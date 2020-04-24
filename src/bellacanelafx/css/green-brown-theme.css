@@ -1,0 +1,23 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 23/04/2020, 23:28:17
+    Author     : joao
+*/
+*{
+    dark-primary-color: #5D4037;
+    default-primary-color: #795548;
+    light-primary-color: #D7CCC8;
+    text-primary-color: #FFFFFF;
+    accent-color: #8BC34A;
+    primary-text-color: #212121;
+    secondary-text-color: #757575;
+    divider-color: #BDBDBD; 
+}
+
+.root{
+    -fx-background-color: default-primary-color;
+}
