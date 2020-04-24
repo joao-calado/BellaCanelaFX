@@ -12,3 +12,12 @@ CREATE TABLE Usuarios (
 	user_senha varchar(32),
 	CONSTRAINT pk_usuarios PRIMARY KEY (user_login)
 );
+
+create table cliente(
+    cli_cod SERIAL,
+    cli_nome varchar(50) not null,
+    cli_cpf varchar(14) not null,
+    cli_email varchar(30) not null,
+    cli_fone varchar(14) not null,
+    constraint pk_cli primary key (cli_cod)
+);
