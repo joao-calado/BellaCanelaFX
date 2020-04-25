@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class DALCliente {
     
-    public boolean gravar(Cliente c){
+    public boolean gravar(Cliente c) {
         
         String sql = "insert into cliente(cli_nome,cli_cpf,cli_email,cli_fone) values ('#1','#2','#3','#4')";
         
@@ -30,7 +30,7 @@ public class DALCliente {
         return Banco.getCon().manipular(sql);
     }
     
-    public boolean alterar(Cliente c){
+    public boolean alterar(Cliente c) {
         
         String sql = "update cliente set cli_nome='#1',cli_cpf='#2',cli_email='#3',cli_fone='#4' where cli_cod="+c.getCod();
         
@@ -42,15 +42,15 @@ public class DALCliente {
         return Banco.getCon().manipular(sql);
     }
     
-    public boolean apagar(Cliente c){
+    public boolean apagar(Cliente c) {
         return Banco.getCon().manipular("delete from cliente where cli_cod="+c.getCod());
     }
     
-    public int getMax(){
+    public int getMax() {
         return Banco.getCon().getMaxPK("cliente", "cli_cod");
     }
     
-    public Cliente get(int cod){
+    public Cliente get(int cod) {
         
         Cliente aux = null;
         
@@ -64,7 +64,7 @@ public class DALCliente {
         return aux;
     }
     
-    public List<Cliente> get(String filtro){
+    public List<Cliente> get(String filtro) {
         
         String sql = "select *from cliente";
         if(!filtro.isEmpty())
@@ -73,11 +73,11 @@ public class DALCliente {
         List<Cliente> aux = new ArrayList();
         ResultSet rs = Banco.getCon().consultar(sql);
         
-        try{
+        try {
             while(rs.next())
                 aux.add(new Cliente(rs.getInt("cli_cod"),rs.getString("cli_nome"),rs.getString("cli_cpf"),rs.getString("cli_email"),rs.getString("cli_fone")));
         }
-        catch(SQLException sqlEx){}
+        catch(SQLException sqlEx) {}
         
         return aux;
     }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
+<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
@@ -9,14 +9,13 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-
 <BorderPane fx:id="pnprincipal" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@css/green-brown-theme.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bellacanelafx.HomeController">
    <top>
       <VBox fx:id="vbNavegacao" prefHeight="95.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <MenuBar>
+            <MenuBar styleClass="menubar">
               <menus>
-                <Menu mnemonicParsing="false" text="Cadastros">
+                <Menu mnemonicParsing="false" styleClass="menubaritens" text="Cadastros">
                   <items>
                     <MenuItem mnemonicParsing="false" onAction="#clkCadCliente" text="Cliente" />
                   </items>
@@ -43,10 +42,10 @@
                   </Menu>
               </menus>
             </MenuBar>
-            <ToolBar prefHeight="40.0" prefWidth="200.0">
-              <items>
-                <Button mnemonicParsing="false" text="Button" />
-              </items>
+            <ToolBar prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #5D4037;">
+               <items>
+                  <JFXButton text="Button" />
+               </items>
             </ToolBar>
          </children>
       </VBox>

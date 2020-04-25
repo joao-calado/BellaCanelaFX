@@ -47,20 +47,22 @@ public class HomeController implements Initializable {
             root = FXMLLoader.load(getClass().getResource("CadCliente.fxml"));
             pnprincipal.setCenter(root);
         } 
-        catch (IOException ex) 
-        {System.out.println(ex);}
+        catch (IOException ex) {
+            System.out.println(ex);
+        }
     }
 
     @FXML
     private void clkConfigurarSistema(ActionEvent event) {
-        try 
-        {
+        
+        try {
             Parent root;
             root = FXMLLoader.load(getClass().getResource("ConfSistema.fxml"));
             pnprincipal.setCenter(root);
         } 
-        catch (IOException ex) 
-        {System.out.println(ex);}
+        catch (IOException ex) {
+            System.out.println(ex);
+        }
     }
     
 }

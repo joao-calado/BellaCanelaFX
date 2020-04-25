@@ -13,13 +13,13 @@ public class Banco {
     
     static private Conexao con = null;
     
-    static public Conexao getCon(){
+    static public Conexao getCon() {
         return con;
     }
     
     private Banco(){}
     
-    static public boolean conectar(){
+    static public boolean conectar() {
         con = new Conexao();
         return con.conectar("jdbc:postgresql://localhost/", "bellacanela", "postgres", "postgres123");
     }

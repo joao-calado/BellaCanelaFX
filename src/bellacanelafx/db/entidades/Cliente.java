@@ -17,7 +17,7 @@ public class Cliente {
     private String email;
     private String fone;
     
-    public Cliente(){}
+    public Cliente() {}
 
     public Cliente(int cod, String nome, String cpf, String email, String fone) {
         this.cod = cod;

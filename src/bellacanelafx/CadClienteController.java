@@ -10,6 +10,7 @@ import bellacanela.util.MaskFieldUtil;
 import bellacanelafx.db.entidades.Cliente;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
+import java.awt.Toolkit;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -102,7 +103,9 @@ public class CadClienteController implements Initializable {
     
     private void EstadoEdicao() {
         pnpesquisa.setDisable(true);
+        pnpesquisa.setOpacity(0.5);
         apdados.setDisable(false);
+        apdados.setOpacity(1);
         btsalvar.setDisable(false);
         btapagar.setDisable(true);
         btalterar.setDisable(true);
@@ -112,7 +115,9 @@ public class CadClienteController implements Initializable {
     
     private void estadoOriginal() {
         pnpesquisa.setDisable(false);
+        pnpesquisa.setOpacity(1);
         apdados.setDisable(true);
+        apdados.setOpacity(0.5);
         btsalvar.setDisable(true);
         btcancelar.setDisable(false);
         btapagar.setDisable(true);
@@ -154,6 +159,8 @@ public class CadClienteController implements Initializable {
 
     @FXML
     private void clkBtNovo(ActionEvent event) {
+        
+        EstadoEdicao();
     }
 
     @FXML
@@ -170,10 +177,23 @@ public class CadClienteController implements Initializable {
 
     @FXML
     private void clkBtCancelar(ActionEvent event) {
+        
+        if (!apdados.isDisabled()) // caso se encontre em estado de edição
+            estadoOriginal();
+        else 
+            HomeController.spnprincipal.setCenter(null);
+        //ou HomeController.spnprincipal.getChildren().clear();
     }
 
     @FXML
     private void dgtPesquisa(KeyEvent event) {
+        
+        if(txpesquisa.getText().length() > 20) {
+            event.consume();
+            Toolkit.getDefaultToolkit().beep();
+        }
+        else
+            carregarTabela("upper (cli_nome) like '%"+txpesquisa.getText().toUpperCase()+"%'");
     }
     
 }
