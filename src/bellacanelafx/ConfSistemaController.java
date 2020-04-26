@@ -5,9 +5,11 @@
  */
 package bellacanelafx;
 
+import com.jfoenix.controls.JFXButton;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.animation.FadeTransition;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.SplitPane;
@@ -22,6 +24,8 @@ public class ConfSistemaController implements Initializable {
 
     @FXML
     private SplitPane painel;
+    @FXML
+    private JFXButton btsalvar;
 
     /**
      * Initializes the controller class.
@@ -38,5 +42,9 @@ public class ConfSistemaController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         fadeout();
     }    
+
+    @FXML
+    private void clkBtSalvar(ActionEvent event) {
+    }
     
 }

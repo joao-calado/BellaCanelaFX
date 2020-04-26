@@ -5,7 +5,6 @@ import bellacanela.util.MaskFieldUtil;
 import bellacanelafx.db.entidades.Cliente;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
-import java.awt.Color;
 import java.awt.Toolkit;
 import java.net.URL;
 import java.util.List;
@@ -30,7 +29,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
-import sun.java2d.loops.MaskFill;
 
 public class CadClienteController implements Initializable {
 
