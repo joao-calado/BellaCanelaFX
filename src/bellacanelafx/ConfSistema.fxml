@@ -1,15 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.layout.HBox?>
 
 <SplitPane fx:id="painel" dividerPositions="0.8835341365461847" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="500.0" prefWidth="800.0" stylesheets="@css/green-brown-theme.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bellacanelafx.ConfSistemaController">
    <items>
-      <HBox prefHeight="100.0" prefWidth="200.0" />
+      <HBox prefHeight="100.0" prefWidth="200.0" spacing="40.0" style="-fx-background-color: #D7CCC8;">
+         <children>
+            <JFXTextField editable="false" focusColor="#699933" promptText="Códgio" styleClass="textFild" unFocusColor="#212121" />
+         </children>
+         <padding>
+            <Insets left="40.0" top="40.0" />
+         </padding></HBox>
       <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0" spacing="40.0">
          <children>
-            <JFXButton fx:id="btsalvar" onAction="#clkBtSalvar" />
+            <JFXButton fx:id="btsalvar" onAction="#clkBtSalvar" text="Salvar" />
          </children>
       </HBox>
    </items>
