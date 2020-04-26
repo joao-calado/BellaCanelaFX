@@ -21,19 +21,19 @@
                   <Cursor fx:constant="CLOSED_HAND" />
                </cursor>
             </JFXTextField>
-            <JFXTextField fx:id="txnome" focusColor="#699933" labelFloat="true" layoutX="35.0" layoutY="81.0" prefHeight="23.0" prefWidth="271.0" promptText="Nome" styleClass="textFild" unFocusColor="#212121">
+            <JFXTextField fx:id="txnome" focusColor="#699933" labelFloat="true" layoutX="35.0" layoutY="81.0" onKeyTyped="#dgtNome" prefHeight="23.0" prefWidth="271.0" promptText="Nome" styleClass="textFild" unFocusColor="#212121">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
             </JFXTextField>
             <JFXTextField fx:id="txcep" focusColor="#699933" labelFloat="true" layoutX="34.0" layoutY="200.0" prefHeight="23.0" prefWidth="271.0" promptText="CEP" styleClass="textFild" unFocusColor="#212121" />
-            <JFXTextField fx:id="txendereco" focusColor="#699933" labelFloat="true" layoutX="34.0" layoutY="262.0" prefHeight="23.0" prefWidth="486.0" promptText="Endereço" styleClass="textFild" unFocusColor="#212121" />
-            <JFXTextField fx:id="txcidade" focusColor="#699933" labelFloat="true" layoutX="550.0" layoutY="201.0" prefHeight="23.0" prefWidth="213.0" promptText="Cidade" styleClass="textFild" unFocusColor="#212121" />
-            <JFXTextField fx:id="txuf" focusColor="#699933" labelFloat="true" layoutX="340.0" layoutY="201.0" prefHeight="23.0" prefWidth="175.0" promptText="UF" styleClass="textFild" unFocusColor="#212121" />
+            <JFXTextField fx:id="txendereco" focusColor="#699933" labelFloat="true" layoutX="34.0" layoutY="262.0" onKeyTyped="#dgtEndereco" prefHeight="23.0" prefWidth="486.0" promptText="Endereço" styleClass="textFild" unFocusColor="#212121" />
+            <JFXTextField fx:id="txcidade" focusColor="#699933" labelFloat="true" layoutX="550.0" layoutY="201.0" onKeyTyped="#dgtCidade" prefHeight="23.0" prefWidth="213.0" promptText="Cidade" styleClass="textFild" unFocusColor="#212121" />
+            <JFXTextField fx:id="txuf" focusColor="#699933" labelFloat="true" layoutX="340.0" layoutY="201.0" onKeyTyped="#dgtUF" prefHeight="23.0" prefWidth="175.0" promptText="UF" styleClass="textFild" unFocusColor="#212121" />
             <JFXTextField fx:id="txcnpj" focusColor="#699933" labelFloat="true" layoutX="549.0" layoutY="144.0" prefHeight="23.0" prefWidth="213.0" promptText="CNPJ" styleClass="textFild" unFocusColor="#212121" />
-            <JFXTextField fx:id="txrazao" focusColor="#699933" labelFloat="true" layoutX="341.0" layoutY="81.0" prefHeight="23.0" prefWidth="422.0" promptText="Razão social" styleClass="textFild" unFocusColor="#212121" />
+            <JFXTextField fx:id="txrazao" focusColor="#699933" labelFloat="true" layoutX="341.0" layoutY="81.0" onKeyTyped="#dgtRazao" prefHeight="23.0" prefWidth="422.0" promptText="Razão social" styleClass="textFild" unFocusColor="#212121" />
             <JFXTextField fx:id="txfone" focusColor="#699933" labelFloat="true" layoutX="341.0" layoutY="144.0" prefHeight="23.0" prefWidth="175.0" promptText="Fone" styleClass="textFild" unFocusColor="#212121" />
-            <JFXTextField fx:id="txemail" focusColor="#699933" labelFloat="true" layoutX="33.0" layoutY="144.0" prefHeight="23.0" prefWidth="271.0" promptText="Email" styleClass="textFild" unFocusColor="#212121" />
+            <JFXTextField fx:id="txemail" focusColor="#699933" labelFloat="true" layoutX="33.0" layoutY="144.0" onKeyTyped="#dgtEmail" prefHeight="23.0" prefWidth="271.0" promptText="Email" styleClass="textFild" unFocusColor="#212121" />
             <ImageView fx:id="imgIcone" fitHeight="129.0" fitWidth="132.0" layoutX="550.0" layoutY="295.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../imagens/icone_hamburguer.png" />
