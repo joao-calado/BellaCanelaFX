@@ -17,6 +17,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.SplitPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
 
 /**
@@ -99,6 +100,10 @@ public class ConfSistemaController implements Initializable {
 
     @FXML
     private void dgtEmail(KeyEvent event) {
+    }
+
+    @FXML
+    private void mcEscolherIcone(MouseEvent event) {
     }
     
 }
