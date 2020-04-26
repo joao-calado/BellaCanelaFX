@@ -35,6 +35,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
+import sun.java2d.loops.MaskFill;
 
 /**
  * FXML Controller class
@@ -83,6 +84,8 @@ public class CadClienteController implements Initializable {
     private JFXTextField txpesquisa;
     @FXML
     private VBox pnpesquisa;
+    @FXML
+    private JFXTextField txpesquisaCPF;
 
     /**
      * Initializes the controller class.
@@ -186,6 +189,7 @@ public class CadClienteController implements Initializable {
         
         MaskFieldUtil.cpfField(txcpf);
         MaskFieldUtil.foneField(txfone);
+        MaskFieldUtil.cpfField(txpesquisaCPF);
         
         estadoOriginal();
     }    
@@ -350,12 +354,18 @@ public class CadClienteController implements Initializable {
     @FXML
     private void dgtPesquisa(KeyEvent event) {
         
+        txpesquisaCPF.clear();
+        carregarTabela("");
+        
         if(txpesquisa.getText().length() > 20) {
             event.consume();
             Toolkit.getDefaultToolkit().beep();
         }
-        else
-            carregarTabela("upper (cli_nome) like '%"+txpesquisa.getText().toUpperCase()+"%'");
+        else {
+            
+            if(!txpesquisa.getText().isEmpty())
+                carregarTabela("upper (cli_nome) like '%"+txpesquisa.getText().toUpperCase()+"%'");
+        }
     }
 
     @FXML
@@ -374,6 +384,16 @@ public class CadClienteController implements Initializable {
             event.consume();
             Toolkit.getDefaultToolkit().beep();
         }
+    }
+
+    @FXML
+    private void dgtPesquisaCPF(KeyEvent event) {
+        
+        txpesquisa.clear();
+        carregarTabela("");
+        
+        if(!txpesquisaCPF.getText().isEmpty())
+            carregarTabela("upper (cli_cpf) like '%"+txpesquisaCPF.getText().toUpperCase()+"%'");
     }
     
 }
