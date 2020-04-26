@@ -7,8 +7,10 @@ package bellacanela.db.dal;
 
 import bellacanelafx.db.entidades.ConfSistema;
 import bellacanelafx.db.util.Banco;
+import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -72,14 +74,14 @@ public class DALConfSistema {
         return aux;
     }
     
-    public boolean gravarIcone(ConfSistema cf, FileInputStream icone) throws SQLException {
+    public boolean gravarIcone(ConfSistema cs, FileInputStream icone) throws SQLException {
         
         try {
             
             String sql = "update parametrizacao set par_icone = ? where par_cod = ?";
             PreparedStatement ps = Banco.getCon().getConnect().prepareStatement(sql);
             ps.setBinaryStream(1, icone);
-            ps.setInt(2, cf.getCod());
+            ps.setInt(2, cs.getCod());
             ps.executeUpdate();
             ps.close();
             icone.close();
@@ -89,5 +91,28 @@ public class DALConfSistema {
         }
         
         return true;
+    }
+    
+    public InputStream getIcone(ConfSistema cs) throws SQLException {
+        
+        InputStream is = null;
+        
+        try {
+            
+            PreparedStatement ps = Banco.getCon().getConnect().prepareStatement("select par_icone from parametrizacao where par_cod = ?");
+            ps.setInt(1, cs.getCod());
+            ResultSet rs = ps.executeQuery();
+            
+            if(rs.next()) {
+                byte[] bytes = rs.getBytes("par_icone");
+                is = new ByteArrayInputStream(bytes);
+            }
+            ps.close();
+        }
+        catch(SQLException sqlEx) {
+            return null;
+        }
+        
+        return is;
     }
 }
