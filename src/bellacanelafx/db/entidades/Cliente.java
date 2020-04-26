@@ -26,6 +26,13 @@ public class Cliente {
         this.email = email;
         this.fone = fone;
     }
+    
+     public Cliente(String nome, String cpf, String email, String fone) {        
+        this.nome = nome;
+        this.cpf = cpf;
+        this.email = email;
+        this.fone = fone;
+    }
 
     public int getCod() {
         return cod;
