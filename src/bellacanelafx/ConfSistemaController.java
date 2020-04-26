@@ -40,6 +40,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
 import javax.imageio.ImageIO;
+import org.json.JSONObject;
 
 /**
  * FXML Controller class
@@ -331,13 +332,13 @@ public class ConfSistemaController implements Initializable {
                 protected Object call() throws Exception {
                     
                     String dados = ConsultaAPI.consultaCep(txcep.getText().replace("-", ""));
-                    /*JSONObject jason = new JSONObject(dados);
+                    JSONObject jason = new JSONObject(dados);
                     
                     txendereco.setText(jason.getString("logradouro"));
                     txcidade.setText(jason.getString("localidade"));
                     txuf.setText(jason.getString("uf"));
                     
-                    */return null;
+                    return null;
                 }
             };
             new Thread(task).start();
