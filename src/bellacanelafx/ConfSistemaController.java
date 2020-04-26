@@ -16,6 +16,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.SplitPane;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.util.Duration;
 
 /**
@@ -74,6 +75,30 @@ public class ConfSistemaController implements Initializable {
 
     @FXML
     private void clkBtSalvar(ActionEvent event) {
+    }
+
+    @FXML
+    private void dgtNome(KeyEvent event) {
+    }
+
+    @FXML
+    private void dgtEndereco(KeyEvent event) {
+    }
+
+    @FXML
+    private void dgtCidade(KeyEvent event) {
+    }
+
+    @FXML
+    private void dgtUF(KeyEvent event) {
+    }
+
+    @FXML
+    private void dgtRazao(KeyEvent event) {
+    }
+
+    @FXML
+    private void dgtEmail(KeyEvent event) {
     }
     
 }
