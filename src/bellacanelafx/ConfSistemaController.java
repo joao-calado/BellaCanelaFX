@@ -5,13 +5,23 @@
  */
 package bellacanelafx;
 
+import bellacanela.db.dal.DALConfSistema;
+import bellacanela.util.MaskFieldUtil;
+import bellacanelafx.db.entidades.ConfSistema;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXColorPicker;
 import com.jfoenix.controls.JFXTextField;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.animation.FadeTransition;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -20,7 +30,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.util.Duration;
+import javax.imageio.ImageIO;
 
 /**
  * FXML Controller class
@@ -108,9 +120,50 @@ public class ConfSistemaController implements Initializable {
         return res;
     }
     
+    private void carregarCampos() {
+        
+        DALConfSistema dal = new DALConfSistema();
+        ConfSistema cs = dal.get();
+        
+        if(cs != null) {
+            
+            txcod.setText(""+cs.getCod());
+            txnome.setText(cs.getNome());
+            txcep.setText(cs.getCep());
+            txendereco.setText(cs.getEndereco());
+            txcidade.setText(cs.getCidade());
+            txuf.setText(cs.getUf());
+            txcnpj.setText(cs.getCnpj());
+            txrazao.setText(cs.getRazao());
+            txfone.setText(cs.getFone());
+            txemail.setText(cs.getEmail());
+            cpcor1.setValue(Color.valueOf(cs.getCor1()));
+            cpcor2.setValue(Color.valueOf(cs.getCor2()));
+            
+            InputStream icone = null;
+            try {
+                icone = dal.getIcone(cs);
+                BufferedImage imgConvertida;
+                try {
+                    imgConvertida = ImageIO.read(icone);
+                    imgIcone.setImage(SwingFXUtils.toFXImage(imgConvertida, null));
+                }
+                catch(IOException ioEx) {}
+            } 
+            catch (SQLException ex) {
+                Logger.getLogger(ConfSistemaController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
         fadeout();
+        MaskFieldUtil.cepField(txcep);
+        MaskFieldUtil.cnpjField(txcnpj);
+        MaskFieldUtil.foneField(txfone);
+        carregarCampos();
     }    
 
     @FXML
