@@ -32,4 +32,23 @@ public class DALConfSistema {
         
         return Banco.getCon().manipular(sql);
     }
+    
+    public boolean alterar(ConfSistema cs) {
+        
+        String sql = "update parametrizacao set par_nome='#a',par_cep='#b',par_endereco='#c',par_cidade='#d',par_uf='#e',par_cnpj='#f',par_razao_social='#g',par_fone='#h',par_email='#i',par_cor1='#j',par_cor2='#k' where par_cod="+cs.getCod();
+        
+        sql = sql.replaceAll("#a", cs.getNome());
+        sql = sql.replaceAll("#b", cs.getCep());
+        sql = sql.replaceAll("#c", cs.getEndereco());
+        sql = sql.replaceAll("#d", cs.getCidade());
+        sql = sql.replaceAll("#e", cs.getUf());
+        sql = sql.replaceAll("#f", cs.getCnpj());
+        sql = sql.replaceAll("#g", cs.getRazao());
+        sql = sql.replaceAll("#h", cs.getFone());
+        sql = sql.replaceAll("#i", cs.getEmail());
+        sql = sql.replaceAll("#j", cs.getCor1());
+        sql = sql.replaceAll("#k", cs.getCor2());
+        
+        return Banco.getCon().manipular(sql);
+    }
 }
