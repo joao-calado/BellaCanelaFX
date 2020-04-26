@@ -54,7 +54,10 @@ public class DALFuncionario {
     }
     
     public ArrayList<Funcionario> getFuncionarios(String filter){
-        String SQL = "SELECT * FROM Funcionarios WHERE " + filter;
+        String SQL = "SELECT * FROM Funcionarios";
+        if(!filter.equals(""))
+            SQL += " WHERE " + filter;
+        
         ArrayList<Funcionario> funcionarios = new ArrayList();
         Funcionario f = null;
         
