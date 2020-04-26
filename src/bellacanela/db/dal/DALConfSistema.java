@@ -7,6 +7,9 @@ package bellacanela.db.dal;
 
 import bellacanelafx.db.entidades.ConfSistema;
 import bellacanelafx.db.util.Banco;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -67,5 +70,24 @@ public class DALConfSistema {
         catch (SQLException sqlEx) {}
         
         return aux;
+    }
+    
+    public boolean gravarIcone(ConfSistema cf, FileInputStream icone) throws SQLException {
+        
+        try {
+            
+            String sql = "update parametrizacao set par_icone = ? where par_cod = ?";
+            PreparedStatement ps = Banco.getCon().getConnect().prepareStatement(sql);
+            ps.setBinaryStream(1, icone);
+            ps.setInt(2, cf.getCod());
+            ps.executeUpdate();
+            ps.close();
+            icone.close();
+        }
+        catch(IOException ioEx) {
+            return false;
+        }
+        
+        return true;
     }
 }
