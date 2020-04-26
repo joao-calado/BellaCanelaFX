@@ -64,5 +64,17 @@ public class HomeController implements Initializable {
             System.out.println(ex);
         }
     }
+
+    @FXML
+    private void clkCadFuncionario(ActionEvent event) {
+        try {
+            Parent root;
+            root = FXMLLoader.load(getClass().getResource("CadFuncionario.fxml"));
+            pnprincipal.setCenter(root);
+        } 
+        catch (IOException ex) {
+            System.out.println(ex);
+        }
+    }
     
 }
