@@ -7,6 +7,8 @@ package bellacanela.db.dal;
 
 import bellacanelafx.db.entidades.ConfSistema;
 import bellacanelafx.db.util.Banco;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  *
@@ -50,5 +52,20 @@ public class DALConfSistema {
         sql = sql.replaceAll("#k", cs.getCor2());
         
         return Banco.getCon().manipular(sql);
+    }
+    
+    public ConfSistema get() {
+        
+        ConfSistema aux = null;
+        ResultSet rs = Banco.getCon().consultar("select * from parametrizacao");
+        
+        try {
+            if(rs.next()) {
+                aux = new ConfSistema(rs.getInt("par_cod"),rs.getString("gar_nome"),rs.getString("gar_cep"),rs.getString("gar_endereco"),rs.getString("gar_cidade"),rs.getString("gar_uf"),rs.getString("gar_cnpj"),rs.getString("gar_razao_social"),rs.getString("gar_fone"),rs.getString("gar_email"),rs.getString("gar_cor1"),rs.getString("gar_2"));
+            }
+        }
+        catch (SQLException sqlEx) {}
+        
+        return aux;
     }
 }
