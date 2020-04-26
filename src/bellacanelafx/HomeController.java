@@ -37,7 +37,7 @@ public class HomeController implements Initializable {
         
         try 
         {
-            if(cs == null) {
+            if(cs == null) { // significa que é o primeiro acesso ao sistema
             
                 try {
                     Parent root;
@@ -50,14 +50,14 @@ public class HomeController implements Initializable {
             }
             else {
                 
-                /*Parent root;
+                Parent root;
                 root = FXMLLoader.load(getClass().getResource("login.fxml"));
-                pnprincipal.setCenter(root);*/
+                pnprincipal.setCenter(root);
             }
             
-            Parent root;
+            /*Parent root;
             root = FXMLLoader.load(getClass().getResource("login.fxml"));
-            pnprincipal.setCenter(root);
+            pnprincipal.setCenter(root);*/
         } 
         catch (IOException ex) {
             System.out.println(ex);

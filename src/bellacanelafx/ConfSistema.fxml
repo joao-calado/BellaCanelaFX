@@ -26,7 +26,7 @@
                   <Insets />
                </opaqueInsets>
             </JFXTextField>
-            <JFXTextField fx:id="txcep" focusColor="#699933" labelFloat="true" layoutX="34.0" layoutY="200.0" prefHeight="23.0" prefWidth="271.0" promptText="CEP" styleClass="textFild" unFocusColor="#212121" />
+            <JFXTextField fx:id="txcep" focusColor="#699933" labelFloat="true" layoutX="34.0" layoutY="200.0" onKeyTyped="#dgtCEP" prefHeight="23.0" prefWidth="271.0" promptText="CEP" styleClass="textFild" unFocusColor="#212121" />
             <JFXTextField fx:id="txendereco" focusColor="#699933" labelFloat="true" layoutX="34.0" layoutY="262.0" onKeyTyped="#dgtEndereco" prefHeight="23.0" prefWidth="486.0" promptText="Endereço" styleClass="textFild" unFocusColor="#212121" />
             <JFXTextField fx:id="txcidade" focusColor="#699933" labelFloat="true" layoutX="550.0" layoutY="201.0" onKeyTyped="#dgtCidade" prefHeight="23.0" prefWidth="213.0" promptText="Cidade" styleClass="textFild" unFocusColor="#212121" />
             <JFXTextField fx:id="txuf" focusColor="#699933" labelFloat="true" layoutX="340.0" layoutY="201.0" onKeyTyped="#dgtUF" prefHeight="23.0" prefWidth="175.0" promptText="UF" styleClass="textFild" unFocusColor="#212121" />
@@ -52,9 +52,9 @@
             <Insets left="40.0" top="40.0" />
          </opaqueInsets>
       </AnchorPane>
-      <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0" spacing="40.0">
+      <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0" spacing="40.0" styleClass="root">
          <children>
-            <JFXButton fx:id="btsalvar" onAction="#clkBtSalvar" text="Salvar" />
+            <JFXButton fx:id="btsalvar" onAction="#clkBtSalvar" prefHeight="23.0" prefWidth="215.0" text="Salvar" />
          </children>
       </HBox>
    </items>
