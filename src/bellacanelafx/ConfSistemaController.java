@@ -69,6 +69,36 @@ public class ConfSistemaController implements Initializable {
         ft.play(); 
     }
     
+    private boolean verificarEmail(String email) {
+        
+        boolean res = false;
+        
+        if((email.contains("@hotmail") || email.contains("@gmail")) && email.contains(".com"))
+            res = true;
+        
+        return res;
+    }
+    
+    private boolean verificarCpf (String cpf) {
+        
+        boolean res = false;
+        
+        if(cpf.length() == 14)
+            res = true;
+        
+        return res;
+    }
+    
+    private boolean verificarFone (String fone) {
+        
+        boolean res = false;
+        
+        if(fone.length() >= 13)
+            res = true;
+        
+        return res;
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         fadeout();
