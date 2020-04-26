@@ -4,7 +4,10 @@
 <?import com.jfoenix.controls.JFXColorPicker?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
@@ -13,19 +16,37 @@
    <items>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #D7CCC8;">
          <children>
-            <JFXTextField editable="false" focusColor="#699933" layoutX="33.0" layoutY="37.0" promptText="Código" styleClass="textFild" unFocusColor="#212121" />
-            <JFXTextField focusColor="#699933" labelFloat="true" layoutX="185.0" layoutY="37.0" promptText="Nome" styleClass="textFild" unFocusColor="#212121" />
-            <JFXTextField focusColor="#699933" labelFloat="true" layoutX="334.0" layoutY="37.0" promptText="CEP" styleClass="textFild" unFocusColor="#212121" />
-            <JFXTextField focusColor="#699933" labelFloat="true" layoutX="484.0" layoutY="37.0" promptText="Endereço" styleClass="textFild" unFocusColor="#212121" />
-            <JFXTextField focusColor="#699933" labelFloat="true" layoutX="641.0" layoutY="37.0" promptText="Cidade" styleClass="textFild" unFocusColor="#212121" />
-            <JFXTextField focusColor="#699933" labelFloat="true" layoutX="33.0" layoutY="99.0" promptText="UF" styleClass="textFild" unFocusColor="#212121" />
-            <JFXTextField focusColor="#699933" labelFloat="true" layoutX="185.0" layoutY="99.0" promptText="CNPJ" styleClass="textFild" unFocusColor="#212121" />
-            <JFXTextField focusColor="#699933" labelFloat="true" layoutX="334.0" layoutY="99.0" promptText="Razão social" styleClass="textFild" unFocusColor="#212121" />
-            <JFXTextField focusColor="#699933" labelFloat="true" layoutX="484.0" layoutY="99.0" promptText="Fone" styleClass="textFild" unFocusColor="#212121" />
-            <JFXTextField focusColor="#699933" labelFloat="true" layoutX="641.0" layoutY="99.0" promptText="Email" styleClass="textFild" unFocusColor="#212121" />
-            <ImageView fx:id="imgIcone" fitHeight="150.0" fitWidth="200.0" layoutX="33.0" layoutY="267.0" pickOnBounds="true" preserveRatio="true" />
-            <JFXColorPicker layoutX="405.0" layoutY="235.0" />
-            <JFXColorPicker layoutX="558.0" layoutY="235.0" />
+            <JFXTextField editable="false" focusColor="#699933" layoutX="33.0" layoutY="32.0" prefHeight="23.0" prefWidth="83.0" promptText="Código" styleClass="textFild" unFocusColor="#212121">
+               <cursor>
+                  <Cursor fx:constant="CLOSED_HAND" />
+               </cursor>
+            </JFXTextField>
+            <JFXTextField focusColor="#699933" labelFloat="true" layoutX="35.0" layoutY="81.0" prefHeight="23.0" prefWidth="271.0" promptText="Nome" styleClass="textFild" unFocusColor="#212121">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </JFXTextField>
+            <JFXTextField focusColor="#699933" labelFloat="true" layoutX="34.0" layoutY="200.0" prefHeight="23.0" prefWidth="271.0" promptText="CEP" styleClass="textFild" unFocusColor="#212121" />
+            <JFXTextField focusColor="#699933" labelFloat="true" layoutX="34.0" layoutY="262.0" prefHeight="23.0" prefWidth="486.0" promptText="Endereço" styleClass="textFild" unFocusColor="#212121" />
+            <JFXTextField focusColor="#699933" labelFloat="true" layoutX="550.0" layoutY="201.0" prefHeight="23.0" prefWidth="213.0" promptText="Cidade" styleClass="textFild" unFocusColor="#212121" />
+            <JFXTextField focusColor="#699933" labelFloat="true" layoutX="340.0" layoutY="201.0" prefHeight="23.0" prefWidth="175.0" promptText="UF" styleClass="textFild" unFocusColor="#212121" />
+            <JFXTextField focusColor="#699933" labelFloat="true" layoutX="549.0" layoutY="144.0" prefHeight="23.0" prefWidth="213.0" promptText="CNPJ" styleClass="textFild" unFocusColor="#212121" />
+            <JFXTextField focusColor="#699933" labelFloat="true" layoutX="341.0" layoutY="81.0" prefHeight="23.0" prefWidth="422.0" promptText="Razão social" styleClass="textFild" unFocusColor="#212121" />
+            <JFXTextField focusColor="#699933" labelFloat="true" layoutX="341.0" layoutY="144.0" prefHeight="23.0" prefWidth="175.0" promptText="Fone" styleClass="textFild" unFocusColor="#212121" />
+            <JFXTextField focusColor="#699933" labelFloat="true" layoutX="33.0" layoutY="144.0" prefHeight="23.0" prefWidth="271.0" promptText="Email" styleClass="textFild" unFocusColor="#212121" />
+            <ImageView fx:id="imgIcone" fitHeight="132.0" fitWidth="213.0" layoutX="550.0" layoutY="292.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../imagens/icone_hamburguer.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+            <JFXColorPicker layoutX="33.0" layoutY="333.0" prefHeight="45.0" prefWidth="486.0" />
+            <JFXColorPicker layoutX="35.0" layoutY="385.0" prefWidth="486.0" />
+            <Label layoutX="33.0" layoutY="310.0" text="Escolha a cod 1" />
+            <Label layoutX="34.0" layoutY="368.0" text="Escolha a cod 2" />
+            <Label layoutX="552.0" layoutY="265.0" text="Escolha o ícone" />
          </children>
          <opaqueInsets>
             <Insets left="40.0" top="40.0" />
