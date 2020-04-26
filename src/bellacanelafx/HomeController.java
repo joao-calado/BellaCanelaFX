@@ -1,5 +1,7 @@
 package bellacanelafx;
 
+import bellacanela.db.dal.DALConfSistema;
+import bellacanelafx.db.entidades.ConfSistema;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -26,11 +28,33 @@ public class HomeController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
         spnprincipal = pnprincipal;
         this.vbNavegacao.setDisable(true);
         
+        DALConfSistema dal = new DALConfSistema();
+        ConfSistema cs = dal.get();
+        
         try 
         {
+            if(cs == null) {
+            
+                try {
+                    Parent root;
+                    root = FXMLLoader.load(getClass().getResource("ConfSistema.fxml"));
+                    pnprincipal.setCenter(root);
+                } 
+                catch (IOException ex) {
+                    System.out.println(ex);
+                }
+            }
+            else {
+                
+                /*Parent root;
+                root = FXMLLoader.load(getClass().getResource("login.fxml"));
+                pnprincipal.setCenter(root);*/
+            }
+            
             Parent root;
             root = FXMLLoader.load(getClass().getResource("login.fxml"));
             pnprincipal.setCenter(root);
