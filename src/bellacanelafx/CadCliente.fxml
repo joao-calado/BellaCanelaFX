@@ -50,7 +50,7 @@
                         <Cursor fx:constant="CLOSED_HAND" />
                      </cursor>
                   </JFXTextField>
-                  <JFXTextField fx:id="txnome" focusColor="#699933" labelFloat="true" layoutX="190.0" layoutY="31.0" prefHeight="25.0" prefWidth="331.0" promptText="Nome" styleClass="textFild" unFocusColor="#212121">
+                  <JFXTextField fx:id="txnome" focusColor="#699933" labelFloat="true" layoutX="190.0" layoutY="31.0" onKeyTyped="#dgtNome" prefHeight="25.0" prefWidth="331.0" promptText="Nome" styleClass="textFild" unFocusColor="#212121">
                      <cursor>
                         <Cursor fx:constant="TEXT" />
                      </cursor>
@@ -60,7 +60,7 @@
                         <Cursor fx:constant="TEXT" />
                      </cursor>
                   </JFXTextField>
-                  <JFXTextField fx:id="txemail" focusColor="#699933" labelFloat="true" layoutX="66.0" layoutY="95.0" prefHeight="25.0" prefWidth="457.0" promptText="Email" styleClass="textFild" unFocusColor="#212121">
+                  <JFXTextField fx:id="txemail" focusColor="#699933" labelFloat="true" layoutX="66.0" layoutY="95.0" onKeyTyped="#dgtEmail" prefHeight="25.0" prefWidth="457.0" promptText="Email" styleClass="textFild" unFocusColor="#212121">
                      <cursor>
                         <Cursor fx:constant="TEXT" />
                      </cursor>

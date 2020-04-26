@@ -10,6 +10,7 @@ import bellacanela.util.MaskFieldUtil;
 import bellacanelafx.db.entidades.Cliente;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
+import java.awt.Color;
 import java.awt.Toolkit;
 import java.net.URL;
 import java.util.List;
@@ -21,6 +22,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
@@ -102,10 +105,12 @@ public class CadClienteController implements Initializable {
     }
     
     private void EstadoEdicao() {
+        
         pnpesquisa.setDisable(true);
         pnpesquisa.setOpacity(0.5);
         apdados.setDisable(false);
         apdados.setOpacity(1);
+        
         btsalvar.setDisable(false);
         btapagar.setDisable(true);
         btalterar.setDisable(true);
@@ -114,10 +119,12 @@ public class CadClienteController implements Initializable {
     }
     
     private void estadoOriginal() {
+        
         pnpesquisa.setDisable(false);
         pnpesquisa.setOpacity(1);
         apdados.setDisable(true);
         apdados.setOpacity(0.5);
+        
         btsalvar.setDisable(true);
         btcancelar.setDisable(false);
         btapagar.setDisable(true);
@@ -134,6 +141,36 @@ public class CadClienteController implements Initializable {
                 ((ComboBox)n).getItems().clear();
         }
         carregarTabela("");
+    }
+    
+    private boolean verificarEmail(String email) {
+        
+        boolean res = false;
+        
+        if((email.contains("@hotmail") || email.contains("@gmail")) && email.contains(".com"))
+            res = true;
+        
+        return res;
+    }
+    
+    private boolean verificarCpf (String cpf) {
+        
+        boolean res = false;
+        
+        if(cpf.length() == 14)
+            res = true;
+        
+        return res;
+    }
+    
+    private boolean verificarFone (String fone) {
+        
+        boolean res = false;
+        
+        if(fone.length() >= 13)
+            res = true;
+        
+        return res;
     }
     
     @Override
@@ -155,6 +192,11 @@ public class CadClienteController implements Initializable {
 
     @FXML
     private void clkTabela(MouseEvent event) {
+        
+        if(tabela.getSelectionModel().getSelectedIndex() >= 0) {
+            btalterar.setDisable(false);
+            btapagar.setDisable(false);
+        }
     }
 
     @FXML
@@ -165,14 +207,134 @@ public class CadClienteController implements Initializable {
 
     @FXML
     private void clkBtAlterar(ActionEvent event) {
+        
+        if(tabela.getSelectionModel().getSelectedItem() != null) {
+            
+            Cliente c = (Cliente) tabela.getSelectionModel().getSelectedItem();
+            
+            txcod.setText(""+c.getCod());
+            txnome.setText(c.getNome());
+            txcpf.setText(c.getCpf());
+            txemail.setText(c.getEmail());
+            txfone.setText(c.getFone());
+            
+            EstadoEdicao();
+        }
     }
 
     @FXML
     private void clkBtApagar(ActionEvent event) {
+        
+        Alert a = new Alert(Alert.AlertType.CONFIRMATION);
+        a.setContentText("Confirma a exclusão?");
+        
+        if(a.showAndWait().get() == ButtonType.OK) {
+            
+            DALCliente dal = new DALCliente();
+            Cliente c = tabela.getSelectionModel().getSelectedItem();
+            
+            if(dal.apagar(c)) {
+                
+                a.setTitle("Informação:");
+                a.setAlertType(Alert.AlertType.INFORMATION);
+                a.setContentText("Cliente apagado com sucesso!");
+            }
+            else {
+                
+                a.setTitle("Erro:");
+                a.setAlertType(Alert.AlertType.ERROR);
+                a.setContentText("Problemas ao tentar apagar cliente!");
+            }
+            
+            a.showAndWait();
+            carregarTabela("");
+        }
     }
 
     @FXML
     private void clkBtSalvar(ActionEvent event) {
+        
+        int cod = -1;
+        try {
+            cod = Integer.parseInt(txcod.getText());
+        }
+        catch(NumberFormatException ex) {
+            cod = 0;
+        }
+        
+        Alert a = new Alert(Alert.AlertType.INFORMATION);
+        a.setHeaderText(null);
+        
+        if(verificarEmail(txemail.getText())) {
+            
+            if(verificarCpf(txcpf.getText())) {
+                
+                if(verificarFone(txfone.getText())) {
+                    
+                    DALCliente dal = new DALCliente();
+                    Cliente c = new Cliente(cod, txnome.getText(), txcpf.getText(), txemail.getText(), txfone.getText());
+
+                    if(c.getCod() == 0) { // novo cadastro
+
+                        if(dal.gravar(c)) {
+
+                            a.setTitle("Informação:");
+                            a.setAlertType(Alert.AlertType.INFORMATION);
+                            a.setContentText("Cliente gravado com sucesso!");
+                        }
+                        else {
+
+                            a.setTitle("Erro:");
+                            a.setAlertType(Alert.AlertType.ERROR);
+                            a.setContentText("Problemas ao tentar gravar cliente!");
+                        }
+                    }
+                    else { // alteração de cadastro
+
+                        if(dal.alterar(c)) {
+
+                            a.setTitle("Informação:");
+                            a.setAlertType(Alert.AlertType.INFORMATION);
+                            a.setContentText("Cliente alterado com sucesso!");
+                        }
+                        else {
+
+                            a.setTitle("Erro:");
+                            a.setAlertType(Alert.AlertType.ERROR);
+                            a.setContentText("Problemas ao tentar alterar cliente!");
+                        }
+                    }
+
+                    carregarTabela("");
+                    estadoOriginal();
+                }
+                else {
+                    
+                    a.setTitle("Atenção:");
+                    a.setAlertType(Alert.AlertType.WARNING);
+                    a.setContentText("Informe um fone em formato válido!");
+                    txfone.clear();
+                    txfone.requestFocus();
+                }
+            }
+            else {
+                
+                a.setTitle("Atenção:");
+                a.setAlertType(Alert.AlertType.WARNING);
+                a.setContentText("Informe um CPF em formato válido!");
+                txcpf.clear();
+                txcpf.requestFocus();
+            }
+        }
+        else {
+            
+            a.setTitle("Atenção:");
+            a.setAlertType(Alert.AlertType.WARNING);
+            a.setContentText("Informe um email em formato válido!");
+            txemail.clear();
+            txemail.requestFocus();
+        }
+        a.showAndWait();
     }
 
     @FXML
@@ -194,6 +356,24 @@ public class CadClienteController implements Initializable {
         }
         else
             carregarTabela("upper (cli_nome) like '%"+txpesquisa.getText().toUpperCase()+"%'");
+    }
+
+    @FXML
+    private void dgtNome(KeyEvent event) {
+        
+        if(txnome.getText().length() > 40) {
+            event.consume();
+            Toolkit.getDefaultToolkit().beep();
+        }
+    }
+
+    @FXML
+    private void dgtEmail(KeyEvent event) {
+        
+        if(txemail.getText().length() > 30) {
+            event.consume();
+            Toolkit.getDefaultToolkit().beep();
+        }
     }
     
 }
