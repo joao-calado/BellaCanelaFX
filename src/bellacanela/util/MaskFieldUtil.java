@@ -256,6 +256,41 @@ public abstract class MaskFieldUtil {
         }
         return result.replaceAll("[^0-9]", "");
     }
+    
+      
+    public static void monetaryFieldFig(final TextField textField) {      
+        textField.lengthProperty().addListener((observableValue, number, number2) -> {
+            String value = textField.getText();
+            value = value.replaceAll("[^0-9,]", "");            
+            textField.setText(value);
+            MaskFieldUtil.positionCaret(textField);
+        }
+        );
+    }
+
+
+    public static void onlyAlfa(TextField textField) {
+        textField.lengthProperty().addListener((observableValue, number, number2) -> {
+            String value = textField.getText();
+            value = value.replaceAll("[^A-Z a-z]", "");            
+            textField.setText(value);
+            MaskFieldUtil.positionCaret(textField);
+        }
+        );       
+    }
+    
+     public static void onlyUF(TextField textField) {
+         MaskFieldUtil.maxField(textField, 2);
+        textField.lengthProperty().addListener((observableValue, number, number2) -> {
+            String value = textField.getText();
+            value = value.replaceAll("[^ A-Z]", "");
+            
+            textField.setText(value);
+            MaskFieldUtil.positionCaret(textField);
+        }
+        );       
+    }
+    
 
     static {
         Collections.addAll(ignoreKeyCodes, new KeyCode[]{KeyCode.F1, KeyCode.F2, KeyCode.F3, KeyCode.F4, KeyCode.F5, KeyCode.F6, KeyCode.F7, KeyCode.F8, KeyCode.F9, KeyCode.F10, KeyCode.F11, KeyCode.F12});
