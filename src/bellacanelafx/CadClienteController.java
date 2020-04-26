@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package bellacanelafx;
 
 import bellacanela.db.dal.DALCliente;
@@ -37,11 +32,6 @@ import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import sun.java2d.loops.MaskFill;
 
-/**
- * FXML Controller class
- *
- * @author joao
- */
 public class CadClienteController implements Initializable {
 
     @FXML
@@ -86,10 +76,6 @@ public class CadClienteController implements Initializable {
     private VBox pnpesquisa;
     @FXML
     private JFXTextField txpesquisaCPF;
-
-    /**
-     * Initializes the controller class.
-     */
     
     private void fadeout() {
         FadeTransition ft = new FadeTransition(Duration.millis(1000), painel);
