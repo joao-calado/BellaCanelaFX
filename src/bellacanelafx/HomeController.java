@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package bellacanelafx;
 
 import java.io.IOException;
@@ -17,11 +12,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
-/**
- * FXML Controller class
- *
- * @author joao
- */
 public class HomeController implements Initializable {
 
     //dados estáticos
@@ -36,7 +26,18 @@ public class HomeController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        spnprincipal=pnprincipal;
+        spnprincipal = pnprincipal;
+        this.vbNavegacao.setDisable(true);
+        
+        try 
+        {
+            Parent root;
+            root = FXMLLoader.load(getClass().getResource("login.fxml"));
+            pnprincipal.setCenter(root);
+        } 
+        catch (IOException ex) {
+            System.out.println(ex);
+        }
     }    
 
     @FXML
