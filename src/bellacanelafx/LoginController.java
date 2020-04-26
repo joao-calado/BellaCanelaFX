@@ -3,6 +3,8 @@ package bellacanelafx;
 import bellacanela.db.dal.DALUsuario;
 import bellacanelafx.db.entidades.Usuario;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXSnackbar;
+import com.jfoenix.controls.JFXSnackbar.SnackbarEvent;
 import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
 import java.sql.SQLException;
@@ -12,6 +14,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -56,6 +59,14 @@ public class LoginController implements Initializable {
                 }
             }
             HomeController.spnprincipal.setCenter(null);
+        }
+        else{
+            JFXSnackbar sb = new JFXSnackbar(pane);
+            Label mens = new Label("Login ou senha incorretos, tente novamente!");
+            mens.setStyle("-fx-text-fill: red;"
+                        + "-fx-font-size: 14px;"
+                        + "-fx-padding: 10px;");
+            sb.enqueue(new SnackbarEvent(mens));
         }
     }
     
