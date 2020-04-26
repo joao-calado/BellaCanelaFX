@@ -34,7 +34,7 @@
             <JFXTextField fx:id="txrazao" focusColor="#699933" labelFloat="true" layoutX="341.0" layoutY="81.0" prefHeight="23.0" prefWidth="422.0" promptText="Razão social" styleClass="textFild" unFocusColor="#212121" />
             <JFXTextField fx:id="txfone" focusColor="#699933" labelFloat="true" layoutX="341.0" layoutY="144.0" prefHeight="23.0" prefWidth="175.0" promptText="Fone" styleClass="textFild" unFocusColor="#212121" />
             <JFXTextField fx:id="txemail" focusColor="#699933" labelFloat="true" layoutX="33.0" layoutY="144.0" prefHeight="23.0" prefWidth="271.0" promptText="Email" styleClass="textFild" unFocusColor="#212121" />
-            <ImageView fx:id="imgIcone" fitHeight="132.0" fitWidth="213.0" layoutX="550.0" layoutY="292.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="imgIcone" fitHeight="129.0" fitWidth="132.0" layoutX="550.0" layoutY="295.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../imagens/icone_hamburguer.png" />
                </image>

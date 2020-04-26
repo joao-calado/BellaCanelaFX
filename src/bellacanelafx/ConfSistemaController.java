@@ -6,6 +6,8 @@
 package bellacanelafx;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXColorPicker;
+import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.animation.FadeTransition;
@@ -13,6 +15,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.SplitPane;
+import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
 /**
@@ -26,6 +29,32 @@ public class ConfSistemaController implements Initializable {
     private SplitPane painel;
     @FXML
     private JFXButton btsalvar;
+    @FXML
+    private JFXTextField txcod;
+    @FXML
+    private JFXTextField txnome;
+    @FXML
+    private JFXTextField txcep;
+    @FXML
+    private JFXTextField txendereco;
+    @FXML
+    private JFXTextField txcidade;
+    @FXML
+    private JFXTextField txuf;
+    @FXML
+    private JFXTextField txcnpj;
+    @FXML
+    private JFXTextField txrazao;
+    @FXML
+    private JFXTextField txfone;
+    @FXML
+    private JFXTextField txemail;
+    @FXML
+    private ImageView imgIcone;
+    @FXML
+    private JFXColorPicker cpcor1;
+    @FXML
+    private JFXColorPicker cpcor2;
 
     /**
      * Initializes the controller class.
