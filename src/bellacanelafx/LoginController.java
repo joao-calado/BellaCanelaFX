@@ -3,6 +3,7 @@ package bellacanelafx;
 import bellacanela.db.dal.DALUsuario;
 import bellacanelafx.db.entidades.Usuario;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXSnackbar;
 import com.jfoenix.controls.JFXSnackbar.SnackbarEvent;
 import com.jfoenix.controls.JFXTextField;
@@ -25,13 +26,11 @@ public class LoginController implements Initializable {
     @FXML
     private JFXTextField tfUser;
     @FXML
-    private JFXTextField tfPassword;
+    private JFXPasswordField tfPassword;
     @FXML
     private JFXButton btLogin;
     @FXML
     private BorderPane pane;
-    
-    public boolean teste;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
