@@ -12,7 +12,7 @@
       <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #D7CCC8;" BorderPane.alignment="CENTER">
          <children>
             <JFXTextField fx:id="tfUser" focusColor="#699933" labelFloat="true" layoutX="167.0" layoutY="137.0" prefHeight="25.0" prefWidth="267.0" promptText="Nome de usuário" />
-            <JFXPasswordField fx:id="tfPassword" focusColor="#699933" labelFloat="true" layoutX="168.0" layoutY="175.0" onKeyPressed="#evtKey" prefHeight="25.0" prefWidth="267.0" promptText="Senha" />
+            <JFXPasswordField fx:id="tfPassword" focusColor="#699933" labelFloat="true" layoutX="168.0" layoutY="188.0" onKeyPressed="#evtKey" prefHeight="25.0" prefWidth="267.0" promptText="Senha" />
             <JFXButton fx:id="btLogin" layoutX="264.0" layoutY="239.0" onAction="#evtLogin" prefHeight="25.0" prefWidth="74.0" ripplerFill="#699933" style="-fx-background-color: #938884;" text="Login">
                <font>
                   <Font name="System Bold" size="12.0" />
