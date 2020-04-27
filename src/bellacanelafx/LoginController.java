@@ -16,6 +16,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -44,8 +46,7 @@ public class LoginController implements Initializable {
         ft.play(); 
     }
     
-    @FXML
-    private void evtLogin(ActionEvent event) throws SQLException {
+    private void fazerLogin() throws SQLException{
         DALUsuario dal = new DALUsuario();
         Usuario u = new Usuario(this.tfUser.getText(), this.tfPassword.getText());
         
@@ -67,6 +68,17 @@ public class LoginController implements Initializable {
                         + "-fx-padding: 10px;");
             sb.enqueue(new SnackbarEvent(mens));
         }
+    }
+    
+    @FXML
+    private void evtLogin(ActionEvent event) throws SQLException {
+        this.fazerLogin();
+    }
+
+    @FXML
+    private void evtKey(KeyEvent event) throws SQLException {
+        if(event.getCode() == KeyCode.ENTER)
+            this.fazerLogin();
     }
     
 }
