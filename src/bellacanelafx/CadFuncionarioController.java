@@ -6,6 +6,7 @@ import bellacanela.util.MaskFieldUtil;
 import bellacanelafx.db.entidades.Cliente;
 import bellacanelafx.db.entidades.Funcionario;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXSnackbar;
 import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -144,6 +146,15 @@ public class CadFuncionarioController implements Initializable {
         }
         
         loadTable("");
+    }
+    
+    private void snackbar(String message, String cor){
+        JFXSnackbar sb = new JFXSnackbar(this.apDados);
+        Label mens = new Label(message);
+        mens.setStyle("-fx-text-fill: "+cor+";"
+                    + "-fx-font-size: 14px;"
+                    + "-fx-padding: 10px;");
+        sb.enqueue(new JFXSnackbar.SnackbarEvent(mens));
     }
 
     @FXML
