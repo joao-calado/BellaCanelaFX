@@ -206,7 +206,7 @@ public class ConfSistemaController implements Initializable {
             
             if(cs == null) { // significa que não tem parametros salvos, portanto é o primeiro acesso
 
-                cs = new ConfSistema(0, txnome.getText(), txcep.getText(), txendereco.getText(), txcidade.getText(), txuf.getText(), txcnpj.getText(), txrazao.getText(), txfone.getText(), txemail.getText(), cpcor1.getPromptText(), cpcor2.getPromptText());
+                cs = new ConfSistema(0, txnome.getText(), txcep.getText(), txendereco.getText(), txcidade.getText(), txuf.getText(), txcnpj.getText(), txrazao.getText(), txfone.getText(), txemail.getText(), cpcor1.getValue().toString(), cpcor2.getPromptText());
 
                 if(dal.gravar(cs)) {
 
