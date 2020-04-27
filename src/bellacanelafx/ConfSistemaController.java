@@ -244,7 +244,7 @@ public class ConfSistemaController implements Initializable {
                             if(dal.gravarIcone(cs, imagem)) {
                                 
                                 a.setTitle("Informação:");
-                                a.setContentText("Salvo com sucesso (COM ICONE)!");
+                                a.setContentText("Salvo com sucesso (COM ICONE)!\nReinicie o programa para ter o ícone atualizado.");
                             }
                         }
                         catch(SQLException ex) {}
@@ -272,7 +272,7 @@ public class ConfSistemaController implements Initializable {
                             if(dal.gravarIcone(cs, imagem)) {
                                 
                                 a.setTitle("Informação:");
-                                a.setContentText("Alterado com sucesso (COM ICONE)!");
+                                a.setContentText("Alterado com sucesso (COM ICONE)!\nReinicie o programa para ter o ícone atualizado.");
                             }
                         }
                         catch(SQLException ex) {}
