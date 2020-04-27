@@ -108,5 +108,17 @@ public class HomeController implements Initializable {
             System.out.println(ex);
         }
     }
+
+    @FXML
+    private void clkCadUsuario(ActionEvent event) {
+        try {
+            Parent root;
+            root = FXMLLoader.load(getClass().getResource("CadUsuario.fxml"));
+            pnprincipal.setCenter(root);
+        } 
+        catch (IOException ex) {
+            System.out.println(ex);
+        }
+    }
     
 }
