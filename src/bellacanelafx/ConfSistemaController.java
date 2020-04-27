@@ -85,6 +85,9 @@ public class ConfSistemaController implements Initializable {
     
     private Image img;
     static public File arq = null;
+    static private int flagIcone = 0;
+    @FXML
+    private JFXButton btcancelar;
     
     /**
      * Initializes the controller class.
@@ -206,7 +209,7 @@ public class ConfSistemaController implements Initializable {
             
             if(cs == null) { // significa que não tem parametros salvos, portanto é o primeiro acesso
 
-                cs = new ConfSistema(0, txnome.getText(), txcep.getText(), txendereco.getText(), txcidade.getText(), txuf.getText(), txcnpj.getText(), txrazao.getText(), txfone.getText(), txemail.getText(), cpcor1.getValue().toString(), cpcor2.getPromptText());
+                cs = new ConfSistema(0, txnome.getText(), txcep.getText(), txendereco.getText(), txcidade.getText(), txuf.getText(), txcnpj.getText(), txrazao.getText(), txfone.getText(), txemail.getText(), cpcor1.getValue().toString(), cpcor2.getValue().toString());
 
                 if(dal.gravar(cs)) {
 
@@ -249,25 +252,10 @@ public class ConfSistemaController implements Initializable {
             }
             else { // significa que não é o primeiro acesso
 
-                cs = new ConfSistema(Integer.parseInt(txcod.getText()), txnome.getText(), txcep.getText(), txendereco.getText(), txcidade.getText(), txuf.getText(), txcnpj.getText(), txrazao.getText(), txfone.getText(), txemail.getText(), cpcor1.getPromptText(), cpcor2.getPromptText());
+                cs = new ConfSistema(Integer.parseInt(txcod.getText()), txnome.getText(), txcep.getText(), txendereco.getText(), txcidade.getText(), txuf.getText(), txcnpj.getText(), txrazao.getText(), txfone.getText(), txemail.getText(), cpcor1.getValue().toString(), cpcor2.getValue().toString());
                 if(dal.alterar(cs)) {
 
-                    if(arq == null) { // caso nenhum icone tenha sido selecionada
-
-                        try {
-
-                            File n = new File("src/imagens/icone_hamburguer.png");
-                            arq = n;
-                            imagem = new FileInputStream(arq);
-                            if(dal.gravarIcone(cs, imagem)) {
-                                
-                                a.setTitle("Informação:");
-                                a.setContentText("Alterado com sucesso (SEM ICONE)!");
-                            }
-                        }
-                        catch(SQLException ex) {}
-                    }
-                    else { // caso algum icone tenha sido selecionado
+                    if(arq != null) { // caso tenha selecionado icone
 
                         try {
 
@@ -279,6 +267,11 @@ public class ConfSistemaController implements Initializable {
                             }
                         }
                         catch(SQLException ex) {}
+                    }
+                    else {
+                        
+                        a.setTitle("Informação:");
+                        a.setContentText("Alterado com sucesso!");
                     }
                 }
                 else {
@@ -292,6 +285,7 @@ public class ConfSistemaController implements Initializable {
         
         a.showAndWait();
         arq = null;
+        flagIcone = 0;
         HomeController.spnprincipal.setCenter(null);
     }
 
@@ -362,6 +356,7 @@ public class ConfSistemaController implements Initializable {
 
            img = new Image(arq.toURI().toString());
            imgIcone.setImage(img);
+           flagIcone = 1;
         }
     }
 
@@ -387,6 +382,12 @@ public class ConfSistemaController implements Initializable {
             };
             new Thread(task).start();
         }
+    }
+
+    @FXML
+    private void clkBtCancelar(ActionEvent event) {
+        
+        HomeController.spnprincipal.setCenter(null);
     }
     
 }
