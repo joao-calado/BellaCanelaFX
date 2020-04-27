@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="pnprincipal" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@css/green-brown-theme.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bellacanelafx.HomeController">
+<BorderPane fx:id="pnprincipal" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="600.0" minWidth="800.0" stylesheets="@css/green-brown-theme.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bellacanelafx.HomeController">
    <top>
       <VBox fx:id="vbNavegacao" prefHeight="95.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
@@ -18,6 +18,8 @@
                 <Menu mnemonicParsing="false" styleClass="menubaritens" text="Cadastros">
                   <items>
                     <MenuItem mnemonicParsing="false" onAction="#clkCadCliente" text="Cliente" />
+                        <MenuItem mnemonicParsing="false" onAction="#clkCadFuncionario" text="Funcionario" />
+                        <MenuItem mnemonicParsing="false" onAction="#clkCadUsuario" text="Usuário" />
                   </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Comanda">
@@ -42,7 +44,7 @@
                   </Menu>
               </menus>
             </MenuBar>
-            <ToolBar prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #5D4037;">
+            <ToolBar fx:id="toolbarpn" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #5D4037;">
                <items>
                   <JFXButton text="Button" />
                </items>

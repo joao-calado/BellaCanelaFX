@@ -4,7 +4,9 @@ INSERT INTO Usuarios(user_login, user_senha) VALUES('joao', '123');
 INSERT INTO Usuarios(user_login, user_senha) VALUES('daniel', '123');
 
 /*====================TABELA DE FUNCIONARIOS=====================*/
-INSERT INTO Funcionarios(fun_cod, fun_nome, fun_idade, fun_telefone, fun_salario) VALUES(DEFAULT, 'Evandro', 21, '18991058156', 2000.00);
+INSERT INTO Funcionarios(fun_cod, fun_nome, fun_idade, fun_telefone, fun_salario) VALUES(DEFAULT, 'Evandro', 21, '(18)99105-8156', 2000.00);
+INSERT INTO Funcionarios(fun_cod, fun_nome, fun_idade, fun_telefone, fun_salario) VALUES(DEFAULT, 'Carlos', 17, '(12)99205-4156', 1356.75);
+INSERT INTO Funcionarios(fun_cod, fun_nome, fun_idade, fun_telefone, fun_salario) VALUES(DEFAULT, 'Ana', 45, '(12)45678-9988', 1532);
 
 /*========================Tabela cliente=========================*/
 insert into cliente(cli_cod, cli_nome, cli_cpf, cli_email, cli_fone) values (default, 'Jorginho', '321.321.456-65', 'jorginho@gmail.com', '(34)94324-4323');
