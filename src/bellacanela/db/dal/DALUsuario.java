@@ -40,4 +40,38 @@ public class DALUsuario {
         
         return rs.next();
     }
+    
+    public Usuario getUsuario(String login){
+        String SQL = "SELECT * FROM Usuarios WHERE user_login = " + login;
+        Usuario u = null;
+        
+        ResultSet rs = Banco.getCon().consultar(SQL);
+        try{
+            u = new Usuario(rs.getString("user_login"), rs.getString("user_senha"));
+        }
+        catch(SQLException e){
+            System.out.println("ERRO AO CONSULTAR USUARIOS.");
+        }
+        
+        return u;
+    }
+    
+    public ArrayList<Usuario> getUsuarios(String filter){
+        String SQL = "SELECT * FROM Usuarios";
+        if(!filter.equals(""))
+            SQL += " WHERE " + filter;
+        
+        ArrayList<Usuario> usuarios = new ArrayList();
+        
+        ResultSet rs = Banco.getCon().consultar(SQL);
+        try{
+            while(rs.next())
+                usuarios.add(new Usuario(rs.getString("user_login"), rs.getString("user_senha")));
+        }
+        catch(SQLException e){
+            System.out.println("ERRO AO CONSULTAR USUARIOS.");
+        }
+        
+        return usuarios;
+    }
 }
