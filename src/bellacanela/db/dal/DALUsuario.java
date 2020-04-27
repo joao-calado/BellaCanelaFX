@@ -18,7 +18,7 @@ public class DALUsuario {
     }
     
     public boolean update(Usuario u){
-        String SQL = "UPDATE Usuarios SET user_senha = '#1' WHERE user_login = " + u.getLogin();
+        String SQL = "UPDATE Usuarios SET user_senha = '#1' WHERE user_login = '" + u.getLogin() + "'";
         
         SQL = SQL.replaceAll("#1", u.getSenha());
         
@@ -26,7 +26,7 @@ public class DALUsuario {
     }
     
     public boolean delete(String login){
-        String SQL = "DELETE FROM Usuarios WHERE user_login = " + login;
+        String SQL = "DELETE FROM Usuarios WHERE user_login = '" + login + "'";
         return Banco.getCon().manipular(SQL);
     }
     
