@@ -101,7 +101,7 @@ public class ConfSistemaController implements Initializable {
         
         boolean res = false;
         
-        if((email.contains("@hotmail") || email.contains("@gmail")) && email.contains(".com"))
+        if((email.contains("@hotmail") || email.contains("@gmail")) || email.contains("@bellacanela") && email.contains(".com"))
             res = true;
         else {
             Alert a = new Alert(Alert.AlertType.WARNING);
@@ -126,6 +126,7 @@ public class ConfSistemaController implements Initializable {
         else {
             
             Alert a = new Alert(Alert.AlertType.WARNING);
+            a.setHeaderText(null);
             a.setTitle("Atenção:");
             a.setContentText("Informe um fone em formato válido!");
             txfone.clear();
@@ -153,16 +154,26 @@ public class ConfSistemaController implements Initializable {
             txrazao.setText(cs.getRazao());
             txfone.setText(cs.getFone());
             txemail.setText(cs.getEmail());
-            cpcor1.setValue(Color.valueOf(cs.getCor1()));
-            cpcor2.setValue(Color.valueOf(cs.getCor2()));
+            
+            try {
+                cpcor1.setValue(Color.valueOf(cs.getCor1()));
+                cpcor2.setValue(Color.valueOf(cs.getCor2()));
+            }
+            catch(Exception ex) {}
+            
             
             InputStream icone = null;
             try {
                 icone = dal.getIcone(cs);
                 BufferedImage imgConvertida;
                 try {
-                    imgConvertida = ImageIO.read(icone);
-                    imgIcone.setImage(SwingFXUtils.toFXImage(imgConvertida, null));
+                    
+                    if (icone != null) {
+                        
+                        imgConvertida = ImageIO.read(icone);
+                        imgIcone.setImage(SwingFXUtils.toFXImage(imgConvertida, null));
+                    }
+                    
                 }
                 catch(IOException ioEx) {}
             } 
@@ -186,6 +197,8 @@ public class ConfSistemaController implements Initializable {
     private void clkBtSalvar(ActionEvent event) throws FileNotFoundException {
         
         FileInputStream imagem;
+        Alert a = new Alert(Alert.AlertType.INFORMATION);
+        a.setHeaderText(null);
         DALConfSistema dal = new DALConfSistema();
         ConfSistema cs = dal.get();
         
@@ -193,7 +206,7 @@ public class ConfSistemaController implements Initializable {
             
             if(cs == null) { // significa que não tem parametros salvos, portanto é o primeiro acesso
 
-                cs = new ConfSistema(0, txnome.getText(), txcep.getText(), txendereco.getText(), txcidade.getText(), txuf.getText(), txcnpj.getText(), txrazao.getText(), txfone.getText(), txemail.getText(), cpcor1.getValue().toString(), cpcor2.getValue().toString());
+                cs = new ConfSistema(0, txnome.getText(), txcep.getText(), txendereco.getText(), txcidade.getText(), txuf.getText(), txcnpj.getText(), txrazao.getText(), txfone.getText(), txemail.getText(), cpcor1.getPromptText(), cpcor2.getPromptText());
 
                 if(dal.gravar(cs)) {
 
@@ -204,7 +217,12 @@ public class ConfSistemaController implements Initializable {
                             File n = new File("src/imagens/icone_hamburguer.png");
                             arq = n;
                             imagem = new FileInputStream(arq);
-                            dal.gravarIcone(cs, imagem);
+                            
+                            if(dal.gravarIcone(cs, imagem)) {
+                                
+                                a.setTitle("Informação:");
+                                a.setContentText("Salvo com sucesso (SEM ICONE)!");
+                            }
                         }
                         catch(SQLException ex) {}
                     }
@@ -213,15 +231,25 @@ public class ConfSistemaController implements Initializable {
                         try {
 
                             imagem = new FileInputStream(arq);
-                            dal.gravarIcone(cs, imagem);
+                            if(dal.gravarIcone(cs, imagem)) {
+                                
+                                a.setTitle("Informação:");
+                                a.setContentText("Salvo com sucesso (COM ICONE)!");
+                            }
                         }
                         catch(SQLException ex) {}
                     }
                 }
+                else {
+                    
+                    a.setAlertType(Alert.AlertType.ERROR);
+                    a.setTitle("Informação:");
+                    a.setContentText("Problemas ao salvar!");
+                }
             }
             else { // significa que não é o primeiro acesso
 
-                cs = new ConfSistema(0, txnome.getText(), txcep.getText(), txendereco.getText(), txcidade.getText(), txuf.getText(), txcnpj.getText(), txrazao.getText(), txfone.getText(), txemail.getText(), cpcor1.getValue().toString(), cpcor2.getValue().toString());
+                cs = new ConfSistema(Integer.parseInt(txcod.getText()), txnome.getText(), txcep.getText(), txendereco.getText(), txcidade.getText(), txuf.getText(), txcnpj.getText(), txrazao.getText(), txfone.getText(), txemail.getText(), cpcor1.getPromptText(), cpcor2.getPromptText());
                 if(dal.alterar(cs)) {
 
                     if(arq == null) { // caso nenhum icone tenha sido selecionada
@@ -231,7 +259,11 @@ public class ConfSistemaController implements Initializable {
                             File n = new File("src/imagens/icone_hamburguer.png");
                             arq = n;
                             imagem = new FileInputStream(arq);
-                            dal.gravarIcone(cs, imagem);
+                            if(dal.gravarIcone(cs, imagem)) {
+                                
+                                a.setTitle("Informação:");
+                                a.setContentText("Alterado com sucesso (SEM ICONE)!");
+                            }
                         }
                         catch(SQLException ex) {}
                     }
@@ -240,15 +272,27 @@ public class ConfSistemaController implements Initializable {
                         try {
 
                             imagem = new FileInputStream(arq);
-                            dal.gravarIcone(cs, imagem);
+                            if(dal.gravarIcone(cs, imagem)) {
+                                
+                                a.setTitle("Informação:");
+                                a.setContentText("Alterado com sucesso (COM ICONE)!");
+                            }
                         }
                         catch(SQLException ex) {}
                     }
                 }
+                else {
+                    
+                    a.setAlertType(Alert.AlertType.ERROR);
+                    a.setTitle("Informação:");
+                    a.setContentText("Problemas ao alterar!");
+                }
             }
         }    
         
+        a.showAndWait();
         arq = null;
+        HomeController.spnprincipal.setCenter(null);
     }
 
     @FXML
