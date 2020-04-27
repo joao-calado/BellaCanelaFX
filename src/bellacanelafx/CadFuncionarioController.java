@@ -156,6 +156,16 @@ public class CadFuncionarioController implements Initializable {
                     + "-fx-padding: 10px;");
         sb.enqueue(new JFXSnackbar.SnackbarEvent(mens));
     }
+    
+    private String convertStr(String s){
+        String dst = "";
+        
+        for(char c : s.toCharArray())
+            if(c != '.')
+                dst += c == ',' ? '.' : c;
+        
+        return dst;
+    }
 
     @FXML
     private void clkNovo(ActionEvent event) {
@@ -167,11 +177,16 @@ public class CadFuncionarioController implements Initializable {
         if(this.tbFuncionarios.getSelectionModel().getSelectedItem() != null){
             Funcionario f = (Funcionario)this.tbFuncionarios.getSelectionModel().getSelectedItem();
             
+            String strSal = f.getSalario()+"";
+            int i = (strSal).indexOf(".");
+            if(strSal.length() - i == 2)
+                strSal += "0";
+            
             this.tfCod.setText(f.getCod()+"");
             this.tfNome.setText(f.getNome());
             this.tfIdade.setText(f.getIdade()+"");
             this.tfTelefone.setText(f.getTelefone());
-            this.tfSalario.setText(f.getSalario()+"");
+            this.tfSalario.setText(strSal);
             
             this.edition();
         }
@@ -187,18 +202,14 @@ public class CadFuncionarioController implements Initializable {
             Funcionario f = this.tbFuncionarios.getSelectionModel().getSelectedItem();
             
             if(dal.delete(f)){
-                a.setContentText("Excluido com sucesso!");
-                a.setAlertType(Alert.AlertType.INFORMATION);
+                this.snackbar("Excluido com sucesso!", "green");
                 
                 this.original();
                 this.loadTable("");
             }
             else{
-                a.setContentText("Erro ao excluir.");
-                a.setAlertType(Alert.AlertType.ERROR);
+                this.snackbar("Erro ao excluir.", "red");
             }
-            
-            a.showAndWait();
         }
     }
 
@@ -213,39 +224,35 @@ public class CadFuncionarioController implements Initializable {
             COD = 0;
         }
         
-        Alert a = new Alert(Alert.AlertType.INFORMATION);
         DALFuncionario dal = new DALFuncionario();
-        System.out.println(this.tfSalario.getText().replace('.', '\0').replace(',', '.'));
         Funcionario f = new Funcionario(COD,
                                         this.tfNome.getText(),
                                         Integer.parseInt(this.tfIdade.getText()),
                                         this.tfTelefone.getText(),
-                                        Double.parseDouble(this.tfSalario.getText().replace('.', '\0').replace(',', '.')));
-        
+                                        Double.parseDouble(this.convertStr(this.tfSalario.getText())));
+
         if(f.getCod() == 0){
             if(dal.insert(f)){
-                a.setContentText("Funcionario gravado com sucesso!");
+                this.snackbar("Funcionario gravado com sucesso!", "green");
                 
                 this.original();
                 this.loadTable("");
             }
             else{
-                a.setContentText("Problemas ao gravar Funcionario!");
+                this.snackbar("Problemas ao gravar Funcionario!", "red");
             }
         }
         else{
             if(dal.update(f)){
-                a.setContentText("Funcionario atualizado com sucesso!");
+                this.snackbar("Funcionario atualizado com sucesso!", "green");
                 
                 this.original();
                 this.loadTable("");
             }
             else{
-                a.setContentText("Problemas ao atualizar Funcionario!");
+                this.snackbar("Problemas ao atualizar Funcionario!", "red");
             }
         }
-        
-        a.showAndWait();
     }
 
     @FXML
