@@ -54,7 +54,10 @@
       </AnchorPane>
       <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0" spacing="40.0" styleClass="root">
          <children>
-            <JFXButton fx:id="btsalvar" onAction="#clkBtSalvar" prefHeight="23.0" prefWidth="215.0" text="Salvar" />
+            <JFXButton fx:id="btsalvar" onAction="#clkBtSalvar" prefHeight="23.0" prefWidth="215.0" text="Salvar">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></JFXButton>
          </children>
       </HBox>
    </items>
