@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.ToolBar;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -18,6 +19,8 @@ public class HomeController implements Initializable {
 
     //dados estáticos
     public static BorderPane spnprincipal=null;
+    public static ToolBar toolbarPane = null;
+    public static AnchorPane apcentro = null;
     
     @FXML
     private BorderPane pnprincipal;
@@ -25,11 +28,15 @@ public class HomeController implements Initializable {
     private VBox vbNavegacao;
     @FXML
     private AnchorPane apPrincipal;
+    @FXML
+    private ToolBar toolbarpn;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
         spnprincipal = pnprincipal;
+        toolbarPane = toolbarpn;
+        apcentro = apPrincipal;
         this.vbNavegacao.setDisable(true);
         
         DALConfSistema dal = new DALConfSistema();

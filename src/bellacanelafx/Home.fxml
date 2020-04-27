@@ -43,7 +43,7 @@
                   </Menu>
               </menus>
             </MenuBar>
-            <ToolBar prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #5D4037;">
+            <ToolBar fx:id="toolbarpn" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #5D4037;">
                <items>
                   <JFXButton text="Button" />
                </items>

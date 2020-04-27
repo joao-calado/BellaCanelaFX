@@ -8,6 +8,8 @@ package bellacanelafx;
 import bellacanela.db.dal.DALConfSistema;
 import bellacanela.util.ConsultaAPI;
 import bellacanela.util.MaskFieldUtil;
+import static bellacanelafx.HomeController.spnprincipal;
+import static bellacanelafx.HomeController.toolbarPane;
 import bellacanelafx.db.entidades.ConfSistema;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXColorPicker;
@@ -30,13 +32,18 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
 import javafx.scene.control.SplitPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
 import javax.imageio.ImageIO;
@@ -242,6 +249,8 @@ public class ConfSistemaController implements Initializable {
                         }
                         catch(SQLException ex) {}
                     }
+                    toolbarPane.setBackground(new Background(new BackgroundFill(Paint.valueOf(cpcor1.getValue().toString()), CornerRadii.EMPTY, Insets.EMPTY)));
+                    spnprincipal.setBackground(new Background(new BackgroundFill(Paint.valueOf(cpcor2.getValue().toString()), CornerRadii.EMPTY, Insets.EMPTY)));
                 }
                 else {
                     
@@ -273,6 +282,8 @@ public class ConfSistemaController implements Initializable {
                         a.setTitle("Informação:");
                         a.setContentText("Alterado com sucesso!");
                     }
+                    toolbarPane.setBackground(new Background(new BackgroundFill(Paint.valueOf(cs.getCor1()), CornerRadii.EMPTY, Insets.EMPTY)));
+                    spnprincipal.setBackground(new Background(new BackgroundFill(Paint.valueOf(cs.getCor2()), CornerRadii.EMPTY, Insets.EMPTY)));
                 }
                 else {
                     
@@ -280,6 +291,7 @@ public class ConfSistemaController implements Initializable {
                     a.setTitle("Informação:");
                     a.setContentText("Problemas ao alterar!");
                 }
+                
             }
         }    
         
@@ -389,5 +401,6 @@ public class ConfSistemaController implements Initializable {
         
         HomeController.spnprincipal.setCenter(null);
     }
+
     
 }
