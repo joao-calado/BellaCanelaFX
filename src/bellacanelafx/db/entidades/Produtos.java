@@ -7,22 +7,25 @@ public class Produtos {
     private String nome;
     private Categoria cat;
     private Medida med;
+    private double preco;
 
     public Produtos() {
     }
 
     
-    public Produtos(int cod, String nome, Categoria cat, Medida med) {
+    public Produtos(int cod, String nome, Categoria cat, Medida med, double preco) {
         this.cod = cod;
         this.nome = nome;
         this.cat = cat;
         this.med = med;
+        this.preco = preco;
     }
     
-    public Produtos(String nome, Categoria cat, Medida med) {
+    public Produtos(String nome, Categoria cat, Medida med, double preco) {
         this.nome = nome;
         this.cat = cat;
         this.med = med;
+        this.preco = preco;        
     }
     
     
@@ -57,6 +60,13 @@ public class Produtos {
     public void setMed(Medida med) {
         this.med = med;
     }
-    
+
+    public double getPreco() {
+        return preco;
+    }
+
+    public void setPreco(double preco) {
+        this.preco = preco;
+    }    
     
 }

@@ -50,7 +50,8 @@ CREATE TABLE Produto (
     prod_cod SERIAL,
     prod_nome varchar(50) NOT NULL,
     prod_cat INTEGER NOT NULL,
-    prod_med INTEGER NOT NULL,	
+    prod_med INTEGER NOT NULL,
+    prod_preco decimal(10,2),	
     CONSTRAINT pk_prod PRIMARY KEY (prod_cod),	
     CONSTRAINT fK_prodcat FOREIGN KEY (prod_cat) REFERENCES Categoria,
     CONSTRAINT fK_prodmed FOREIGN KEY (prod_med) REFERENCES Medida    
