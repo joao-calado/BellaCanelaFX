@@ -92,7 +92,8 @@ public class CadUsuarioController implements Initializable {
     }
     
     private void loadMasks() {
-        
+        MaskFieldUtil.maxField(this.tfLogin, 16);
+        MaskFieldUtil.maxField(this.tfSenha, 32);
     }
     
     private void edition() {        

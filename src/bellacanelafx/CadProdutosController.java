@@ -15,6 +15,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.animation.FadeTransition;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -90,8 +91,8 @@ public class CadProdutosController implements Initializable {
         colCod.setCellValueFactory(new PropertyValueFactory("cod"));
         colNome.setCellValueFactory(new PropertyValueFactory("nome"));
         colPreço.setCellValueFactory(new PropertyValueFactory("preco"));
-        colCategoria.setCellValueFactory(new PropertyValueFactory("cat"));
-        colMedida.setCellValueFactory(new PropertyValueFactory("med"));
+        colCategoria.setCellValueFactory((TableColumn.CellDataFeatures<Produtos, String> p) -> new SimpleStringProperty(p.getValue().getCat().getNome()));
+        colMedida.setCellValueFactory((TableColumn.CellDataFeatures<Produtos, String> p) -> new SimpleStringProperty(p.getValue().getMed().getNome()));
         
        fadeout();
        loadMasks();
