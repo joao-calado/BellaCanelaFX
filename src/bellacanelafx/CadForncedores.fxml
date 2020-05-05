@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<SplitPane fx:id="pane" dividerPositions="0.42168674698795183" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bellacanelafx.CadForncedoresController">
+   <items>
+      <VBox prefHeight="156.0" prefWidth="598.0">
+         <children>
+            <HBox alignment="CENTER" prefHeight="40.0" prefWidth="598.0" spacing="40.0" style="-fx-background-color: #5D4037;">
+               <children>
+                  <JFXButton fx:id="btnovo" onAction="#clkBtNovo" text="Novo">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                  <JFXButton fx:id="btalterar" onAction="#clkBtAlterar" text="Alterar">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                  <JFXButton fx:id="btapagar" onAction="#clkBtApagar" text="Apagar">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                  <JFXButton fx:id="btsalvar" onAction="#clkBtSalvar" text="Salvar">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                  <JFXButton fx:id="btcancelar" onAction="#clkBtCancelar" text="Cancelar">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+               </children>
+            </HBox>
+            <AnchorPane fx:id="apDados" prefHeight="167.0" prefWidth="748.0" style="-fx-background-color: #D7CCC8;">
+               <children>
+                  <JFXTextField fx:id="txCod" editable="false" focusColor="#699933" layoutX="66.0" layoutY="31.0" prefHeight="25.0" prefWidth="90.0" promptText="Código" styleClass="textFild" unFocusColor="#212121">
+                     <cursor>
+                        <Cursor fx:constant="CLOSED_HAND" />
+                     </cursor>
+                  </JFXTextField>
+                  <JFXTextField fx:id="txNome" focusColor="#699933" labelFloat="true" layoutX="190.0" layoutY="31.0" prefHeight="25.0" prefWidth="331.0" promptText="Nome" styleClass="textFild" unFocusColor="#212121">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </JFXTextField>
+                  <JFXTextField fx:id="txDesc" focusColor="#699933" labelFloat="true" layoutX="418.0" layoutY="95.0" prefHeight="25.0" prefWidth="320.0" promptText="Descrição" styleClass="textFild" unFocusColor="#212121">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </JFXTextField>
+                  <JFXTextField fx:id="txEmail" focusColor="#699933" labelFloat="true" layoutX="66.0" layoutY="95.0" prefHeight="25.0" prefWidth="331.0" promptText="Email" styleClass="textFild" unFocusColor="#212121">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </JFXTextField>
+                  <JFXTextField fx:id="txFone" focusColor="#699933" labelFloat="true" layoutX="543.0" layoutY="31.0" prefHeight="25.0" prefWidth="188.0" promptText="Telefone" styleClass="textFild" unFocusColor="#212121">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </JFXTextField>
+               </children>
+            </AnchorPane>
+         </children>
+      </VBox>
+      <VBox fx:id="pnSearch" prefHeight="206.0" prefWidth="598.0">
+         <children>
+            <HBox alignment="CENTER" prefHeight="48.0" prefWidth="798.0" spacing="20.0" style="-fx-background-color: #D7CCC8;">
+               <children>
+                  <JFXTextField fx:id="txPesquisa" focusColor="#699933" labelFloat="true" onKeyTyped="#dgtPesquisa" prefHeight="25.0" prefWidth="454.0" promptText="Informe o nome do Fornecedor para pesquisar" styleClass="textFild" unFocusColor="#212121">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </JFXTextField>
+               </children>
+            </HBox>
+            <TableView fx:id="tabela" onMouseClicked="#clkTabela" prefHeight="240.0" prefWidth="798.0" style="-fx-background-color: #D7CCC8;">
+               <columns>
+                  <TableColumn fx:id="colCod" editable="false" maxWidth="60.0" minWidth="60.0" prefWidth="60.0" text="Código" />
+                  <TableColumn fx:id="colNome" editable="false" maxWidth="200.0" minWidth="200.0" prefWidth="200.0" text="Nome" />
+                  <TableColumn fx:id="colEmail" editable="false" maxWidth="250.0" minWidth="200.0" prefWidth="200.0" text="Email" />
+                  <TableColumn fx:id="colFone" editable="false" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" text="Telefone" />
+                  <TableColumn fx:id="colDesc" editable="false" maxWidth="1.7976931348623157E308" minWidth="180.0" prefWidth="180.0" text="Descrição" />
+               </columns>
+            </TableView>
+         </children>
+      </VBox>
+   </items>
+</SplitPane>

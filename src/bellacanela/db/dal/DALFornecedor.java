@@ -56,13 +56,13 @@ public class DALFornecedor {
         return aux;
     }
     
-    public List<Fornecedor> get(String filtro) {
+    public ArrayList<Fornecedor> get(String filtro) {
         
         String sql = "select *from fornecedor";
         if(!filtro.isEmpty())
             sql += " where "+filtro;
         
-        List<Fornecedor> aux = new ArrayList();
+        ArrayList<Fornecedor> aux = new ArrayList();
         ResultSet rs = Banco.getCon().consultar(sql);
         
         try {

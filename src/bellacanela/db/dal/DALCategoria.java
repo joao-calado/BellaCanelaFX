@@ -42,7 +42,7 @@ public class DALCategoria {
         
         Categoria aux = null;
         
-        ResultSet rs = Banco.getCon().consultar("select * from categoria where cat_cod="+cod);
+        ResultSet rs = Banco.getCon().consultar("select * from categoria where cat_cod='"+cod+"'");
         try{
             if(rs.next())
                 aux = new Categoria(rs.getInt("cat_cod"),rs.getString("cat_nome"));

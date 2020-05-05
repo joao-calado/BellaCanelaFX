@@ -32,7 +32,7 @@ public class DALMedida {
     }
     
     public boolean apagar(Medida m) {
-        return Banco.getCon().manipular("delete from medida where med_cod="+m.getCod());
+        return Banco.getCon().manipular("delete from medida where med_cod= '"+m.getCod()+"'");
     }
     
     public int getMax() {
@@ -43,7 +43,7 @@ public class DALMedida {
         
         Medida aux = null;
         
-        ResultSet rs = Banco.getCon().consultar("select * from medida where med_cod="+cod);
+        ResultSet rs = Banco.getCon().consultar("select * from medida where med_cod= '"+cod+"'");
         try{
             if(rs.next())
                 aux = new Medida(rs.getInt("med_cod"),rs.getString("med_nome"));

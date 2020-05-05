@@ -1,6 +1,8 @@
 
 package bellacanela.db.dal;
 
+import bellacanelafx.db.entidades.Categoria;
+import bellacanelafx.db.entidades.Medida;
 import bellacanelafx.db.entidades.Produtos;
 import bellacanelafx.db.util.Banco;
 import java.sql.ResultSet;
@@ -62,10 +64,16 @@ public class DALProduto {
         
         ArrayList<Produtos> aux = new ArrayList();
         ResultSet rs = Banco.getCon().consultar(sql);
-        
+        Categoria cat = null;
+        Medida med = null;
         try {
-            while(rs.next())
-                aux.add(new Produtos(rs.getInt("prod_cod"),rs.getString("prod_nome"), new DALCategoria().get(rs.getInt("prod_cad")),new DALMedida().get(rs.getInt("prod_med")),rs.getDouble("prod_preco")));
+            while(rs.next()){
+                
+                cat = new DALCategoria().get(rs.getInt("prod_cad"));
+                med = new DALMedida().get(rs.getInt("prod_med"));                
+                aux.add(new Produtos(rs.getInt("prod_cod"),rs.getString("prod_nome"), cat , med ,rs.getDouble("prod_preco")));
+            }
+                
         }
         catch(SQLException sqlEx) {}
         

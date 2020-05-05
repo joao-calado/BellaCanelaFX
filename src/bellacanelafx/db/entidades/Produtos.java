@@ -9,9 +9,15 @@ public class Produtos {
     private Medida med;
     private double preco;
 
-    public Produtos() {
+    public Produtos(String nome) {
+        
     }
 
+    public Produtos(int cod, String nome, double preco) {
+        this.cod = cod;
+        this.nome = nome;    
+        this.preco = preco;
+    }
     
     public Produtos(int cod, String nome, Categoria cat, Medida med, double preco) {
         this.cod = cod;

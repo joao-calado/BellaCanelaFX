@@ -120,5 +120,57 @@ public class HomeController implements Initializable {
             System.out.println(ex);
         }
     }
+
+    @FXML
+    private void clkCadProdutos(ActionEvent event) {
+         try 
+        {
+            Parent root;
+            root = FXMLLoader.load(getClass().getResource("CadProdutos.fxml"));
+            pnprincipal.setCenter(root);
+        } 
+        catch (IOException ex) {
+            System.out.println(ex);
+        }
+    }
+
+    @FXML
+    private void clkCadFornecedores(ActionEvent event) {
+         try 
+        {
+            Parent root;
+            root = FXMLLoader.load(getClass().getResource("CadForncedores.fxml"));
+            pnprincipal.setCenter(root);
+        } 
+        catch (IOException ex) {
+            System.out.println(ex);
+        }
+    }
+
+    @FXML
+    private void clkCadMedida(ActionEvent event) {
+        try 
+        {
+            Parent root;
+            root = FXMLLoader.load(getClass().getResource("CadMedidas.fxml"));
+            pnprincipal.setCenter(root);
+        } 
+        catch (IOException ex) {
+            System.out.println(ex);
+        }
+    }
+
+    @FXML
+    private void clkCadCategoria(ActionEvent event) {
+        try 
+        {
+            Parent root;
+            root = FXMLLoader.load(getClass().getResource("CadCategorias.fxml"));
+            pnprincipal.setCenter(root);
+        } 
+        catch (IOException ex) {
+            System.out.println(ex);
+        }
+    }
     
 }

@@ -125,15 +125,24 @@ public class CadProdutosController implements Initializable {
         this.btApagar.setDisable(true);
         this.btAlterar.setDisable(true);
         this.tfSearch.clear();
+        
         this.tfNome.requestFocus();
     }
+    
     private void loadTable(String filtro) {
         DALProduto dal = new DALProduto();
+        
         ArrayList<Produtos> Prod = dal.get(filtro);
+        if(Prod.isEmpty()){
+            System.out.println("FUDEU");
+            System.out.println(dal.getMax());
+        }
         ObservableList<Produtos> modelo = FXCollections.observableArrayList(Prod);
+        
         this.tbProdutos.setItems(modelo);
-        this.tbProdutos.refresh();     
-        cbCategoria.setItems(FXCollections.observableArrayList(new DALCategoria().get("")));
+        this.tbProdutos.refresh(); 
+        
+        this.cbCategoria.setItems(FXCollections.observableArrayList(new DALCategoria().get("")));
         this.cbMedida.setItems(FXCollections.observableArrayList(new DALMedida().get("")));   
     }    
 

@@ -20,6 +20,10 @@
                     <MenuItem mnemonicParsing="false" onAction="#clkCadCliente" text="Cliente" />
                         <MenuItem mnemonicParsing="false" onAction="#clkCadFuncionario" text="Funcionario" />
                         <MenuItem mnemonicParsing="false" onAction="#clkCadUsuario" text="Usuário" />
+                        <MenuItem mnemonicParsing="false" onAction="#clkCadProdutos" text="Produtos" />
+                        <MenuItem mnemonicParsing="false" onAction="#clkCadFornecedores" text="Fornecedores" />
+                        <MenuItem mnemonicParsing="false" onAction="#clkCadMedida" text="Medida" />
+                        <MenuItem mnemonicParsing="false" onAction="#clkCadCategoria" text="Categoria" />
                   </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Comanda">
