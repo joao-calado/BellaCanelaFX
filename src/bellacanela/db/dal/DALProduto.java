@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 package bellacanela.db.dal;
 
@@ -80,3 +81,4 @@ public class DALProduto {
         return aux;
     }
 }
+
