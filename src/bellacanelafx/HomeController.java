@@ -152,7 +152,7 @@ public class HomeController implements Initializable {
         try 
         {
             Parent root;
-            root = FXMLLoader.load(getClass().getResource("CadMedidas.fxml"));
+            root = FXMLLoader.load(getClass().getResource("CadMedida.fxml"));
             pnprincipal.setCenter(root);
         } 
         catch (IOException ex) {
@@ -165,7 +165,7 @@ public class HomeController implements Initializable {
         try 
         {
             Parent root;
-            root = FXMLLoader.load(getClass().getResource("CadCategorias.fxml"));
+            root = FXMLLoader.load(getClass().getResource("CadCategoria.fxml"));
             pnprincipal.setCenter(root);
         } 
         catch (IOException ex) {

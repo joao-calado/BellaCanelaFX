@@ -52,13 +52,13 @@ public class DALCategoria {
         return aux;
     }
     
-    public List<Categoria> get(String filtro) {
+    public ArrayList<Categoria> get(String filtro) {
         
         String sql = "select *from categoria";
         if(!filtro.isEmpty())
             sql += " where "+filtro;
         
-        List<Categoria> aux = new ArrayList();
+        ArrayList<Categoria> aux = new ArrayList();
         ResultSet rs = Banco.getCon().consultar(sql);
         
         try {

@@ -1,11 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bellacanelafx.CadMedidaController">
-    
-</AnchorPane>
+<SplitPane fx:id="pane" dividerPositions="0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bellacanelafx.CadMedidaController">
+   <items>
+      <VBox maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="209.0" prefWidth="773.0">
+         <children>
+            <HBox alignment="CENTER" prefHeight="40.0" prefWidth="598.0" spacing="40.0" style="-fx-background-color: #5D4037;">
+               <children>
+                  <JFXButton fx:id="btnovo" onAction="#clkBtNovo" text="Novo">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                  <JFXButton fx:id="btalterar" onAction="#clkBtAlterar" text="Alterar">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                  <JFXButton fx:id="btapagar" onAction="#clkBtApagar" text="Apagar">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                  <JFXButton fx:id="btsalvar" onAction="#clkBtSalvar" text="Salvar">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                  <JFXButton fx:id="btcancelar" onAction="#clkBtCancelar" text="Cancelar">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+               </children>
+            </HBox>
+            <AnchorPane fx:id="apDados" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="171.0" prefWidth="798.0" style="-fx-background-color: #D7CCC8;">
+               <children>
+                  <JFXTextField fx:id="txCod" disable="true" focusColor="#699933" layoutX="107.0" layoutY="56.0" prefHeight="25.0" prefWidth="90.0" promptText="Código" styleClass="textFild" unFocusColor="#212121">
+                     <cursor>
+                        <Cursor fx:constant="CLOSED_HAND" />
+                     </cursor>
+                  </JFXTextField>
+                  <JFXTextField fx:id="txNome" focusColor="#699933" labelFloat="true" layoutX="330.0" layoutY="56.0" prefHeight="25.0" prefWidth="372.0" promptText="Nome" styleClass="textFild" unFocusColor="#212121">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </JFXTextField>
+               </children>
+            </AnchorPane>
+         </children>
+      </VBox>
+      <VBox fx:id="pnSearch" prefHeight="106.0" prefWidth="798.0">
+         <children>
+            <HBox alignment="CENTER" prefHeight="50.0" prefWidth="798.0" spacing="20.0" style="-fx-background-color: #D7CCC8;">
+               <children>
+                  <JFXTextField fx:id="txPesquisa" focusColor="#699933" labelFloat="true" onKeyTyped="#dgtPesquisa" prefHeight="25.0" prefWidth="454.0" promptText="Informe o nome da Medida para pesquisar" styleClass="textFild" unFocusColor="#212121">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </JFXTextField>
+               </children>
+            </HBox>
+            <TableView fx:id="tabela" onMouseClicked="#clkTabela" prefHeight="240.0" prefWidth="798.0" style="-fx-background-color: #D7CCC8;">
+               <columns>
+                  <TableColumn fx:id="colCod" editable="false" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="111.0" text="Código" />
+                  <TableColumn fx:id="colNome" editable="false" maxWidth="1.7976931348623157E308" minWidth="674.0" prefWidth="686.0" text="Nome" />
+               </columns>
+            </TableView>
+         </children>
+      </VBox>
+   </items>
+</SplitPane>

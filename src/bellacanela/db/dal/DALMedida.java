@@ -53,13 +53,13 @@ public class DALMedida {
         return aux;
     }
     
-    public List<Medida> get(String filtro) {
+    public ArrayList<Medida> get(String filtro) {
         
         String sql = "select *from medida";
         if(!filtro.isEmpty())
             sql += " where "+filtro;
         
-        List<Medida> aux = new ArrayList();
+        ArrayList<Medida> aux = new ArrayList();
         ResultSet rs = Banco.getCon().consultar(sql);
         
         try {
