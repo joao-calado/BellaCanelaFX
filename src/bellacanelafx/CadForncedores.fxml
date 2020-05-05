@@ -45,7 +45,7 @@
             </HBox>
             <AnchorPane fx:id="apDados" prefHeight="167.0" prefWidth="748.0" style="-fx-background-color: #D7CCC8;">
                <children>
-                  <JFXTextField fx:id="txCod" editable="false" focusColor="#699933" layoutX="66.0" layoutY="31.0" prefHeight="25.0" prefWidth="90.0" promptText="Código" styleClass="textFild" unFocusColor="#212121">
+                  <JFXTextField fx:id="txCod" disable="true" focusColor="#699933" layoutX="66.0" layoutY="31.0" prefHeight="25.0" prefWidth="90.0" promptText="Código" styleClass="textFild" unFocusColor="#212121">
                      <cursor>
                         <Cursor fx:constant="CLOSED_HAND" />
                      </cursor>
@@ -55,7 +55,7 @@
                         <Cursor fx:constant="TEXT" />
                      </cursor>
                   </JFXTextField>
-                  <JFXTextField fx:id="txDesc" focusColor="#699933" labelFloat="true" layoutX="418.0" layoutY="95.0" prefHeight="25.0" prefWidth="320.0" promptText="Descrição" styleClass="textFild" unFocusColor="#212121">
+                  <JFXTextField fx:id="txFone" focusColor="#699933" labelFloat="true" layoutX="543.0" layoutY="31.0" prefHeight="25.0" prefWidth="188.0" promptText="Telefone" styleClass="textFild" unFocusColor="#212121">
                      <cursor>
                         <Cursor fx:constant="TEXT" />
                      </cursor>
@@ -65,7 +65,7 @@
                         <Cursor fx:constant="TEXT" />
                      </cursor>
                   </JFXTextField>
-                  <JFXTextField fx:id="txFone" focusColor="#699933" labelFloat="true" layoutX="543.0" layoutY="31.0" prefHeight="25.0" prefWidth="188.0" promptText="Telefone" styleClass="textFild" unFocusColor="#212121">
+                  <JFXTextField fx:id="txDesc" focusColor="#699933" labelFloat="true" layoutX="418.0" layoutY="95.0" prefHeight="25.0" prefWidth="320.0" promptText="Descrição" styleClass="textFild" unFocusColor="#212121">
                      <cursor>
                         <Cursor fx:constant="TEXT" />
                      </cursor>

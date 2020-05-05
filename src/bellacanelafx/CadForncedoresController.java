@@ -97,7 +97,7 @@ public class CadForncedoresController implements Initializable {
         
         fadeout();
         loadMasks();
-        
+        original();
     }    
 
     private void fadeout() {
@@ -227,7 +227,7 @@ public class CadForncedoresController implements Initializable {
         DALFornecedor dal = new DALFornecedor();
         Fornecedor f;
         
-        if(txCod.getText() == ""){
+        if("".equals(txCod.getText())){
             f = new Fornecedor(this.txNome.getText(), this.txFone.getText(), this.txEmail.getText(), this.txDesc.getText());
             if(dal.gravar(f)){
                 this.snackbar("Fornecedor gravado com sucesso!", "green");

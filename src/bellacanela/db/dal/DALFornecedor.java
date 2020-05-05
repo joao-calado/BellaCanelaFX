@@ -12,7 +12,7 @@ public class DALFornecedor {
     
     public boolean gravar(Fornecedor f) {
         
-        String sql = "insert into fornecedor(for_nome,for_telefone,for_email,for_desc) values ('#1','#2','#3','#4')";
+        String sql = "insert into fornecedor(for_cod, for_nome,for_telefone,for_email,for_desc) values (default, '#1','#2','#3','#4')";
         
         sql = sql.replaceAll("#1", ""+f.getNome());
         sql = sql.replaceAll("#2", ""+f.getTelefone());
@@ -58,7 +58,7 @@ public class DALFornecedor {
     
     public ArrayList<Fornecedor> get(String filtro) {
         
-        String sql = "select *from fornecedor";
+        String sql = "select * from fornecedor";
         if(!filtro.isEmpty())
             sql += " where "+filtro;
         
