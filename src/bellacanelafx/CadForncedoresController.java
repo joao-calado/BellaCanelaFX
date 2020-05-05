@@ -107,7 +107,7 @@ public class CadForncedoresController implements Initializable {
         ft.play(); 
     }
     private void loadMasks() {        
-        MaskFieldUtil.onlyAlfa(txFone);
+        MaskFieldUtil.onlyDigitsValue(txFone);
         MaskFieldUtil.onlyAlfaNumericValue(txDesc);
     }
     
@@ -205,7 +205,7 @@ public class CadForncedoresController implements Initializable {
     private void clkBtApagar(ActionEvent event) {
         Alert a = new Alert(Alert.AlertType.CONFIRMATION);
         
-        a.setContentText("Realmente deseja excluir o funcionário " + this.txNome.getText() + "?");
+        a.setContentText("Realmente deseja excluir o Fornecedor " + this.txNome.getText() + "?");
         if(a.showAndWait().get() == ButtonType.OK){
             DALFornecedor dal = new DALFornecedor();
             
@@ -223,6 +223,34 @@ public class CadForncedoresController implements Initializable {
 
     @FXML
     private void clkBtSalvar(ActionEvent event) {
+        
+        DALFornecedor dal = new DALFornecedor();
+        Fornecedor f;
+        
+        if(txCod.getText() == ""){
+            f = new Fornecedor(this.txNome.getText(), this.txFone.getText(), this.txEmail.getText(), this.txDesc.getText());
+            if(dal.gravar(f)){
+                this.snackbar("Fornecedor gravado com sucesso!", "green");
+                
+                this.original();
+                this.loadTable("");
+            }
+            else{
+                this.snackbar("Problemas ao gravar Fornecedor!", "red");
+            }
+        }
+        else{
+            f = new Fornecedor (Integer.parseInt(this.txCod.getText()),this.txNome.getText(), this.txFone.getText(), this.txEmail.getText(), this.txDesc.getText());
+            if(dal.alterar(f)){
+                this.snackbar("Fornecedor atualizado com sucesso!", "green");
+                
+                this.original();
+                this.loadTable("");
+            }
+            else{
+                this.snackbar("Problemas ao atualizar Fornecedor!", "red");
+            }
+        }
     }
 
     @FXML
@@ -237,7 +265,7 @@ public class CadForncedoresController implements Initializable {
     
     @FXML
     private void dgtPesquisa(KeyEvent event) {        
-        String filtro = this.txPesquisa.getText().isEmpty() ? "" : "UPPER(prod_nome) LIKE '%#1%'";
+        String filtro = this.txPesquisa.getText().isEmpty() ? "" : "UPPER(for_nome) LIKE '%#1%'";
         filtro = filtro.replaceAll("#1", this.txPesquisa.getText().toUpperCase());
         loadTable(filtro);
     }

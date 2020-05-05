@@ -220,7 +220,7 @@ public class CadProdutosController implements Initializable {
     private void clkApagar(ActionEvent event) {
         Alert a = new Alert(Alert.AlertType.CONFIRMATION);
         
-        a.setContentText("Realmente deseja excluir o funcionário " + this.tfNome.getText() + "?");
+        a.setContentText("Realmente deseja excluir o Produto " + this.tfNome.getText() + "?");
         if(a.showAndWait().get() == ButtonType.OK){
             DALProduto dal = new DALProduto();
             
@@ -246,25 +246,25 @@ public class CadProdutosController implements Initializable {
         if(tfCod.getText() == ""){
             f = new Produtos(this.colNome.getText(), cbCategoria.getValue(), cbMedida.getValue(), Double.parseDouble(this.convertStr(this.tfPreço.getText())));
             if(dal.gravar(f)){
-                this.snackbar("Funcionario gravado com sucesso!", "green");
+                this.snackbar("Produto gravado com sucesso!", "green");
                 
                 this.original();
                 this.loadTable("");
             }
             else{
-                this.snackbar("Problemas ao gravar Funcionario!", "red");
+                this.snackbar("Problemas ao gravar Produto!", "red");
             }
         }
         else{
             f = new Produtos(Integer.parseInt(this.tfCod.getText()),this.colNome.getText(), cbCategoria.getValue(), cbMedida.getValue(), Double.parseDouble(this.convertStr(this.tfPreço.getText())));
             if(dal.alterar(f)){
-                this.snackbar("Funcionario atualizado com sucesso!", "green");
+                this.snackbar("Produto atualizado com sucesso!", "green");
                 
                 this.original();
                 this.loadTable("");
             }
             else{
-                this.snackbar("Problemas ao atualizar Funcionario!", "red");
+                this.snackbar("Problemas ao atualizar Produto!", "red");
             }
         }
     }
