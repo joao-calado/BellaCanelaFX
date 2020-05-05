@@ -36,6 +36,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
+import javafx.util.StringConverter;
 
 /**
  * FXML Controller class
@@ -129,17 +130,52 @@ public class CadProdutosController implements Initializable {
         DALProduto dal = new DALProduto();
         
         ArrayList<Produtos> Prod = dal.get(filtro);
-        if(Prod.isEmpty()){
-            System.out.println("FUDEU");
-            System.out.println(dal.getMax());
-        }
+      
         ObservableList<Produtos> modelo = FXCollections.observableArrayList(Prod);
         
         this.tbProdutos.setItems(modelo);
         this.tbProdutos.refresh(); 
         
         this.cbCategoria.setItems(FXCollections.observableArrayList(new DALCategoria().get("")));
-        this.cbMedida.setItems(FXCollections.observableArrayList(new DALMedida().get("")));   
+        this.cbMedida.setItems(FXCollections.observableArrayList(new DALMedida().get("")));  
+        
+        this.cbCategoria.setConverter(new StringConverter<Categoria>(){
+            @Override
+            public String toString(Categoria cat) {
+                return cat.getNome();
+            }
+
+            @Override
+            public Categoria fromString(String string) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            } 
+            
+            public Categoria toValue(Categoria cat){
+               return cat;
+            }
+    
+    
+         });
+        
+        this.cbMedida.setConverter(new StringConverter<Medida>(){
+            @Override
+            public String toString(Medida cat) {
+                return cat.getNome();
+            }
+
+            @Override
+            public Medida fromString(String string) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+            
+            public Medida toValue(Medida cat){
+               return cat;
+            }
+    
+         });
+        
+        
+        
     }    
 
     
@@ -239,8 +275,8 @@ public class CadProdutosController implements Initializable {
         DALProduto dal = new DALProduto();
         Produtos f;
         
-        if(tfCod.getText() == ""){
-            f = new Produtos(this.colNome.getText(), cbCategoria.getValue(), cbMedida.getValue(), Double.parseDouble(this.convertStr(this.tfPreço.getText())));
+        if("".equals(tfCod.getText())){
+            f = new Produtos(this.tfNome.getText(), cbCategoria.getValue(), cbMedida.getValue(), Double.parseDouble(this.convertStr(this.tfPreço.getText())));
             if(dal.gravar(f)){
                 this.snackbar("Produto gravado com sucesso!", "green");
                 

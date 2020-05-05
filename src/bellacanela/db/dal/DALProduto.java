@@ -13,7 +13,7 @@ public class DALProduto {
    
      public boolean gravar(Produtos p) {
         
-        String sql = "insert into produto(prod_cod, prod_nome, prod_cat, prod_med) values (default, '#1','#2','#3','4#')";
+        String sql = "insert into produto(prod_cod, prod_nome, prod_cat, prod_med, prod_preco) values (default, '#1','#2','#3','#4')";
         
         sql = sql.replaceAll("#1", ""+p.getNome());
         sql = sql.replaceAll("#2", ""+p.getCat().getCod());
