@@ -108,6 +108,10 @@ public class CadFuncionarioController implements Initializable {
     private void loadMasks() {
         MaskFieldUtil.foneField(this.tfTelefone);
         MaskFieldUtil.monetaryField(this.tfSalario);
+        MaskFieldUtil.maxField(this.tfNome, 50);
+        MaskFieldUtil.onlyAlfa(this.tfNome);
+        MaskFieldUtil.maxField(this.tfIdade, 3);
+        MaskFieldUtil.numericField(this.tfIdade);
     }
     
     private void edition() {        
