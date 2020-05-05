@@ -187,6 +187,18 @@ public class CadForncedoresController implements Initializable {
 
     @FXML
     private void clkBtAlterar(ActionEvent event) {
+        if(this.tabela.getSelectionModel().getSelectedItem() != null){
+            Fornecedor f = new DALFornecedor().get(this.tabela.getSelectionModel().getSelectedItem().getCod());
+
+            
+            this.txCod.setText(f.getCod()+"");
+            this.txDesc.setText(f.getDesc()+"");
+            this.txEmail.setText(f.getEmail()+"");
+            this.txFone.setText(f.getTelefone()+"");
+            this.txNome.setText(f.getNome()+"");
+           
+            this.edition();
+         }
     }
 
     @FXML
