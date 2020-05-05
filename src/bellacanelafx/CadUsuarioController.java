@@ -1,9 +1,7 @@
 package bellacanelafx;
 
-import bellacanela.db.dal.DALFuncionario;
 import bellacanela.db.dal.DALUsuario;
 import bellacanela.util.MaskFieldUtil;
-import bellacanelafx.db.entidades.Funcionario;
 import bellacanelafx.db.entidades.Usuario;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXSnackbar;
@@ -185,29 +183,38 @@ public class CadUsuarioController implements Initializable {
 
     @FXML
     private void clkSalvar(ActionEvent event) {
-        DALUsuario dal = new DALUsuario();
-        Usuario u = new Usuario(this.tfLogin.getText(), this.tfSenha.getText());
+        boolean ans = true;
         
-        if(this.update){
-            if(dal.update(u)){
-                this.snackbar("Usuario alterado com sucesso!", "green");
-                this.update = false;
-                this.tfLogin.setDisable(false);
-                this.original();
-                this.loadTable("");
-            }
-            else{
-                this.snackbar("Erro ao tentar alterar o usuario", "red");
-            }
+        if(this.tfLogin.getText().isEmpty() || this.tfSenha.getText().isEmpty()){
+            ans = false;
+            this.snackbar("Alguns campos ainda precisam ser preenchidos", "red");
         }
-        else{
-            if(dal.insert(u)){
-                this.snackbar("Usuario cadastrado com sucesso!", "green");
-                this.original();
-                this.loadTable("");
+        
+        if(ans){
+            DALUsuario dal = new DALUsuario();
+            Usuario u = new Usuario(this.tfLogin.getText(), this.tfSenha.getText());
+
+            if(this.update){
+                if(dal.update(u)){
+                    this.snackbar("Usuario alterado com sucesso!", "green");
+                    this.update = false;
+                    this.tfLogin.setDisable(false);
+                    this.original();
+                    this.loadTable("");
+                }
+                else{
+                    this.snackbar("Erro ao tentar alterar o usuario", "red");
+                }
             }
             else{
-                this.snackbar("Erro ao tentar cadastrar o usuario", "red");
+                if(dal.insert(u)){
+                    this.snackbar("Usuario cadastrado com sucesso!", "green");
+                    this.original();
+                    this.loadTable("");
+                }
+                else{
+                    this.snackbar("Erro ao tentar cadastrar o usuario", "red");
+                }
             }
         }
     }
