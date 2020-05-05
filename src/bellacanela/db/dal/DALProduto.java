@@ -69,7 +69,7 @@ public class DALProduto {
         try {
             while(rs.next()){
                 
-                cat = new DALCategoria().get(rs.getInt("prod_cad"));
+                cat = new DALCategoria().get(rs.getInt("prod_cat"));
                 med = new DALMedida().get(rs.getInt("prod_med"));                
                 aux.add(new Produtos(rs.getInt("prod_cod"),rs.getString("prod_nome"), cat , med ,rs.getDouble("prod_preco")));
             }

@@ -20,6 +20,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.animation.FadeTransition;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -73,7 +75,7 @@ public class CadProdutosController implements Initializable {
     @FXML
     private TableView<Produtos> tbProdutos;
     @FXML
-    private TableColumn<Produtos, String> colCod;
+    private TableColumn<Produtos, Integer> colCod;
     @FXML
     private TableColumn<Produtos, String> colNome;   
     @FXML
@@ -95,12 +97,11 @@ public class CadProdutosController implements Initializable {
         colCod.setCellValueFactory(new PropertyValueFactory("cod"));
         colNome.setCellValueFactory(new PropertyValueFactory("nome"));
         colPreço.setCellValueFactory(new PropertyValueFactory("preco"));
-        colCategoria.setCellValueFactory(new PropertyValueFactory("cat"));
-        colMedida.setCellValueFactory(new PropertyValueFactory("med"));
-        
-       fadeout();
-       loadMasks();
-       original();
+        colCategoria.setCellValueFactory((TableColumn.CellDataFeatures<Produtos, String> p) -> new SimpleObjectProperty(p.getValue().getCat().getNome()));
+        colMedida.setCellValueFactory((TableColumn.CellDataFeatures<Produtos, String> p) -> new SimpleObjectProperty(p.getValue().getMed().getNome()));
+        fadeout();
+        loadMasks();
+        original();
     } 
     
     private void fadeout() {
