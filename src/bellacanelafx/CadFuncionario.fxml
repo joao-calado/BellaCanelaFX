@@ -50,22 +50,22 @@
                         <Cursor fx:constant="CLOSED_HAND" />
                      </cursor>
                   </JFXTextField>
-                  <JFXTextField fx:id="tfNome" focusColor="#699933" labelFloat="true" layoutX="190.0" layoutY="31.0" prefHeight="25.0" prefWidth="545.0" promptText="Nome" styleClass="textFild" unFocusColor="#212121">
+                  <JFXTextField fx:id="tfNome" focusColor="#699933" labelFloat="true" layoutX="190.0" layoutY="31.0" prefHeight="25.0" prefWidth="545.0" promptText="*Nome" styleClass="textFild" unFocusColor="#212121">
                      <cursor>
                         <Cursor fx:constant="TEXT" />
                      </cursor>
                   </JFXTextField>
-                  <JFXTextField fx:id="tfIdade" focusColor="#699933" labelFloat="true" layoutX="66.0" layoutY="95.0" prefHeight="25.0" prefWidth="101.0" promptText="Idade" styleClass="textFild" unFocusColor="#212121">
+                  <JFXTextField fx:id="tfIdade" focusColor="#699933" labelFloat="true" layoutX="66.0" layoutY="95.0" prefHeight="25.0" prefWidth="101.0" promptText="*Idade" styleClass="textFild" unFocusColor="#212121">
                      <cursor>
                         <Cursor fx:constant="TEXT" />
                      </cursor>
                   </JFXTextField>
-                  <JFXTextField fx:id="tfTelefone" focusColor="#699933" labelFloat="true" layoutX="190.0" layoutY="95.0" prefHeight="25.0" prefWidth="339.0" promptText="Telefone" styleClass="textFild" unFocusColor="#212121">
+                  <JFXTextField fx:id="tfTelefone" focusColor="#699933" labelFloat="true" layoutX="190.0" layoutY="95.0" prefHeight="25.0" prefWidth="339.0" promptText="*Telefone" styleClass="textFild" unFocusColor="#212121">
                      <cursor>
                         <Cursor fx:constant="TEXT" />
                      </cursor>
                   </JFXTextField>
-                  <JFXTextField fx:id="tfSalario" focusColor="#699933" labelFloat="true" layoutX="547.0" layoutY="95.0" prefHeight="25.0" prefWidth="188.0" promptText="Salário" styleClass="textFild" unFocusColor="#212121">
+                  <JFXTextField fx:id="tfSalario" focusColor="#699933" labelFloat="true" layoutX="547.0" layoutY="95.0" prefHeight="25.0" prefWidth="188.0" promptText="*Salário" styleClass="textFild" unFocusColor="#212121">
                      <cursor>
                         <Cursor fx:constant="TEXT" />
                      </cursor>
