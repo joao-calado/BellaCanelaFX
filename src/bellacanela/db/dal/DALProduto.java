@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-
 package bellacanela.db.dal;
 
 import bellacanelafx.db.entidades.Categoria;
