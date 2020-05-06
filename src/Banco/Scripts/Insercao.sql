@@ -1,7 +1,10 @@
 /*======================TABELA DE USUARIOS=======================*/
-INSERT INTO Usuarios(user_login, user_senha) VALUES('evandro', '123');
-INSERT INTO Usuarios(user_login, user_senha) VALUES('joao', '123');
-INSERT INTO Usuarios(user_login, user_senha) VALUES('daniel', '123');
+INSERT INTO Usuarios(user_login, user_senha, user_nivel, user_habilitado) VALUES('admin', 'admin', 1, true);
+INSERT INTO Usuarios(user_login, user_senha, user_nivel, user_habilitado) VALUES('evandro', '123', 1, true);
+INSERT INTO Usuarios(user_login, user_senha, user_nivel, user_habilitado) VALUES('joao', '123'   , 1, true);
+INSERT INTO Usuarios(user_login, user_senha, user_nivel, user_habilitado) VALUES('daniel', '123' , 1, true);
+INSERT INTO Usuarios(user_login, user_senha, user_nivel, user_habilitado) VALUES('ze', '123'     , 0, true);
+INSERT INTO Usuarios(user_login, user_senha, user_nivel, user_habilitado) VALUES('ana', '123'    , 0, false);
 
 /*====================TABELA DE FUNCIONARIOS=====================*/
 INSERT INTO Funcionarios(fun_cod, fun_nome, fun_idade, fun_telefone, fun_salario) VALUES(DEFAULT, 'Evandro', 21, '(18)99105-8156', 2000.00);

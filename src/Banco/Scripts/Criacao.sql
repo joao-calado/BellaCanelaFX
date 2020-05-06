@@ -11,6 +11,8 @@ CREATE TABLE Funcionarios (
 CREATE TABLE Usuarios (
 	user_login varchar(16),
 	user_senha varchar(32),
+        user_nivel INTEGER,
+        user_habilitado BOOLEAN,
 	CONSTRAINT pk_usuarios PRIMARY KEY (user_login)
 );
 
