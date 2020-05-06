@@ -1,12 +1,15 @@
 package bellacanelafx;
 
+import bellacanela.db.dal.DALConfSistema;
 import bellacanela.db.dal.DALUsuario;
+import bellacanelafx.db.entidades.ConfSistema;
 import bellacanelafx.db.entidades.Usuario;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXSnackbar;
 import com.jfoenix.controls.JFXSnackbar.SnackbarEvent;
 import com.jfoenix.controls.JFXTextField;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -14,13 +17,14 @@ import javafx.animation.FadeTransition;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class LoginController implements Initializable {
@@ -58,7 +62,22 @@ public class LoginController implements Initializable {
                     aux.setDisable(false);
                 }
             }
-            HomeController.spnprincipal.setCenter(null);
+            
+            DALConfSistema dalCONF = new DALConfSistema();
+            ConfSistema cs = dalCONF.get();
+            if(cs == null) { // significa que é o primeiro acesso ao sistema
+                
+                try {
+                    Parent root;
+                    root = FXMLLoader.load(getClass().getResource("ConfSistema.fxml"));
+                    HomeController.spnprincipal.setCenter(root);
+                }
+                catch (IOException ex) {
+                    System.out.println(ex);
+                }
+            }
+            else
+                HomeController.spnprincipal.setCenter(null);
         }
         else{
             JFXSnackbar sb = new JFXSnackbar(pane);

@@ -39,32 +39,11 @@ public class HomeController implements Initializable {
         apcentro = apPrincipal;
         this.vbNavegacao.setDisable(true);
         
-        DALConfSistema dal = new DALConfSistema();
-        ConfSistema cs = dal.get();
-        
         try 
         {
-            if(cs == null) { // significa que é o primeiro acesso ao sistema
-            
-                try {
-                    Parent root;
-                    root = FXMLLoader.load(getClass().getResource("ConfSistema.fxml"));
-                    pnprincipal.setCenter(root);
-                } 
-                catch (IOException ex) {
-                    System.out.println(ex);
-                }
-            }
-            else {
-                
-                Parent root;
-                root = FXMLLoader.load(getClass().getResource("login.fxml"));
-                pnprincipal.setCenter(root);
-            }
-            
-            /*Parent root;
+            Parent root;
             root = FXMLLoader.load(getClass().getResource("login.fxml"));
-            pnprincipal.setCenter(root);*/
+            pnprincipal.setCenter(root);
         } 
         catch (IOException ex) {
             System.out.println(ex);
