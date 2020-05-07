@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.SplitPane?>
@@ -45,16 +48,15 @@
             </HBox>
             <AnchorPane fx:id="apDados" prefHeight="109.0" prefWidth="798.0" style="-fx-background-color: #D7CCC8;">
                <children>
-                  <JFXTextField fx:id="tfLogin" focusColor="#699933" labelFloat="true" layoutX="37.0" layoutY="42.0" prefHeight="25.0" prefWidth="432.0" promptText="*Login" styleClass="textFild" unFocusColor="#212121">
+                  <JFXTextField fx:id="tfLogin" focusColor="#699933" labelFloat="true" layoutX="36.0" layoutY="29.0" prefHeight="25.0" prefWidth="277.0" promptText="*Login" styleClass="textFild" unFocusColor="#212121">
                      <cursor>
                         <Cursor fx:constant="TEXT" />
                      </cursor>
                   </JFXTextField>
-                  <JFXTextField fx:id="tfSenha" focusColor="#699933" labelFloat="true" layoutX="485.0" layoutY="42.0" prefHeight="25.0" prefWidth="277.0" promptText="*Senha" styleClass="textFild" unFocusColor="#212121">
-                     <cursor>
-                        <Cursor fx:constant="TEXT" />
-                     </cursor>
-                  </JFXTextField>
+                  <JFXPasswordField fx:id="tfSenha" focusColor="#699933" labelFloat="true" layoutX="327.0" layoutY="29.0" prefHeight="25.0" prefWidth="209.0" promptText="*Senha" styleClass="textFild" />
+                  <JFXPasswordField fx:id="tfConfirmarSenha" focusColor="#699933" labelFloat="true" layoutX="554.0" layoutY="29.0" prefHeight="25.0" prefWidth="209.0" promptText="*Confirmar Senha" styleClass="textFild" />
+                  <JFXComboBox fx:id="cbNivel" focusColor="#699933" labelFloat="true" layoutX="36.0" layoutY="69.0" prefHeight="23.0" prefWidth="277.0" promptText="Nível" />
+                  <JFXCheckBox fx:id="checkHabilitado" checkedColor="#699933" layoutX="327.0" layoutY="72.0" selected="true" text="Habilitado" />
                </children>
             </AnchorPane>
          </children>
@@ -72,8 +74,10 @@
             </HBox>
             <TableView fx:id="tbUsuarios" onMouseClicked="#clkTable" prefHeight="304.0" prefWidth="798.0" style="-fx-background-color: #D7CCC8;">
                <columns>
-                  <TableColumn fx:id="colLogin" editable="false" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="574.0" text="Login" />
-                  <TableColumn fx:id="colSenha" editable="false" maxWidth="305.0" minWidth="100.0" prefWidth="223.0" text="Senha" />
+                  <TableColumn fx:id="colLogin" editable="false" maxWidth="500.0" minWidth="500.0" prefWidth="500.0" resizable="false" text="Login" />
+                  <TableColumn fx:id="colSenha" editable="false" maxWidth="300.0" minWidth="300.0" prefWidth="300.0" resizable="false" text="Senha" visible="false" />
+                  <TableColumn fx:id="colNivel" editable="false" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" resizable="false" text="Nível" />
+                  <TableColumn fx:id="colHabilitado" editable="false" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" resizable="false" text="Habilitado" />
                </columns>
             </TableView>
          </children>

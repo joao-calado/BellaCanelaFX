@@ -10,6 +10,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
 import javafx.scene.control.ToolBar;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -21,6 +23,8 @@ public class HomeController implements Initializable {
     public static BorderPane spnprincipal=null;
     public static ToolBar toolbarPane = null;
     public static AnchorPane apcentro = null;
+    public static VBox vbnavegacao = null;
+    public static Menu micadastros = null;
     
     @FXML
     private BorderPane pnprincipal;
@@ -30,6 +34,8 @@ public class HomeController implements Initializable {
     private AnchorPane apPrincipal;
     @FXML
     private ToolBar toolbarpn;
+    @FXML
+    private Menu miCadastros;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -37,6 +43,9 @@ public class HomeController implements Initializable {
         spnprincipal = pnprincipal;
         toolbarPane = toolbarpn;
         apcentro = apPrincipal;
+        vbnavegacao = vbNavegacao;
+        micadastros = miCadastros;
+        
         this.vbNavegacao.setDisable(true);
         
         try 
