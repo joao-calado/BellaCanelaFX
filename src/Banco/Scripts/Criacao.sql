@@ -2,8 +2,8 @@
 CREATE TABLE Funcionarios (
 	fun_cod SERIAL,
 	fun_nome varchar(50) NOT NULL,
-	fun_idade INTEGER NOT NULL,
-	fun_telefone varchar(11) NOT NULL,
+	fun_datanascimento DATE NOT NULL,
+	fun_telefone varchar(14) NOT NULL,
 	fun_salario decimal(10,2),
 	CONSTRAINT pk_fun PRIMARY KEY (fun_cod)
 );
