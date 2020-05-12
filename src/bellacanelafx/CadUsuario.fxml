@@ -55,8 +55,8 @@
                   </JFXTextField>
                   <JFXPasswordField fx:id="tfSenha" focusColor="#699933" labelFloat="true" layoutX="327.0" layoutY="29.0" prefHeight="25.0" prefWidth="209.0" promptText="*Senha" styleClass="textFild" />
                   <JFXPasswordField fx:id="tfConfirmarSenha" focusColor="#699933" labelFloat="true" layoutX="554.0" layoutY="29.0" prefHeight="25.0" prefWidth="209.0" promptText="*Confirmar Senha" styleClass="textFild" />
-                  <JFXComboBox fx:id="cbNivel" focusColor="#699933" labelFloat="true" layoutX="36.0" layoutY="69.0" prefHeight="23.0" prefWidth="277.0" promptText="Nível" />
-                  <JFXCheckBox fx:id="checkHabilitado" checkedColor="#699933" layoutX="327.0" layoutY="72.0" selected="true" text="Habilitado" />
+                  <JFXComboBox fx:id="cbNivel" focusColor="#699933" labelFloat="true" layoutX="36.0" layoutY="69.0" prefHeight="23.0" prefWidth="277.0" promptText="Nível*" />
+                  <JFXCheckBox fx:id="checkHabilitado" checkedColor="#699933" layoutX="327.0" layoutY="72.0" selected="true" text="Habilitado*" />
                </children>
             </AnchorPane>
          </children>

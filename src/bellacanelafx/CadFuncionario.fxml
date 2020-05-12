@@ -66,7 +66,7 @@
                         <Cursor fx:constant="TEXT" />
                      </cursor>
                   </JFXTextField>
-                  <JFXDatePicker fx:id="dpDataNascimento" defaultColor="#699933" editable="false" layoutX="556.0" layoutY="94.0" prefHeight="25.0" prefWidth="179.0" promptText="Data nascimento" styleClass="textFild" />
+                  <JFXDatePicker fx:id="dpDataNascimento" defaultColor="#699933" editable="false" layoutX="556.0" layoutY="94.0" prefHeight="25.0" prefWidth="179.0" promptText="Data nascimento*" styleClass="textFild" />
                </children>
             </AnchorPane>
          </children>
@@ -75,7 +75,7 @@
          <children>
             <HBox alignment="CENTER" prefHeight="45.0" prefWidth="798.0" spacing="20.0" style="-fx-background-color: #D7CCC8;">
                <children>
-                  <JFXTextField fx:id="tfSearch" focusColor="#699933" labelFloat="true" onKeyReleased="#evtSearch" prefHeight="25.0" prefWidth="599.0" promptText="Informe o nome do cliente para pesquisar" styleClass="textFild" unFocusColor="#212121">
+                  <JFXTextField fx:id="tfSearch" focusColor="#699933" labelFloat="true" onKeyReleased="#evtSearch" prefHeight="25.0" prefWidth="599.0" promptText="Informe o nome do funcionario para pesquisar" styleClass="textFild" unFocusColor="#212121">
                      <cursor>
                         <Cursor fx:constant="TEXT" />
                      </cursor>
@@ -86,7 +86,7 @@
                <columns>
                   <TableColumn fx:id="colCod" editable="false" maxWidth="60.0" minWidth="60.0" prefWidth="60.0" text="Código" />
                   <TableColumn fx:id="colNome" editable="false" maxWidth="1.7976931348623157E308" minWidth="290.0" prefWidth="290.0" text="Nome" />
-                  <TableColumn fx:id="colDataNascimento" editable="false" maxWidth="133.0" minWidth="100.0" prefWidth="133.0" text="Idade" />
+                  <TableColumn fx:id="colDataNascimento" editable="false" maxWidth="133.0" minWidth="100.0" prefWidth="133.0" text="Data Nascimento" />
                   <TableColumn fx:id="colTelefone" editable="false" maxWidth="250.0" minWidth="76.0" prefWidth="211.0" text="Telefone" />
                   <TableColumn fx:id="colSalario" editable="false" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" text="Salário" />
                </columns>

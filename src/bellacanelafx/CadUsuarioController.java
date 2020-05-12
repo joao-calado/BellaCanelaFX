@@ -260,7 +260,7 @@ public class CadUsuarioController implements Initializable {
                     this.loadTable("");
                 }
                 else{
-                    this.snackbar("Erro ao tentar cadastrar o usuario", "red");
+                    this.snackbar("Login ja existente", "red");
                 }
             }
         }
@@ -270,8 +270,10 @@ public class CadUsuarioController implements Initializable {
     private void clkCancelar(ActionEvent event) {
         if (!this.apDados.isDisabled())
             this.original();
-        else 
+        else {
             HomeController.spnprincipal.setCenter(null);
+            BellaCanela.sStage.setTitle("Bella Canela");
+        }
     }
 
     @FXML

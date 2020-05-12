@@ -270,8 +270,10 @@ public class CadFuncionarioController implements Initializable {
     private void clkCancelar(ActionEvent event) {
         if (!this.apDados.isDisabled())
             this.original();
-        else 
+        else {
             HomeController.spnprincipal.setCenter(null);
+            BellaCanela.sStage.setTitle("Bella Canela");
+        }
     }
 
     @FXML

@@ -27,6 +27,8 @@ import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 
 public class BellaCanela extends Application {
+    public static Stage sStage;
+    
     @Override
     public void start(Stage stage) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("Home.fxml"));
@@ -62,7 +64,9 @@ public class BellaCanela extends Application {
             }
         }
         
+        sStage = stage;
         stage.setScene(scene);
+        stage.setTitle("Bella Canela");
         stage.setMaximized(true);
         stage.show();
         

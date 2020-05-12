@@ -90,6 +90,7 @@ public class HomeController implements Initializable {
         try {
             Parent root;
             root = FXMLLoader.load(getClass().getResource("CadFuncionario.fxml"));
+            BellaCanela.sStage.setTitle("CRUD Funcionario");
             pnprincipal.setCenter(root);
         } 
         catch (IOException ex) {
@@ -102,6 +103,7 @@ public class HomeController implements Initializable {
         try {
             Parent root;
             root = FXMLLoader.load(getClass().getResource("CadUsuario.fxml"));
+            BellaCanela.sStage.setTitle("CRUD Usuario");
             pnprincipal.setCenter(root);
         } 
         catch (IOException ex) {
