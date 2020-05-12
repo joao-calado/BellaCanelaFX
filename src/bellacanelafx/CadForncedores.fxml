@@ -3,12 +3,14 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <SplitPane fx:id="pane" dividerPositions="0.42168674698795183" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bellacanelafx.CadForncedoresController">
    <items>
@@ -45,31 +47,37 @@
             </HBox>
             <AnchorPane fx:id="apDados" prefHeight="167.0" prefWidth="748.0" style="-fx-background-color: #D7CCC8;">
                <children>
-                  <JFXTextField fx:id="txCod" disable="true" focusColor="#699933" layoutX="66.0" layoutY="31.0" prefHeight="25.0" prefWidth="90.0" promptText="Código" styleClass="textFild" unFocusColor="#212121">
+                  <JFXTextField fx:id="txCod" disable="true" focusColor="#699933" layoutX="66.0" layoutY="54.0" prefHeight="25.0" prefWidth="90.0" promptText="Código" styleClass="textFild" unFocusColor="#212121">
                      <cursor>
                         <Cursor fx:constant="CLOSED_HAND" />
                      </cursor>
                   </JFXTextField>
-                  <JFXTextField fx:id="txNome" focusColor="#699933" labelFloat="true" layoutX="190.0" layoutY="31.0" prefHeight="25.0" prefWidth="331.0" promptText="Nome" styleClass="textFild" unFocusColor="#212121">
+                  <JFXTextField fx:id="txNome" focusColor="#699933" labelFloat="true" layoutX="190.0" layoutY="54.0" prefHeight="25.0" prefWidth="331.0" promptText="Nome *" styleClass="textFild" unFocusColor="#212121">
                      <cursor>
                         <Cursor fx:constant="TEXT" />
                      </cursor>
                   </JFXTextField>
-                  <JFXTextField fx:id="txFone" focusColor="#699933" labelFloat="true" layoutX="543.0" layoutY="31.0" prefHeight="25.0" prefWidth="188.0" promptText="Telefone" styleClass="textFild" unFocusColor="#212121">
+                  <JFXTextField fx:id="txFone" focusColor="#699933" labelFloat="true" layoutX="543.0" layoutY="54.0" prefHeight="25.0" prefWidth="188.0" promptText="Telefone *" styleClass="textFild" unFocusColor="#212121">
                      <cursor>
                         <Cursor fx:constant="TEXT" />
                      </cursor>
                   </JFXTextField>
-                  <JFXTextField fx:id="txEmail" focusColor="#699933" labelFloat="true" layoutX="66.0" layoutY="95.0" prefHeight="25.0" prefWidth="331.0" promptText="Email" styleClass="textFild" unFocusColor="#212121">
+                  <JFXTextField fx:id="txEmail" focusColor="#699933" labelFloat="true" layoutX="66.0" layoutY="118.0" prefHeight="25.0" prefWidth="331.0" promptText="Email *" styleClass="textFild" unFocusColor="#212121">
                      <cursor>
                         <Cursor fx:constant="TEXT" />
                      </cursor>
                   </JFXTextField>
-                  <JFXTextField fx:id="txDesc" focusColor="#699933" labelFloat="true" layoutX="418.0" layoutY="95.0" prefHeight="25.0" prefWidth="320.0" promptText="Descrição" styleClass="textFild" unFocusColor="#212121">
+                  <JFXTextField fx:id="txDesc" focusColor="#699933" labelFloat="true" layoutX="418.0" layoutY="118.0" prefHeight="25.0" prefWidth="320.0" promptText="Descrição" styleClass="textFild" unFocusColor="#212121">
                      <cursor>
                         <Cursor fx:constant="TEXT" />
                      </cursor>
                   </JFXTextField>
+                  <Label layoutX="703.0" layoutY="14.0" text="* Obrigatorio" />
+                  <Label layoutX="14.0" layoutY="8.0" text="Fornecedores">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
                </children>
             </AnchorPane>
          </children>
@@ -78,7 +86,12 @@
          <children>
             <HBox alignment="CENTER" prefHeight="48.0" prefWidth="798.0" spacing="20.0" style="-fx-background-color: #D7CCC8;">
                <children>
-                  <JFXTextField fx:id="txPesquisa" focusColor="#699933" labelFloat="true" onKeyTyped="#dgtPesquisa" prefHeight="25.0" prefWidth="454.0" promptText="Informe o nome do Fornecedor para pesquisar" styleClass="textFild" unFocusColor="#212121">
+                  <JFXTextField fx:id="txPesquisa" focusColor="#699933" labelFloat="true" onKeyTyped="#dgtPesquisa" prefHeight="25.0" prefWidth="340.0" promptText="Informe o nome do Fornecedor para pesquisar" styleClass="textFild" unFocusColor="#212121">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </JFXTextField>
+                  <JFXTextField fx:id="txPesquisa2" focusColor="#699933" labelFloat="true" layoutX="239.0" layoutY="21.0" onKeyTyped="#dgtPesquisa" prefHeight="25.0" prefWidth="340.0" promptText="Informe o Email do Fornecedor para pesquisar" styleClass="textFild" unFocusColor="#212121">
                      <cursor>
                         <Cursor fx:constant="TEXT" />
                      </cursor>

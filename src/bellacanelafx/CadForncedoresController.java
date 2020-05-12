@@ -83,7 +83,9 @@ public class CadForncedoresController implements Initializable {
     private AnchorPane apDados;
     @FXML
     private VBox pnSearch;
-
+    @FXML
+    private JFXTextField txPesquisa2;
+    
     /**
      * Initializes the controller class.
      */
@@ -106,8 +108,9 @@ public class CadForncedoresController implements Initializable {
         ft.setToValue(1);
         ft.play(); 
     }
-    private void loadMasks() {        
-        MaskFieldUtil.onlyDigitsValue(txFone);
+    private void loadMasks() {    
+        MaskFieldUtil.onlyAlfa(txNome);
+        MaskFieldUtil.foneField(txFone);
         MaskFieldUtil.onlyAlfaNumericValue(txDesc);
     }
     
@@ -226,10 +229,35 @@ public class CadForncedoresController implements Initializable {
         
         DALFornecedor dal = new DALFornecedor();
         Fornecedor f;
+        boolean flag =  true;
+        String x = this.txFone.getText();
         
-        if("".equals(txCod.getText())){
-            f = new Fornecedor(this.txNome.getText(), this.txFone.getText(), this.txEmail.getText(), this.txDesc.getText());
-            if(dal.gravar(f)){
+        this.txNome.setStyle("-fx-background-color: transparent");
+        this.txFone.setStyle("-fx-background-color: transparent");
+        this.txEmail.setStyle("-fx-background-color: transparent");
+        
+        if("".equals(this.txNome.getText())){
+            this.txNome.setStyle("-fx-background-color: #FF6347");
+            flag = false;
+        }
+        if("".equals(this.txFone.getText())){
+            this.txFone.setStyle("-fx-background-color: #FF6347");
+            flag = false;
+        }
+        if("".equals(this.txEmail.getText()) || !verificarEmail(this.txEmail.getText())){
+            this.txEmail.setStyle("-fx-background-color: #FF6347");
+            flag = false;
+        }
+        if("".equals(this.txDesc.getText())){
+            this.txFone.setText(" ");
+        }
+
+        
+        if("".equals(txCod.getText())){      
+
+            
+            f = new Fornecedor(this.txNome.getText(), x.replaceAll("[^0-9]", ""), this.txEmail.getText(), this.txDesc.getText());
+            if(flag && dal.gravar(f)){
                 this.snackbar("Fornecedor gravado com sucesso!", "green");
                 
                 this.original();
@@ -240,8 +268,9 @@ public class CadForncedoresController implements Initializable {
             }
         }
         else{
-            f = new Fornecedor (Integer.parseInt(this.txCod.getText()),this.txNome.getText(), this.txFone.getText(), this.txEmail.getText(), this.txDesc.getText());
-            if(dal.alterar(f)){
+            
+            f = new Fornecedor (Integer.parseInt(this.txCod.getText()),this.txNome.getText(), x.replaceAll("[^0-9]", ""), this.txEmail.getText(), this.txDesc.getText());
+            if(flag && dal.alterar(f)){
                 this.snackbar("Fornecedor atualizado com sucesso!", "green");
                 
                 this.original();
@@ -261,15 +290,33 @@ public class CadForncedoresController implements Initializable {
             HomeController.spnprincipal.setCenter(null);
     }
 
-
     
     @FXML
     private void dgtPesquisa(KeyEvent event) {        
-        String filtro = this.txPesquisa.getText().isEmpty() ? "" : "UPPER(for_nome) LIKE '%#1%'";
-        filtro = filtro.replaceAll("#1", this.txPesquisa.getText().toUpperCase());
+        String filtro, f1, f2;
+        
+        f1 = this.txPesquisa.getText().isEmpty() ? "" : "UPPER(for_nome) LIKE '%#1%'";
+        f1 = f1.replaceAll("#1", this.txPesquisa.getText().toUpperCase());
+        
+        f2= this.txPesquisa2.getText().isEmpty() ? "" : "UPPER(for_email) LIKE '%#2%'";          
+        f2 = f2.replaceAll("#2", this.txPesquisa2.getText().toUpperCase());       
+        
+        if(f1 == ""){
+            filtro = f2;
+        }
+        else
+            if(f2 == ""){
+                filtro = f1;
+            }
+            else
+                filtro = f1 + " and " + f2;
+         
+        
         loadTable(filtro);
     }
 
+
+    
     @FXML
     private void clkTabela(MouseEvent event) {
         if(this.tabela.getSelectionModel().getSelectedItem() != null){
@@ -277,5 +324,4 @@ public class CadForncedoresController implements Initializable {
             this.btapagar.setDisable(false);
         }
     }
-    
 }

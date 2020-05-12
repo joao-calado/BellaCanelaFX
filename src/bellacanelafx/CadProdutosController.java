@@ -19,6 +19,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -85,6 +86,9 @@ public class CadProdutosController implements Initializable {
     private JFXComboBox<Categoria> cbCategoria;
     @FXML
     private SplitPane pane;
+    private JFXTextField tfSearch2;
+    @FXML
+    private JFXComboBox<Categoria> cbCategoriaSearch;
     
     
     @Override
@@ -94,7 +98,7 @@ public class CadProdutosController implements Initializable {
         colPreço.setCellValueFactory(new PropertyValueFactory("preco"));
         colCategoria.setCellValueFactory((TableColumn.CellDataFeatures<Produtos, String> p) -> new SimpleStringProperty(p.getValue().getCat().getNome()));
         colMedida.setCellValueFactory((TableColumn.CellDataFeatures<Produtos, String> p) -> new SimpleStringProperty(p.getValue().getMed().getNome()));
-        
+    
        fadeout();
        loadMasks();
        original();
@@ -134,10 +138,21 @@ public class CadProdutosController implements Initializable {
         ObservableList<Produtos> modelo = FXCollections.observableArrayList(Prod);
         
         this.tbProdutos.setItems(modelo);
-        this.tbProdutos.refresh(); 
+        this.tbProdutos.refresh();       
+        
+        
+    }   
+    
+    private void loadCB (){
         
         this.cbCategoria.setItems(FXCollections.observableArrayList(new DALCategoria().get("")));
         this.cbMedida.setItems(FXCollections.observableArrayList(new DALMedida().get("")));  
+        ArrayList<Categoria> aux = new DALCategoria().get("");
+        aux.add(new Categoria (0, ""));
+        
+        this.cbCategoriaSearch.setItems(FXCollections.observableArrayList(aux));
+        
+        
         
         this.cbCategoria.setConverter(new StringConverter<Categoria>(){
             @Override
@@ -174,9 +189,24 @@ public class CadProdutosController implements Initializable {
     
          });
         
-        
-        
-    }    
+        this.cbCategoriaSearch.setConverter(new StringConverter<Categoria>(){
+            @Override
+            public String toString(Categoria cat) {
+                return cat.getNome();
+            }
+
+            @Override
+            public Categoria fromString(String string) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            } 
+            
+            public Categoria toValue(Categoria cat){
+               return cat;
+            }
+    
+    
+         });
+    }
 
     
     private void original() {
@@ -202,6 +232,7 @@ public class CadProdutosController implements Initializable {
         }
         
         loadTable("");
+        loadCB();;
     }
     
     private void snackbar(String message, String cor){
@@ -232,7 +263,7 @@ public class CadProdutosController implements Initializable {
     private void clkAlterar(ActionEvent event) {
         if(this.tbProdutos.getSelectionModel().getSelectedItem() != null){
             Produtos f = new DALProduto().get(this.tbProdutos.getSelectionModel().getSelectedItem().getCod());
-
+            
             String strSal = f.getPreco()+"";
             int i = (strSal).indexOf(".");
             if(strSal.length() - i == 2)
@@ -240,9 +271,13 @@ public class CadProdutosController implements Initializable {
 
             this.tfCod.setText(f.getCod()+"");
             this.tfNome.setText(f.getNome());
-            this.colPreço.setText(strSal);
-            this.cbCategoria.setId(f.getCat().getNome());
-            this.cbMedida.setId(f.getMed().getNome());
+            this.tfPreço.setText(strSal);
+            
+            this.cbCategoria.getSelectionModel().select(0);
+            this.cbMedida.getSelectionModel().select(0);
+            
+            this.cbCategoria.getSelectionModel().select(f.getCat());
+            this.cbMedida.getSelectionModel().select(f.getMed());
            
             this.edition();
      }
@@ -274,10 +309,36 @@ public class CadProdutosController implements Initializable {
         
         DALProduto dal = new DALProduto();
         Produtos f;
+        boolean flag = true;
+        
+        this.tfNome.setStyle("-fx-background-color: transparent");
+        this.tfPreço.setStyle("-fx-background-color: transparent");
+        this.cbCategoria.setStyle("-fx-background-color: transparent");
+        this.cbMedida.setStyle("-fx-background-color: transparent");
+        
+
+        if("".equals(this.tfNome.getText())){
+            this.tfNome.setStyle("-fx-background-color: #FF6347");
+            flag = false;
+        }
+        if("".equals(this.tfPreço.getText())){
+            this.tfPreço.setStyle("-fx-background-color: #FF6347");
+            flag = false;
+        }
+        if(this.cbCategoria.getValue() == null){
+            this.cbCategoria.setStyle("-fx-background-color: #FF6347");
+            flag = false;
+        }
+        if(this.cbMedida.getValue() == null){
+            this.cbMedida.setStyle("-fx-background-color: #FF6347");
+            flag = false;
+        }
+           
+        
         
         if("".equals(tfCod.getText())){
             f = new Produtos(this.tfNome.getText(), cbCategoria.getValue(), cbMedida.getValue(), Double.parseDouble(this.convertStr(this.tfPreço.getText())));
-            if(dal.gravar(f)){
+            if(flag && dal.gravar(f)){
                 this.snackbar("Produto gravado com sucesso!", "green");
                 
                 this.original();
@@ -289,7 +350,7 @@ public class CadProdutosController implements Initializable {
         }
         else{
             f = new Produtos(Integer.parseInt(this.tfCod.getText()),this.colNome.getText(), cbCategoria.getValue(), cbMedida.getValue(), Double.parseDouble(this.convertStr(this.tfPreço.getText())));
-            if(dal.alterar(f)){
+            if(flag && dal.alterar(f)){
                 this.snackbar("Produto atualizado com sucesso!", "green");
                 
                 this.original();
@@ -311,8 +372,35 @@ public class CadProdutosController implements Initializable {
 
     @FXML
     private void evtSearch(KeyEvent event) {
-        String filtro = this.tfSearch.getText().isEmpty() ? "" : "UPPER(prod_nome) LIKE '%#1%'";
-        filtro = filtro.replaceAll("#1", this.tfSearch.getText().toUpperCase());
+        String filtro, f1, f2;
+        
+        
+        
+        f1 = this.tfSearch.getText().isEmpty() ? "" : "UPPER(prod_nome) LIKE '%#1%'";
+        f1 = f1.replaceAll("#1", this.tfSearch.getText().toUpperCase());
+        
+        
+        if(this.cbCategoriaSearch.getValue() != null && !"".equals(this.cbCategoriaSearch.getValue().getNome())){
+            f2 = "prod_cat = '#2'";
+            f2 = f2.replaceAll("#2", this.cbCategoriaSearch.getValue().getCod()+"");
+        }
+        else
+            f2 = "";
+        
+        
+        if("".equals(f1)){
+            filtro = f2;
+        }
+        else
+            if("".equals(f2)){
+                filtro = f1;
+            }
+            else
+                filtro = f1 + " and " + f2;
+         
+        
+        
+        
         loadTable(filtro);
     }
 
@@ -323,5 +411,6 @@ public class CadProdutosController implements Initializable {
             this.btApagar.setDisable(false);
         }
     }
+
     
 }
