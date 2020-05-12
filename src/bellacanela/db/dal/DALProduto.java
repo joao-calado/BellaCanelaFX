@@ -44,11 +44,13 @@ public class DALProduto {
     public Produtos get(int cod) {
         
         Produtos aux = null;
-        
-        ResultSet rs = Banco.getCon().consultar("select * from produto where prod_cod="+cod);
+        ResultSet rs = Banco.getCon().consultar("select * from produto where prod_cod='"+cod+"'");
         try{
-            if(rs.next())
-                aux = new Produtos(rs.getInt("prod_cod"),rs.getString("prod_nome"), new DALCategoria().get(rs.getInt("prod_cad")),new DALMedida().get(rs.getInt("prod_med")),rs.getDouble("prod_preco"));
+            
+            if(rs.next()){                
+                aux = new Produtos(rs.getInt("prod_cod"),rs.getString("prod_nome"), new DALCategoria().get(rs.getInt("prod_cat")),new DALMedida().get(rs.getInt("prod_med")),rs.getDouble("prod_preco"));
+            }
+                
         }
         catch(SQLException sqlEx){}
         

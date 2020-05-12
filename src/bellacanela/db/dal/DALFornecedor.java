@@ -24,7 +24,7 @@ public class DALFornecedor {
     
     public boolean alterar(Fornecedor f) {
         
-        String sql = "update cliente set for_nome ='#1',for_telefone = '#2' ,for_email = '#3', for_desc= '#4' where for_cod="+f.getCod();
+        String sql = "update fornecedor set for_nome ='#1',for_telefone = '#2' ,for_email = '#3', for_desc= '#4' where for_cod="+f.getCod();
         
         sql = sql.replaceAll("#1", ""+f.getNome());
         sql = sql.replaceAll("#2", ""+f.getTelefone());
