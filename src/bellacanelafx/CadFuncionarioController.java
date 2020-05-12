@@ -74,6 +74,8 @@ public class CadFuncionarioController implements Initializable {
     private JFXTextField tfSearch;
     @FXML
     private JFXDatePicker dpDataNascimento;
+    @FXML
+    private JFXTextField tfSearchFone;
     
     
     @Override
@@ -287,7 +289,12 @@ public class CadFuncionarioController implements Initializable {
     @FXML
     private void evtSearch(KeyEvent event) {
         String filtro = this.tfSearch.getText().isEmpty() ? "" : "UPPER(fun_nome) LIKE '%#1%'";
+        filtro += filtro.isEmpty() || this.tfSearchFone.getText().isEmpty() ? "" : " AND ";
+        filtro += this.tfSearchFone.getText().isEmpty() ? "" : "fun_telefone LIKE '%#2%'";
+        
         filtro = filtro.replaceAll("#1", this.tfSearch.getText().toUpperCase());
+        filtro = filtro.replaceAll("#2", this.tfSearchFone.getText());
+
         loadTable(filtro);
     }
 }

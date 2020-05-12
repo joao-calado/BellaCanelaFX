@@ -184,17 +184,22 @@ public class CadUsuarioController implements Initializable {
     private void clkAlterar(ActionEvent event) {
         if(this.tbUsuarios.getSelectionModel().getSelectedItem() != null){
             Usuario u = (Usuario)this.tbUsuarios.getSelectionModel().getSelectedItem();
+            DALUsuario dal = new DALUsuario();
             
-            this.edition();
-            
-            this.tfLogin.setText(u.getLogin());
-            this.tfLogin.setDisable(true);
-            this.tfSenha.setText(u.getSenha());
-            this.tfConfirmarSenha.setText(u.getSenha());
-            this.cbNivel.getSelectionModel().select(u.getNivel());
-            this.checkHabilitado.setSelected(u.isHabilitado());
-            
-            this.update = true;
+            if(dal.getUsuarios("user_nivel = 1").size() > 1 || u.getNivel() == 0){
+                this.edition();
+
+                this.tfLogin.setText(u.getLogin());
+                this.tfLogin.setDisable(true);
+                this.tfSenha.setText(u.getSenha());
+                this.tfConfirmarSenha.setText(u.getSenha());
+                this.cbNivel.getSelectionModel().select(u.getNivel());
+                this.checkHabilitado.setSelected(u.isHabilitado());
+
+                this.update = true;
+            }
+            else
+                this.snackbar("Você não pode alterar o ultimo ADM", "red");
         }
     }
 

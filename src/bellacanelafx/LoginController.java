@@ -102,8 +102,11 @@ public class LoginController implements Initializable {
         if(ans){
             HomeController.vbnavegacao.setDisable(false);
             HomeController.spnprincipal.setCenter(null);
-            if(u.getNivel() == 0)
-                HomeController.micadastros.setDisable(true);
+            if(u.getNivel() == 0){
+                //HomeController.micadastros.setDisable(true);
+                HomeController.micadastros.setVisible(false);
+            }
+            
             this.snackbar(HomeController.spnprincipal, "Login realizado com sucesso!", "green");
             
             DALConfSistema dalCONF = new DALConfSistema();

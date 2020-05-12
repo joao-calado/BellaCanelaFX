@@ -75,7 +75,12 @@
          <children>
             <HBox alignment="CENTER" prefHeight="45.0" prefWidth="798.0" spacing="20.0" style="-fx-background-color: #D7CCC8;">
                <children>
-                  <JFXTextField fx:id="tfSearch" focusColor="#699933" labelFloat="true" onKeyReleased="#evtSearch" prefHeight="25.0" prefWidth="599.0" promptText="Informe o nome do funcionario para pesquisar" styleClass="textFild" unFocusColor="#212121">
+                  <JFXTextField fx:id="tfSearch" focusColor="#699933" labelFloat="true" onKeyReleased="#evtSearch" prefHeight="25.0" prefWidth="309.0" promptText="Informe o nome do funcionario para pesquisar" styleClass="textFild" unFocusColor="#212121">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </JFXTextField>
+                  <JFXTextField fx:id="tfSearchFone" focusColor="#699933" labelFloat="true" onKeyReleased="#evtSearch" prefHeight="25.0" prefWidth="309.0" promptText="Informe o telefone funcionario para pesquisar" styleClass="textFild" unFocusColor="#212121">
                      <cursor>
                         <Cursor fx:constant="TEXT" />
                      </cursor>
