@@ -2,10 +2,14 @@ package bellacanelafx.db.entidades;
 
 public class Usuario {
     private String login, senha;
-    
-    public Usuario(String login, String senha){
+    private int nivel;
+    private boolean habilitado;
+
+    public Usuario(String login, String senha, int nivel, boolean habilitado) {
         this.login = login;
         this.senha = senha;
+        this.nivel = nivel;
+        this.habilitado = habilitado;
     }
 
     public String getLogin() {
@@ -22,5 +26,21 @@ public class Usuario {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public int getNivel() {
+        return nivel;
+    }
+
+    public void setNivel(int nivel) {
+        this.nivel = nivel;
+    }
+
+    public boolean isHabilitado() {
+        return habilitado;
+    }
+
+    public void setHabilitado(boolean habilitado) {
+        this.habilitado = habilitado;
     }
 }

@@ -1,16 +1,15 @@
 package bellacanelafx;
 
-import bellacanela.db.dal.DALCliente;
 import bellacanela.db.dal.DALFuncionario;
 import bellacanela.util.MaskFieldUtil;
-import bellacanelafx.db.entidades.Cliente;
 import bellacanelafx.db.entidades.Funcionario;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXSnackbar;
 import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 import javafx.animation.FadeTransition;
 import javafx.collections.FXCollections;
@@ -28,7 +27,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -45,7 +43,7 @@ public class CadFuncionarioController implements Initializable {
     @FXML
     private TableColumn<Funcionario, String> colNome;
     @FXML
-    private TableColumn<Funcionario, Integer> colIdade;
+    private TableColumn<Funcionario, LocalDate> colDataNascimento;
     @FXML
     private TableColumn<Funcionario, String> colTelefone;
     @FXML
@@ -69,19 +67,20 @@ public class CadFuncionarioController implements Initializable {
     @FXML
     private JFXTextField tfNome;
     @FXML
-    private JFXTextField tfIdade;
-    @FXML
     private JFXTextField tfTelefone;
     @FXML
     private JFXTextField tfSalario;
     @FXML
     private JFXTextField tfSearch;
+    @FXML
+    private JFXDatePicker dpDataNascimento;
+    
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         this.colCod.setCellValueFactory(new PropertyValueFactory("cod"));
         this.colNome.setCellValueFactory(new PropertyValueFactory("nome"));
-        this.colIdade.setCellValueFactory(new PropertyValueFactory("idade"));
+        this.colDataNascimento.setCellValueFactory(new PropertyValueFactory("dataNascimento"));
         this.colTelefone.setCellValueFactory(new PropertyValueFactory("telefone"));
         this.colSalario.setCellValueFactory(new PropertyValueFactory("salario"));
         
@@ -110,8 +109,6 @@ public class CadFuncionarioController implements Initializable {
         MaskFieldUtil.monetaryField(this.tfSalario);
         MaskFieldUtil.maxField(this.tfNome, 50);
         MaskFieldUtil.onlyAlfa(this.tfNome);
-        MaskFieldUtil.maxField(this.tfIdade, 3);
-        MaskFieldUtil.numericField(this.tfIdade);
     }
     
     private void edition() {        
@@ -188,7 +185,7 @@ public class CadFuncionarioController implements Initializable {
             
             this.tfCod.setText(f.getCod()+"");
             this.tfNome.setText(f.getNome());
-            this.tfIdade.setText(f.getIdade()+"");
+            this.dpDataNascimento.setValue(f.getDataNascimento());
             this.tfTelefone.setText(f.getTelefone());
             this.tfSalario.setText(strSal);
             
@@ -219,42 +216,52 @@ public class CadFuncionarioController implements Initializable {
 
     @FXML
     private void clkSalvar(ActionEvent event) {
-        int COD;
-        
-        try{
-            COD = Integer.parseInt(this.tfCod.getText());
-        }
-        catch(NumberFormatException e){
-            COD = 0;
-        }
-        
-        DALFuncionario dal = new DALFuncionario();
-        Funcionario f = new Funcionario(COD,
-                                        this.tfNome.getText(),
-                                        Integer.parseInt(this.tfIdade.getText()),
-                                        this.tfTelefone.getText(),
-                                        Double.parseDouble(this.convertStr(this.tfSalario.getText())));
+        boolean ans = true;
 
-        if(f.getCod() == 0){
-            if(dal.insert(f)){
-                this.snackbar("Funcionario gravado com sucesso!", "green");
-                
-                this.original();
-                this.loadTable("");
-            }
-            else{
-                this.snackbar("Problemas ao gravar Funcionario!", "red");
-            }
+        if(this.dpDataNascimento.getValue() == null || this.tfNome.getText().isEmpty() ||
+           this.tfSalario.getText().isEmpty() || this.tfTelefone.getText().isEmpty()){
+            ans = false;
+            this.snackbar("Alguns campos ainda precisam ser preenchidos", "red");
         }
-        else{
-            if(dal.update(f)){
-                this.snackbar("Funcionario atualizado com sucesso!", "green");
-                
-                this.original();
-                this.loadTable("");
+        
+        if(ans){
+            int COD;
+            
+            try{
+                COD = Integer.parseInt(this.tfCod.getText());
+            }
+            catch(NumberFormatException e){
+                COD = 0;
+            }
+
+            DALFuncionario dal = new DALFuncionario();
+            Funcionario f = new Funcionario(COD,
+                                            this.dpDataNascimento.getValue(),                        
+                                            this.tfNome.getText(),
+                                            this.tfTelefone.getText(),
+                                            Double.parseDouble(this.convertStr(this.tfSalario.getText())));
+            
+            if(f.getCod() == 0){
+                if(dal.insert(f)){
+                    this.snackbar("Funcionario gravado com sucesso!", "green");
+
+                    this.original();
+                    this.loadTable("");
+                }
+                else{
+                    this.snackbar("Problemas ao gravar Funcionario!", "red");
+                }
             }
             else{
-                this.snackbar("Problemas ao atualizar Funcionario!", "red");
+                if(dal.update(f)){
+                    this.snackbar("Funcionario atualizado com sucesso!", "green");
+
+                    this.original();
+                    this.loadTable("");
+                }
+                else{
+                    this.snackbar("Problemas ao atualizar Funcionario!", "red");
+                }
             }
         }
     }

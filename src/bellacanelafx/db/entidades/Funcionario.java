@@ -1,20 +1,23 @@
 package bellacanelafx.db.entidades;
 
+import java.time.LocalDate;
+
 public class Funcionario {
-    private int cod, idade;
+    private int cod;
+    private LocalDate dataNascimento;
     private String nome, telefone;
     private double salario;
 
-    public Funcionario(int cod, String nome, int idade, String telefone, double salario) {
+    public Funcionario(int cod, LocalDate dataNascimento, String nome, String telefone, double salario) {
         this.cod = cod;
-        this.idade = idade;
+        this.dataNascimento = dataNascimento;
         this.nome = nome;
         this.telefone = telefone;
         this.salario = salario;
     }
     
-    public Funcionario(String nome, int idade, String telefone, double salario) {
-        this(-1, nome, idade, telefone, salario);
+    public Funcionario(LocalDate dataNascimento, String nome, String telefone, double salario) {
+        this(0, dataNascimento, nome, telefone, salario);
     }
 
     public int getCod() {
@@ -25,12 +28,12 @@ public class Funcionario {
         this.cod = cod;
     }
 
-    public int getIdade() {
-        return idade;
+    public LocalDate getDataNascimento() {
+        return dataNascimento;
     }
 
-    public void setIdade(int idade) {
-        this.idade = idade;
+    public void setDataNascimento(LocalDate dataNascimento) {
+        this.dataNascimento = dataNascimento;
     }
 
     public String getNome() {

@@ -191,6 +191,10 @@ public class ConfSistemaController implements Initializable {
                 Logger.getLogger(ConfSistemaController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        else {
+            btcancelar.setDisable(true);
+            btcancelar.setVisible(false);
+        }
     }
     
     @Override
@@ -293,12 +297,11 @@ public class ConfSistemaController implements Initializable {
                 }
                 
             }
+            a.showAndWait();
+            arq = null;
+            flagIcone = 0;
+            HomeController.spnprincipal.setCenter(null);
         }    
-        
-        a.showAndWait();
-        arq = null;
-        flagIcone = 0;
-        HomeController.spnprincipal.setCenter(null);
     }
 
     @FXML

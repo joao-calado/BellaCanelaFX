@@ -4,14 +4,15 @@ import bellacanelafx.db.entidades.Funcionario;
 import bellacanelafx.db.util.Banco;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class DALFuncionario {
     public boolean insert(Funcionario f){
-        String SQL = "INSERT INTO Funcionarios(fun_cod, fun_nome, fun_idade, fun_telefone, fun_salario) VALUES(DEFAULT, '#1', '#2', '#3', '#4')";
+        String SQL = "INSERT INTO Funcionarios(fun_cod, fun_nome, fun_datanascimento, fun_telefone, fun_salario) VALUES(DEFAULT, '#1', '#2', '#3', '#4')";
         
         SQL = SQL.replaceAll("#1", f.getNome());
-        SQL = SQL.replaceAll("#2", f.getIdade()+"");
+        SQL = SQL.replaceAll("#2", f.getDataNascimento().toString());
         SQL = SQL.replaceAll("#3", f.getTelefone());
         SQL = SQL.replaceAll("#4", f.getSalario()+"");
         
@@ -19,10 +20,10 @@ public class DALFuncionario {
     }
     
     public boolean update(Funcionario f){
-        String SQL = "UPDATE Funcionarios SET fun_nome = '#1', fun_idade = '#2', fun_telefone = '#3', fun_salario = '#4' WHERE fun_cod = " + f.getCod();
+        String SQL = "UPDATE Funcionarios SET fun_nome = '#1', fun_datanascimento = '#2', fun_telefone = '#3', fun_salario = '#4' WHERE fun_cod = " + f.getCod();
         
         SQL = SQL.replaceAll("#1", f.getNome());
-        SQL = SQL.replaceAll("#2", f.getIdade()+"");
+        SQL = SQL.replaceAll("#2", f.getDataNascimento().toString());
         SQL = SQL.replaceAll("#3", f.getTelefone());
         SQL = SQL.replaceAll("#4", f.getSalario()+"");
         
@@ -44,7 +45,7 @@ public class DALFuncionario {
         
         ResultSet rs = Banco.getCon().consultar(SQL);
         try{
-            f = new Funcionario(rs.getInt("fun_cod"), rs.getString("fun_nome"), rs.getInt("fun_idade"), rs.getString("fun_telefone"), rs.getDouble("fun_salario"));
+            f = new Funcionario(rs.getInt("fun_cod"), rs.getDate("fun_datanascimento").toLocalDate(), rs.getString("fun_nome"), rs.getString("fun_telefone"), rs.getDouble("fun_salario"));
         }
         catch(SQLException e){
             System.out.println("ERRO AO CONSULTAR FUNCIONARIO.");
@@ -64,7 +65,7 @@ public class DALFuncionario {
         ResultSet rs = Banco.getCon().consultar(SQL);
         try{
             while(rs.next())
-                funcionarios.add(new Funcionario(rs.getInt("fun_cod"), rs.getString("fun_nome"), rs.getInt("fun_idade"), rs.getString("fun_telefone"), rs.getDouble("fun_salario")));
+                funcionarios.add(new Funcionario(rs.getInt("fun_cod"), rs.getDate("fun_datanascimento").toLocalDate(), rs.getString("fun_nome"), rs.getString("fun_telefone"), rs.getDouble("fun_salario")));
         }
         catch(SQLException e){
             
