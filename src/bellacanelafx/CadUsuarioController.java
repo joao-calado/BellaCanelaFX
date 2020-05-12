@@ -137,8 +137,11 @@ public class CadUsuarioController implements Initializable {
         this.btApagar.setDisable(true);
         this.btAlterar.setDisable(true);
         this.tfSearch.clear();
+        this.tfLogin.setDisable(false);
         this.tfLogin.requestFocus();
         this.cbNivel.getSelectionModel().select(0);
+        this.cbNivel.setDisable(false);
+        this.checkHabilitado.setDisable(false);
     }
     
     private void original() {
@@ -178,6 +181,7 @@ public class CadUsuarioController implements Initializable {
     @FXML
     private void clkNovo(ActionEvent event) {
         this.edition();
+        this.update = false;
     }
 
     @FXML
@@ -186,20 +190,21 @@ public class CadUsuarioController implements Initializable {
             Usuario u = (Usuario)this.tbUsuarios.getSelectionModel().getSelectedItem();
             DALUsuario dal = new DALUsuario();
             
-            if(dal.getUsuarios("user_nivel = 1").size() > 1 || u.getNivel() == 0){
-                this.edition();
-
-                this.tfLogin.setText(u.getLogin());
-                this.tfLogin.setDisable(true);
-                this.tfSenha.setText(u.getSenha());
-                this.tfConfirmarSenha.setText(u.getSenha());
-                this.cbNivel.getSelectionModel().select(u.getNivel());
-                this.checkHabilitado.setSelected(u.isHabilitado());
-
-                this.update = true;
+            this.edition();
+            
+            if(dal.getUsuarios("user_nivel = 1").size() == 1 && u.getNivel() != 0){
+                this.cbNivel.setDisable(true);
+                this.checkHabilitado.setDisable(true);
             }
-            else
-                this.snackbar("Você não pode alterar o ultimo ADM", "red");
+
+            this.tfLogin.setText(u.getLogin());
+            this.tfLogin.setDisable(true);
+            this.tfSenha.setText(u.getSenha());
+            this.tfConfirmarSenha.setText(u.getSenha());
+            this.cbNivel.getSelectionModel().select(u.getNivel());
+            this.checkHabilitado.setSelected(u.isHabilitado());
+            
+            this.update = true;
         }
     }
 
