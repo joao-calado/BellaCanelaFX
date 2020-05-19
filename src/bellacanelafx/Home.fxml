@@ -29,6 +29,7 @@
                 <Menu mnemonicParsing="false" text="Comanda">
                   <items>
                     <MenuItem mnemonicParsing="false" onAction="#clkComandas" text="Mostrar comandas" />
+                        <MenuItem mnemonicParsing="false" onAction="#clkSelecionarMesa" text="Selecionar Mesa" />
                   </items>
                 </Menu>
                   <Menu mnemonicParsing="false" text="Relatórios">

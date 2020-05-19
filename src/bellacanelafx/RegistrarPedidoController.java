@@ -8,6 +8,7 @@ import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -18,6 +19,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 public class RegistrarPedidoController implements Initializable {
 
@@ -65,14 +67,25 @@ public class RegistrarPedidoController implements Initializable {
     private JFXButton btDeletar;
     @FXML
     private JFXCheckBox checkTodasComandas;
+    @FXML
+    private JFXButton btSair;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
     }    
 
+    public void setNMesa(String num){
+        lbNMesa.setText(num);
+    }
+    
     @FXML
     private void clkTabela(MouseEvent event) {
         
+    }
+
+    @FXML
+    private void evtSair(ActionEvent event) {
+        ((Stage)(btSair.getParent().getScene().getWindow())).close();
     }
     
 }

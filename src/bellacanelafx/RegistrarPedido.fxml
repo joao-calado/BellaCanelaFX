@@ -56,6 +56,11 @@
                         <Insets />
                      </HBox.margin>
                   </HBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <JFXButton fx:id="btSair" onAction="#evtSair" prefHeight="25.0" prefWidth="132.0" ripplerFill="#6e5148" style="-fx-background-color: #4d2f27;" text="Sair" />
+                     </children>
+                  </HBox>
                </children>
             </HBox>
             <AnchorPane fx:id="apdados" prefHeight="224.0" prefWidth="798.0" style="-fx-background-color: #D7CCC8;">
@@ -75,7 +80,7 @@
                   <JFXDatePicker fx:id="dpData" defaultColor="#699933" disable="true" layoutX="583.0" layoutY="29.0" prefHeight="25.0" prefWidth="187.0" promptText="Data de abertura" />
                   <JFXTextField fx:id="tfDescricao" disable="true" focusColor="#699933" labelFloat="true" layoutX="36.0" layoutY="68.0" prefHeight="25.0" prefWidth="727.0" promptText="Descrição" />
                   <JFXComboBox fx:id="cbComanda" focusColor="#699933" labelFloat="true" layoutX="36.0" layoutY="112.0" prefHeight="25.0" prefWidth="287.0" promptText="Comandas" />
-                  <JFXTextField fx:id="tfPrecoTotComanda" disable="true" editable="false" focusColor="#699933" labelFloat="true" layoutX="340.0" layoutY="113.0" prefHeight="25.0" prefWidth="200.0" promptText="Preço total da comanda" />
+                  <JFXTextField fx:id="tfPrecoTotComanda" disable="true" editable="false" focusColor="#699933" labelFloat="true" layoutX="340.0" layoutY="113.0" prefHeight="25.0" prefWidth="200.0" promptText="Valor total da comanda" />
                   <JFXButton fx:id="btAddComanda" buttonType="RAISED" layoutX="555.0" layoutY="112.0" prefHeight="25.0" prefWidth="96.0" ripplerFill="#abea62" styleClass="buttonTelas" text="Add Comanda" />
                   <JFXComboBox fx:id="cbProdutos" focusColor="#699933" labelFloat="true" layoutX="36.0" layoutY="166.0" prefHeight="25.0" prefWidth="394.0" promptText="Selecione o Produto" />
                   <Spinner fx:id="spQtde" layoutX="446.0" layoutY="166.0" prefHeight="30.0" prefWidth="96.0" />

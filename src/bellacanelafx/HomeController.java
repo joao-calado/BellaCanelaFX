@@ -201,5 +201,18 @@ public class HomeController implements Initializable {
             System.out.println(ex);
         }
     }
+
+    @FXML
+    private void clkSelecionarMesa(ActionEvent event) {
+        try 
+        {
+            Parent root;
+            root = FXMLLoader.load(getClass().getResource("SelecionarMesa.fxml"));
+            pnprincipal.setCenter(root);
+        } 
+        catch (IOException ex) {
+            System.out.println(ex);
+        }
+    }
     
 }

@@ -11,9 +11,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="214.0" prefWidth="798.0" style="-fx-background-color: #5D4037;" stylesheets="@css/green-brown-theme.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bellacanelafx.AbrirComandaController">
+<AnchorPane prefHeight="253.0" prefWidth="798.0" style="-fx-background-color: #5D4037;" stylesheets="@css/green-brown-theme.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bellacanelafx.AbrirComandaController">
    <children>
-      <AnchorPane fx:id="apdados" layoutY="61.0" prefHeight="153.0" prefWidth="798.0" style="-fx-background-color: #D7CCC8;">
+      <AnchorPane fx:id="apdados" layoutY="61.0" prefHeight="194.0" prefWidth="798.0" style="-fx-background-color: #D7CCC8;">
          <children>
             <Label layoutX="501.0" layoutY="113.0" text="*" textFill="RED">
                <tooltip>
@@ -26,11 +26,13 @@
                   <Font name="Tahoma Bold" size="12.0" />
                </font>
             </Label>
-            <JFXDatePicker fx:id="dpData" defaultColor="#699933" layoutX="583.0" layoutY="29.0" prefHeight="25.0" prefWidth="187.0" promptText="Data de abertura" />
-            <JFXTextField fx:id="tfDescricao" focusColor="#699933" labelFloat="true" layoutX="36.0" layoutY="68.0" prefHeight="25.0" prefWidth="727.0" promptText="Descrição" />
-            <JFXButton fx:id="btAbrirComanda" buttonType="RAISED" layoutX="36.0" layoutY="108.0" prefHeight="25.0" prefWidth="104.0" ripplerFill="#abea62" styleClass="buttonTelas" text="Abrir Comanda" />
-            <JFXComboBox fx:id="cbNome" editable="true" focusColor="#699933" labelFloat="true" layoutX="36.0" layoutY="29.0" prefHeight="25.0" prefWidth="391.0" promptText="Nome do cliente" />
-            <JFXTextField fx:id="tfNumComanda" focusColor="#699933" labelFloat="true" layoutX="443.0" layoutY="29.0" prefHeight="25.0" prefWidth="124.0" promptText="Nº da comanda" />
+            <JFXDatePicker fx:id="dpData" defaultColor="#699933" layoutX="579.0" layoutY="61.0" prefHeight="25.0" prefWidth="187.0" promptText="Data de abertura" />
+            <JFXTextField fx:id="tfDescricao" focusColor="#699933" labelFloat="true" layoutX="32.0" layoutY="100.0" prefHeight="25.0" prefWidth="727.0" promptText="Descrição" />
+            <JFXButton fx:id="btAbrirComanda" buttonType="RAISED" layoutX="32.0" layoutY="140.0" prefHeight="25.0" prefWidth="104.0" ripplerFill="#abea62" styleClass="buttonTelas" text="Abrir Comanda" />
+            <JFXComboBox fx:id="cbNome" editable="true" focusColor="#699933" labelFloat="true" layoutX="32.0" layoutY="61.0" prefHeight="25.0" prefWidth="391.0" promptText="Nome do cliente" />
+            <JFXTextField fx:id="tfNumComanda" focusColor="#699933" labelFloat="true" layoutX="439.0" layoutY="61.0" prefHeight="25.0" prefWidth="124.0" promptText="Nº da comanda" />
+            <JFXButton fx:id="btCancelar" buttonType="RAISED" layoutX="166.0" layoutY="140.0" onAction="#evtCancelar" prefHeight="25.0" prefWidth="104.0" ripplerFill="#abea62" styleClass="buttonTelas" text="Cancelar" />
+            <JFXTextField fx:id="tfNMesa" disable="true" focusColor="#699933" labelFloat="true" layoutX="32.0" layoutY="23.0" promptText="Nº da mesa" />
          </children>
       </AnchorPane>
       <HBox alignment="CENTER" prefHeight="61.0" prefWidth="798.0" style="-fx-background-color: #5D4037;" styleClass="root">
