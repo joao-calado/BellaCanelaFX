@@ -349,7 +349,7 @@ public class CadProdutosController implements Initializable {
             }
         }
         else{
-            f = new Produtos(Integer.parseInt(this.tfCod.getText()),this.colNome.getText(), cbCategoria.getValue(), cbMedida.getValue(), Double.parseDouble(this.convertStr(this.tfPreço.getText())));
+            f = new Produtos(Integer.parseInt(this.tfCod.getText()),this.tfNome.getText(), cbCategoria.getValue(), cbMedida.getValue(), Double.parseDouble(this.convertStr(this.tfPreço.getText())));
             if(flag && dal.alterar(f)){
                 this.snackbar("Produto atualizado com sucesso!", "green");
                 
