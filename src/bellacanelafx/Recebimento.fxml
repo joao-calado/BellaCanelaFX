@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<SplitPane fx:id="painel" dividerPositions="0.5166666666666667" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="542.0" prefWidth="800.0" stylesheets="@css/green-brown-theme.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bellacanelafx.RecebimentoController">
+   <items>
+      <VBox prefHeight="257.0" prefWidth="598.0">
+         <children>
+            <HBox alignment="CENTER" prefHeight="61.0" prefWidth="798.0" styleClass="root">
+               <children>
+                  <Label opacity="0.75" text="Fechar Comandas" textFill="WHITE">
+                     <font>
+                        <Font name="Tahoma Bold" size="24.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="56.0" prefWidth="798.0" style="-fx-background-color: #5D4037;">
+               <children>
+                  <Label opacity="0.75" text="Mesa Nº " textFill="WHITE">
+                     <font>
+                        <Font name="Tahoma Bold" size="14.0" />
+                     </font>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <HBox.margin>
+                        <Insets right="200.0" />
+                     </HBox.margin>
+                  </Label>
+                  <JFXComboBox focusColor="#699933" labelFloat="true" opacity="0.75" prefHeight="25.0" prefWidth="139.0" promptText="Selecione a comanda" style="-fx-background-color: #D7CCC8;" unFocusColor="#212121">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></JFXComboBox>
+                  <JFXButton text="Cancelar">
+                     <HBox.margin>
+                        <Insets left="200.0" />
+                     </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </HBox>
+            <TableView onMouseClicked="#clkTabelaAddProduto" prefHeight="161.0" prefWidth="798.0" styleClass="menubar">
+               <columns>
+                  <TableColumn editable="false" maxWidth="1.7976931348623157E308" minWidth="397.0" prefWidth="545.0" text="Produto" />
+                  <TableColumn editable="false" maxWidth="316.0" minWidth="68.0" prefWidth="127.0" text="Quantidade" />
+                  <TableColumn editable="false" maxWidth="300.0" minWidth="82.0" prefWidth="125.0" text="Valor" />
+               </columns>
+            </TableView>
+         </children>
+      </VBox>
+      <VBox prefHeight="200.0" prefWidth="100.0">
+         <children>
+            <HBox alignment="CENTER" prefHeight="74.0" prefWidth="798.0" style="-fx-background-color: #5D4037;">
+               <children>
+                  <JFXComboBox focusColor="#699933" labelFloat="true" opacity="0.75" prefHeight="25.0" prefWidth="139.0" promptText="Tipo de recebimento" style="-fx-background-color: #D7CCC8;" unFocusColor="#212121">
+                     <HBox.margin>
+                        <Insets right="30.0" />
+                     </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXComboBox>
+                  <JFXTextField focusColor="#699933" labelFloat="true" opacity="0.75" prefHeight="25.0" prefWidth="41.0" promptText="Valor" style="-fx-background-color: #D7CCC8;" unFocusColor="#212121">
+                     <HBox.margin>
+                        <Insets right="30.0" />
+                     </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </JFXTextField>
+                  <JFXDatePicker defaultColor="#699933" opacity="0.75" prefHeight="25.0" prefWidth="105.0" promptText="Vencimento" style="-fx-background-color: #D7CCC8;">
+                     <HBox.margin>
+                        <Insets right="30.0" />
+                     </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXDatePicker>
+                  <JFXButton text="Inserir">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <HBox.margin>
+                        <Insets left="150.0" />
+                     </HBox.margin>
+                  </JFXButton>
+                  <JFXButton text="Excluir">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <HBox.margin>
+                        <Insets left="30.0" />
+                     </HBox.margin>
+                  </JFXButton>
+               </children>
+            </HBox>
+            <TableView onMouseClicked="#clkTabelaAddProduto" prefHeight="136.0" prefWidth="798.0" styleClass="menubar">
+               <columns>
+                  <TableColumn editable="false" maxWidth="1.7976931348623157E308" minWidth="329.0" prefWidth="386.0" text="Tipo do recebimento" />
+                  <TableColumn editable="false" maxWidth="300.0" minWidth="74.0" prefWidth="132.0" text="Valor" />
+                  <TableColumn prefWidth="148.0" text="Data de recebimento" />
+                  <TableColumn maxWidth="301.0" minWidth="131.0" prefWidth="131.0" text="Data de vencimento" />
+               </columns>
+            </TableView>
+            <HBox alignment="CENTER" prefHeight="48.0" prefWidth="798.0" style="-fx-background-color: #5D4037;">
+               <children>
+                  <JFXButton text="Fechar Comanda">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></JFXButton>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </items>
+</SplitPane>
