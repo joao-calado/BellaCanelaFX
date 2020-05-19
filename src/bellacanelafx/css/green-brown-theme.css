@@ -31,10 +31,44 @@
     -fx-background-radius: 12px;
 }
 
+/*Minha ideia de button para as telas, podem melhorar*/
+.buttonTelas {
+    -fx-border-color: transparent;
+    -fx-border-radius: 5px;
+    -fx-font: 12px "Tahoma";
+    -fx-text-fill: white;
+    -fx-opacity: 0.85;
+    -fx-background-radius: 5px;
+    -fx-background-color: #699933;
+    -fx-effect: dropshadow(three-pass-box, rgba(170, 170, 170, 1), 2, 0.5, 0, 0);
+}
+
+.buttonTelas:disabled {
+    -fx-opacity: 0.5;
+}
+
 .textFild {
-    
     -fx-font: 12px "Tahoma";
     -fx-text-fill: primary-text-color;
     -fx-opacity: 0.9;
     -fx-prompt-text-fill: primary-text-color;
 }
+
+/*Spinner do javafx, tentando deixar mais parecido com o jfoenix*/
+.spinner {
+    -fx-prompt-text-fill: black;
+    -fx-text-fill: black;
+    -fx-background-color: none;
+
+    -fx-padding: 0 0 3 0;   
+}
+.spinner .increment-arrow-button,
+.spinner .decrement-arrow-button {
+    -fx-background-color: transparent;
+}
+
+.spinner .text-field {
+    -fx-background-color: transparent;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: #bdbdbd;
+} 
