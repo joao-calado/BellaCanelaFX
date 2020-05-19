@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<SplitPane dividerPositions="0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bellacanelafx.QuitarPgtosController">
+   <items>
+      <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="204.0" prefWidth="798.0">
+         <children>
+            <HBox alignment="CENTER" prefHeight="40.0" prefWidth="598.0" spacing="40.0" style="-fx-background-color: #5D4037;">
+               <children>
+                  <JFXButton fx:id="btalterar" onAction="#clkBtAlterar" text="Quitar">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                  <JFXButton fx:id="btapagar" onAction="#clkBtApagar" text="Estornar">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                  <JFXButton fx:id="btsalvar" onAction="#clkBtSalvar" text="Selecionar">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                  <JFXButton fx:id="btcancelar" onAction="#clkBtCancelar" text="Cancelar">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+               </children>
+            </HBox>
+            <AnchorPane fx:id="apDados" prefHeight="175.0" prefWidth="798.0" style="-fx-background-color: #D7CCC8;">
+               <children>
+                  <JFXTextField fx:id="txCod" disable="true" focusColor="#699933" layoutX="87.0" layoutY="57.0" prefHeight="25.0" prefWidth="78.0" promptText="Código" styleClass="textFild" unFocusColor="#212121">
+                     <cursor>
+                        <Cursor fx:constant="CLOSED_HAND" />
+                     </cursor>
+                  </JFXTextField>
+                  <JFXTextField fx:id="txNome" focusColor="#699933" labelFloat="true" layoutX="195.0" layoutY="57.0" prefHeight="25.0" prefWidth="136.0" promptText="Nome " styleClass="textFild" unFocusColor="#212121">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </JFXTextField>
+                  <JFXTextField fx:id="txDesc" focusColor="#699933" labelFloat="true" layoutX="362.0" layoutY="57.0" prefHeight="25.0" prefWidth="186.0" promptText="Descrição" styleClass="textFild" unFocusColor="#212121">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </JFXTextField>
+                  <JFXTextField fx:id="txValorpago" focusColor="#699933" labelFloat="true" layoutX="438.0" layoutY="114.0" prefHeight="25.0" prefWidth="102.0" promptText="Valor Pago" styleClass="textFild" unFocusColor="#212121">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </JFXTextField>
+                  <JFXDatePicker fx:id="dtVencimento" layoutX="87.0" layoutY="114.0" prefHeight="25.0" prefWidth="136.0" promptText="Vencimento" />
+                  <JFXDatePicker fx:id="dtPagamento" layoutX="263.0" layoutY="114.0" prefHeight="25.0" prefWidth="136.0" promptText="Pagamento" />
+                  <JFXTextField fx:id="txValor" disable="true" focusColor="#699933" labelFloat="true" layoutX="581.0" layoutY="57.0" prefHeight="25.0" prefWidth="102.0" promptText="Valor" styleClass="textFild" unFocusColor="#212121">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </JFXTextField>
+                  <Label layoutX="14.0" layoutY="8.0" text="Quitar Pagamentos">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <JFXTextField fx:id="txValorpago1" focusColor="#699933" labelFloat="true" layoutX="581.0" layoutY="114.0" prefHeight="25.0" prefWidth="102.0" promptText="Desconto/Juros" styleClass="textFild" unFocusColor="#212121">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </JFXTextField>
+               </children>
+            </AnchorPane>
+         </children>
+      </VBox>
+      <VBox fx:id="pnSearch" prefHeight="206.0" prefWidth="598.0">
+         <children>
+            <HBox alignment="CENTER" prefHeight="48.0" prefWidth="798.0" spacing="20.0" style="-fx-background-color: #D7CCC8;" />
+            <TableView fx:id="tabela" onMouseClicked="#clkTabela" prefHeight="254.0" prefWidth="798.0" style="-fx-background-color: #D7CCC8;">
+               <columns>
+                  <TableColumn fx:id="colCod" editable="false" maxWidth="60.0" minWidth="60.0" prefWidth="60.0" text="Código" />
+                  <TableColumn fx:id="colNome" editable="false" maxWidth="200.0" minWidth="150.0" prefWidth="150.0" text="Nome" />
+                  <TableColumn fx:id="colEmail" editable="false" maxWidth="250.0" minWidth="100.0" prefWidth="100.0" text="Valor" />
+                  <TableColumn fx:id="colDesc1" editable="false" maxWidth="1.7976931348623157E308" minWidth="180.0" prefWidth="180.0" text="Descrição" />
+                  <TableColumn fx:id="colFone" editable="false" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" text="Vencimento" />
+                  <TableColumn fx:id="colDesc" editable="false" maxWidth="1.7976931348623157E308" minWidth="150.0" prefWidth="150.0" text="Pagamento" />
+               </columns>
+            </TableView>
+         </children>
+      </VBox>
+   </items>
+</SplitPane>

@@ -162,5 +162,13 @@ public class HomeController implements Initializable {
             System.out.println(ex);
         }
     }
+
+    @FXML
+    private void clkQuitarpagamento(ActionEvent event) {
+    }
+
+    @FXML
+    private void clkResgistrarcompra(ActionEvent event) {
+    }
     
 }
