@@ -165,10 +165,28 @@ public class HomeController implements Initializable {
 
     @FXML
     private void clkQuitarpagamento(ActionEvent event) {
+        try 
+        {
+            Parent root;
+            root = FXMLLoader.load(getClass().getResource("QuitarPgtos.fxml"));
+            pnprincipal.setCenter(root);
+        } 
+        catch (IOException ex) {
+            System.out.println(ex);
+        }
     }
 
     @FXML
     private void clkResgistrarcompra(ActionEvent event) {
+        try 
+        {
+            Parent root;
+            root = FXMLLoader.load(getClass().getResource("RegistrarCompra.fxml"));
+            pnprincipal.setCenter(root);
+        } 
+        catch (IOException ex) {
+            System.out.println(ex);
+        }
     }
     
 }

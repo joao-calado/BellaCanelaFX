@@ -13,6 +13,8 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
@@ -26,12 +28,6 @@ import javafx.scene.layout.VBox;
  */
 public class QuitarPgtosController implements Initializable {
 
-    @FXML
-    private JFXButton btalterar;
-    @FXML
-    private JFXButton btapagar;
-    @FXML
-    private JFXButton btsalvar;
     @FXML
     private JFXButton btcancelar;
     @FXML
@@ -59,15 +55,37 @@ public class QuitarPgtosController implements Initializable {
     @FXML
     private TableColumn<?, ?> colNome;
     @FXML
-    private TableColumn<?, ?> colEmail;
-    @FXML
-    private TableColumn<?, ?> colDesc1;
-    @FXML
-    private TableColumn<?, ?> colFone;
-    @FXML
     private TableColumn<?, ?> colDesc;
     @FXML
-    private JFXTextField txValorpago1;
+    private SplitPane pane;
+    @FXML
+    private JFXButton btQuitar;
+    @FXML
+    private JFXButton btEstornar;
+    @FXML
+    private JFXButton btSelecionar;
+    @FXML
+    private JFXTextField txDescJuros;
+    @FXML
+    private RadioButton rbAntesde;
+    @FXML
+    private JFXDatePicker dpAntesde;
+    @FXML
+    private RadioButton rbDepoisde;
+    @FXML
+    private JFXDatePicker dpDepoisde;
+    @FXML
+    private RadioButton rbPago;
+    @FXML
+    private RadioButton rbAPagar;
+    @FXML
+    private RadioButton rbVencido;
+    @FXML
+    private TableColumn<?, ?> colValor;
+    @FXML
+    private TableColumn<?, ?> colVencimento;
+    @FXML
+    private TableColumn<?, ?> colPagamento;
 
     /**
      * Initializes the controller class.
@@ -77,17 +95,6 @@ public class QuitarPgtosController implements Initializable {
         // TODO
     }    
 
-    @FXML
-    private void clkBtAlterar(ActionEvent event) {
-    }
-
-    @FXML
-    private void clkBtApagar(ActionEvent event) {
-    }
-
-    @FXML
-    private void clkBtSalvar(ActionEvent event) {
-    }
 
     @FXML
     private void clkBtCancelar(ActionEvent event) {
@@ -95,6 +102,18 @@ public class QuitarPgtosController implements Initializable {
 
     @FXML
     private void clkTabela(MouseEvent event) {
+    }
+
+    @FXML
+    private void clkBtQuitar(ActionEvent event) {
+    }
+
+    @FXML
+    private void clkBtEstornar(ActionEvent event) {
+    }
+
+    @FXML
+    private void clkBtSelecionar(ActionEvent event) {
     }
     
 }
