@@ -46,17 +46,17 @@ public class HomeController implements Initializable {
         vbnavegacao = vbNavegacao;
         micadastros = miCadastros;
         
-//        this.vbNavegacao.setDisable(true);
-//        
-//        try 
-//        {
-//            Parent root;
-//            root = FXMLLoader.load(getClass().getResource("login.fxml"));
-//            pnprincipal.setCenter(root);
-//        } 
-//        catch (IOException ex) {
-//            System.out.println(ex);
-//        }
+        this.vbNavegacao.setDisable(true);
+        
+        try 
+        {
+            Parent root;
+            root = FXMLLoader.load(getClass().getResource("login.fxml"));
+            pnprincipal.setCenter(root);
+        } 
+        catch (IOException ex) {
+            System.out.println(ex);
+        }
     }    
 
     @FXML
