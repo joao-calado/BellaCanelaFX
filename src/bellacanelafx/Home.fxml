@@ -28,7 +28,7 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="Comanda">
                   <items>
-                    <MenuItem mnemonicParsing="false" text="Mostrar comandas" />
+                    <MenuItem mnemonicParsing="false" onAction="#clkComandas" text="Mostrar comandas" />
                   </items>
                 </Menu>
                   <Menu mnemonicParsing="false" text="Relatórios">
