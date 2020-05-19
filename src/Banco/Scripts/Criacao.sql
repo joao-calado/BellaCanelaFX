@@ -16,6 +16,41 @@ CREATE TABLE Usuarios (
 	CONSTRAINT pk_usuarios PRIMARY KEY (user_login)
 );
 
+CREATE TABLE Mesa (
+    mes_cod SERIAL,
+
+    mes_liberada BOOLEAN NOT NULL,
+
+    CONSTRAINT pk_mes PRIMARY KEY (mes_cod)
+);
+
+CREATE TABLE Comanda (
+    com_num INTEGER NOT NULL,
+    mes_cod INTEGER NOT NULL,
+
+    cli_cod INTEGER,
+    cli_nome VARCHAR(50),
+    com_data DATE NOT NULL,
+    com_descricao VARCHAR(200),
+
+    CONSTRAINT pk_com PRIMARY KEY (com_num, mes_cod),
+    CONSTRAINT fk_mes_com FOREIGN KEY (mes_cod) REFERENCES Mesa,
+    CONSTRAINT fk_cli_com FOREIGN KEY (cli_cod) REFERENCES Cliente
+);
+
+CREATE TABLE ItensDaComanda (
+    com_num INTEGER NOT NULL,
+    mes_cod INTEGER NOT NULL,
+    prod_cod INTEGER NOT NULL,
+
+    itens_qtde INTEGER NOT NULL,
+    
+    CONSTRAINT pk_itens PRIMARY KEY (com_num, mes_cod, prod_cod),
+    CONSTRAINT fk_com_itens FOREIGN KEY (com_num, mes_cod) REFERENCES Comanda,
+    CONSTRAINT fk_prod_itens FOREIGN KEY (prod_cod) REFERENCES Produto
+);
+
+
 create table cliente(
     cli_cod SERIAL,
     cli_nome varchar(50) not null,
