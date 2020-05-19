@@ -7,7 +7,7 @@ INSERT INTO Usuarios(user_login, user_senha, user_nivel, user_habilitado) VALUES
 INSERT INTO Usuarios(user_login, user_senha, user_nivel, user_habilitado) VALUES('ana', '123'    , 0, false);
 
 /*====================TABELA DE FUNCIONARIOS=====================*/
-INSERT INTO Funcionarios(fun_cod, fun_nome, fun_datanascimento, fun_telefone, fun_salario) VALUES(DEFAULT, 'Evandro', '10/13/1999', '(18)99105-8156', 2000.00);
+INSERT INTO Funcionarios(fun_cod, fun_nome, fun_datanascimento, fun_telefone, fun_salario) VALUES(DEFAULT, 'Evandro', '10/02/1999', '(18)99105-8156', 2000.00); 
 INSERT INTO Funcionarios(fun_cod, fun_nome, fun_datanascimento, fun_telefone, fun_salario) VALUES(DEFAULT, 'Carlos', '31/01/2000', '(12)99205-4156', 1356.75);
 INSERT INTO Funcionarios(fun_cod, fun_nome, fun_datanascimento, fun_telefone, fun_salario) VALUES(DEFAULT, 'Ana', '15/07/1997', '(12)45678-9988', 1532);
 
