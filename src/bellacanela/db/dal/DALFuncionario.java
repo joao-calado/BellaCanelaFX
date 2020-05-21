@@ -4,7 +4,6 @@ import bellacanelafx.db.entidades.Funcionario;
 import bellacanelafx.db.util.Banco;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class DALFuncionario {

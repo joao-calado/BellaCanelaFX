@@ -28,8 +28,7 @@ CREATE TABLE Comanda (
     com_num INTEGER NOT NULL,
     mes_cod INTEGER NOT NULL,
 
-    cli_cod INTEGER,
-    cli_nome VARCHAR(50),
+    cli_cod INTEGER NOT NULL,
     com_data DATE NOT NULL,
     com_descricao VARCHAR(200),
 

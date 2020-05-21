@@ -15,7 +15,14 @@
    <children>
       <AnchorPane fx:id="apdados" layoutY="61.0" prefHeight="194.0" prefWidth="798.0" style="-fx-background-color: #D7CCC8;">
          <children>
-            <Label layoutX="501.0" layoutY="113.0" text="*" textFill="RED">
+            <JFXComboBox fx:id="cbNome" focusColor="#699933" labelFloat="true" layoutX="32.0" layoutY="61.0" prefHeight="25.0" prefWidth="391.0" promptText="Nome do cliente" />
+            <JFXTextField fx:id="tfNumComanda" focusColor="#699933" labelFloat="true" layoutX="439.0" layoutY="61.0" prefHeight="25.0" prefWidth="124.0" promptText="Nº da comanda" />
+            <JFXDatePicker fx:id="dpData" defaultColor="#699933" layoutX="579.0" layoutY="61.0" prefHeight="25.0" prefWidth="187.0" promptText="Data de abertura" />
+            <JFXTextField fx:id="tfDescricao" focusColor="#699933" labelFloat="true" layoutX="32.0" layoutY="100.0" prefHeight="25.0" prefWidth="726.0" promptText="Descrição" />
+            <JFXButton fx:id="btAbrirComanda" buttonType="RAISED" layoutX="32.0" layoutY="140.0" onAction="#evtAbrirComanda" prefHeight="25.0" prefWidth="104.0" ripplerFill="#abea62" styleClass="buttonTelas" text="Abrir Comanda" />
+            <JFXButton fx:id="btCancelar" buttonType="RAISED" layoutX="166.0" layoutY="140.0" onAction="#evtCancelar" prefHeight="25.0" prefWidth="104.0" ripplerFill="#abea62" styleClass="buttonTelas" text="Cancelar" />
+            <JFXTextField fx:id="tfNMesa" disable="true" focusColor="#699933" labelFloat="true" layoutX="32.0" layoutY="23.0" promptText="Nº da mesa" />
+            <Label layoutX="425.0" layoutY="69.0" text="*" textFill="RED">
                <tooltip>
                   <Tooltip style="-fx-opacity: 0.5; -fx-background-color: red;" text="campo obrigatório" />
                </tooltip>
@@ -26,13 +33,28 @@
                   <Font name="Tahoma Bold" size="12.0" />
                </font>
             </Label>
-            <JFXDatePicker fx:id="dpData" defaultColor="#699933" layoutX="579.0" layoutY="61.0" prefHeight="25.0" prefWidth="187.0" promptText="Data de abertura" />
-            <JFXTextField fx:id="tfDescricao" focusColor="#699933" labelFloat="true" layoutX="32.0" layoutY="100.0" prefHeight="25.0" prefWidth="727.0" promptText="Descrição" />
-            <JFXButton fx:id="btAbrirComanda" buttonType="RAISED" layoutX="32.0" layoutY="140.0" prefHeight="25.0" prefWidth="104.0" ripplerFill="#abea62" styleClass="buttonTelas" text="Abrir Comanda" />
-            <JFXComboBox fx:id="cbNome" editable="true" focusColor="#699933" labelFloat="true" layoutX="32.0" layoutY="61.0" prefHeight="25.0" prefWidth="391.0" promptText="Nome do cliente" />
-            <JFXTextField fx:id="tfNumComanda" focusColor="#699933" labelFloat="true" layoutX="439.0" layoutY="61.0" prefHeight="25.0" prefWidth="124.0" promptText="Nº da comanda" />
-            <JFXButton fx:id="btCancelar" buttonType="RAISED" layoutX="166.0" layoutY="140.0" onAction="#evtCancelar" prefHeight="25.0" prefWidth="104.0" ripplerFill="#abea62" styleClass="buttonTelas" text="Cancelar" />
-            <JFXTextField fx:id="tfNMesa" disable="true" focusColor="#699933" labelFloat="true" layoutX="32.0" layoutY="23.0" promptText="Nº da mesa" />
+            <Label layoutX="563.0" layoutY="70.0" text="*" textFill="RED">
+               <tooltip>
+                  <Tooltip style="-fx-opacity: 0.5; -fx-background-color: red;" text="campo obrigatório" />
+               </tooltip>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font name="Tahoma Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="762.0" layoutY="71.0" text="*" textFill="RED">
+               <tooltip>
+                  <Tooltip style="-fx-opacity: 0.5; -fx-background-color: red;" text="campo obrigatório" />
+               </tooltip>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font name="Tahoma Bold" size="12.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
       <HBox alignment="CENTER" prefHeight="61.0" prefWidth="798.0" style="-fx-background-color: #5D4037;" styleClass="root">

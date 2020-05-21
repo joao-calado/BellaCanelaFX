@@ -48,6 +48,7 @@ public class DALMesa {
         String SQL = "SELECT * FROM Mesa";
         if(!filter.equals(""))
             SQL += " WHERE " + filter;
+        SQL += " ORDER BY mes_cod";
         
         ArrayList<Mesa> mesas = new ArrayList();
         

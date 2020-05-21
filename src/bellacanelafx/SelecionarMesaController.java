@@ -19,6 +19,10 @@ public class SelecionarMesaController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        loadMesas();
+    }    
+    
+    public void loadMesas(){
         dal.getMesas("").forEach((m) -> {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("Mesa.fxml"));
@@ -35,6 +39,6 @@ public class SelecionarMesaController implements Initializable {
                 System.out.println("DEU ERRO AO CARREGAR AS MESAS.");
             }
         });
-    }    
+    }
     
 }
