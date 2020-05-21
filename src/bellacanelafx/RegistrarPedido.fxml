@@ -82,8 +82,8 @@
                   <JFXComboBox fx:id="cbComanda" focusColor="#699933" labelFloat="true" layoutX="36.0" layoutY="112.0" onAction="#evtTrocarComanda" prefHeight="25.0" prefWidth="287.0" promptText="Comandas" />
                   <JFXTextField fx:id="tfPrecoTotComanda" disable="true" editable="false" focusColor="#699933" labelFloat="true" layoutX="340.0" layoutY="113.0" prefHeight="25.0" prefWidth="200.0" promptText="Valor total da comanda" />
                   <JFXButton fx:id="btAddComanda" buttonType="RAISED" layoutX="555.0" layoutY="112.0" onAction="#evtAddComanda" prefHeight="25.0" prefWidth="96.0" ripplerFill="#abea62" styleClass="buttonTelas" text="Add Comanda" />
-                  <JFXComboBox fx:id="cbProdutos" focusColor="#699933" labelFloat="true" layoutX="36.0" layoutY="166.0" prefHeight="25.0" prefWidth="394.0" promptText="Selecione o Produto" />
-                  <Spinner fx:id="spQtde" layoutX="446.0" layoutY="166.0" prefHeight="30.0" prefWidth="96.0" />
+                  <JFXComboBox fx:id="cbProdutos" focusColor="#699933" labelFloat="true" layoutX="36.0" layoutY="166.0" onAction="#atualizarComponentesEstaticos" prefHeight="25.0" prefWidth="287.0" promptText="Selecione o Produto" />
+                  <Spinner fx:id="spQtde" layoutX="454.0" layoutY="166.0" prefHeight="30.0" prefWidth="88.0" />
                   <JFXButton fx:id="btInserir" buttonType="RAISED" layoutX="555.0" layoutY="168.0" onAction="#evtInserirProduto" prefHeight="25.0" prefWidth="96.0" ripplerFill="#abea62" styleClass="buttonTelas" text="Inserir" />
                   <JFXButton fx:id="btDeletar" buttonType="RAISED" layoutX="663.0" layoutY="168.0" onAction="#evtDeletarProduto" prefHeight="25.0" prefWidth="96.0" ripplerFill="#abea62" styleClass="buttonTelas" text="Deletar" />
                   <JFXCheckBox fx:id="checkTodasComandas" checkedColor="#699933" layoutX="665.0" layoutY="105.0" onAction="#evtMostrarTodasAsComandas" prefHeight="40.0" prefWidth="93.0" text="Mostrar todas comandas" wrapText="true">
@@ -91,6 +91,7 @@
                         <Font size="9.0" />
                      </font>
                   </JFXCheckBox>
+                  <JFXTextField fx:id="tfPrecoUni" disable="true" focusColor="#699933" labelFloat="true" layoutX="340.0" layoutY="166.0" prefHeight="25.0" prefWidth="96.0" promptText="Preço Unitário" />
                </children>
             </AnchorPane>
          </children>
@@ -101,10 +102,9 @@
             <TableView fx:id="tabela" onMouseClicked="#clkTabela" prefHeight="241.0" prefWidth="798.0" style="-fx-background-color: #D7CCC8;">
                <columns>
                   <TableColumn fx:id="colComanda" editable="false" maxWidth="88.0" minWidth="60.0" prefWidth="88.0" text="Comanda" />
-                  <TableColumn fx:id="colNome" editable="false" maxWidth="373.0" minWidth="60.0" prefWidth="350.0" text="Nome" />
-                  <TableColumn fx:id="colPrecoUni" editable="false" maxWidth="255.0" minWidth="0.0" prefWidth="125.0" text="Preço Unitário" />
-                  <TableColumn fx:id="colQtde" editable="false" maxWidth="241.0" minWidth="21.0" prefWidth="114.0" text="Quantidade" />
-                  <TableColumn fx:id="colPrecoTot" editable="false" maxWidth="384.0" minWidth="60.0" prefWidth="120.0" text="Preço total" />
+                  <TableColumn fx:id="colNome" editable="false" maxWidth="428.0" minWidth="60.0" prefWidth="428.0" text="Nome" />
+                  <TableColumn fx:id="colQtde" editable="false" maxWidth="241.0" minWidth="21.0" prefWidth="162.0" text="Quantidade" />
+                  <TableColumn fx:id="colPrecoTot" editable="false" maxWidth="384.0" minWidth="60.0" prefWidth="119.0" text="Preço total" />
                </columns>
             </TableView>
          </children>

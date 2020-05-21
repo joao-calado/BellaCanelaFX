@@ -8,15 +8,15 @@ public class Comanda {
     private LocalDate data;
     private String descricao;
     private Cliente cliente;
-    private ArrayList<Produtos> produtos;
+    private ArrayList<ItensDaComanda> itens;
 
-    public Comanda(int com_num, int mes_cod, LocalDate data, String descricao, Cliente cliente, ArrayList<Produtos> produtos) {
+    public Comanda(int com_num, int mes_cod, LocalDate data, String descricao, Cliente cliente, ArrayList<ItensDaComanda> itens) {
         this.com_num = com_num;
         this.mes_cod = mes_cod;
         this.data = data;
         this.descricao = descricao;
         this.cliente = cliente;
-        this.produtos = produtos;
+        this.itens = itens;
     }
 
     public int getCom_num() {
@@ -59,11 +59,21 @@ public class Comanda {
         this.cliente = cliente;
     }
 
-    public ArrayList<Produtos> getProdutos() {
-        return produtos;
+    public boolean inserirItem(ItensDaComanda item){
+        for(int i = 0; i < itens.size(); i++)
+            if(itens.get(i).getProduto().getCod() == item.getProduto().getCod()){
+                itens.get(i).setQtde(itens.get(i).getQtde()+item.getQtde());
+                return true;
+            }
+        itens.add(item);
+        return true;
+    }
+    
+    public ArrayList<ItensDaComanda> getItens() {
+        return itens;
     }
 
-    public void setProdutos(ArrayList<Produtos> produtos) {
-        this.produtos = produtos;
+    public void setItens(ArrayList<ItensDaComanda> itens) {
+        this.itens = itens;
     }
 }
