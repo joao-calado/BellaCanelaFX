@@ -49,16 +49,6 @@ CREATE TABLE ItensDaComanda (
     CONSTRAINT fk_prod_itens FOREIGN KEY (prod_cod) REFERENCES Produto
 );
 
-
-create table cliente(
-    cli_cod SERIAL,
-    cli_nome varchar(50) not null,
-    cli_cpf varchar(14) not null,
-    cli_email varchar(30) not null,
-    cli_fone varchar(14) not null,
-    constraint pk_cli primary key (cli_cod)
-);
-
 CREATE TABLE Fornecedor (
     for_cod SERIAL,
     for_nome varchar(50) NOT NULL,	
@@ -93,6 +83,17 @@ CREATE TABLE Produto (
     CONSTRAINT fK_prodmed FOREIGN KEY (prod_med) REFERENCES Medida    
 );
 
+/* <jão> */
+
+create table cliente(
+    
+    cli_cod SERIAL,
+    cli_nome varchar(50) not null,
+    cli_cpf varchar(14) not null,
+    cli_email varchar(30) not null,
+    cli_fone varchar(14) not null,
+    constraint pk_cli primary key (cli_cod)
+);
 
 create table parametrizacao (
     
@@ -111,4 +112,20 @@ create table parametrizacao (
     par_icone bytea,
     constraint pk_par primary key(par_cod)
 );
+
+create table recebimento (
+    
+    rec_cod serial,
+    rec_cli integer,
+    rec_tipo varchar(20),
+    rec_valor decimal(10,2),
+    rec_recebimento date not null,
+    rec_vencimento date,
+    rec_status varchar(1),
+    check rec_status ('S' or 'N'),
+    constraint pk_rec primary key(rec_cod),
+    constraint fk_cli foreign key(rec_cli)
+);
+
+/* </jão> */
 >>>>>>> 45a86786c15eb411328c09ee115319f344ba7cc7
