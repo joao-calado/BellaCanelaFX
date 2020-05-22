@@ -124,7 +124,7 @@ create table recebimento (
     rec_status varchar(1),
     check rec_status ('S' or 'N'),
     constraint pk_rec primary key(rec_cod),
-    constraint fk_cli foreign key(rec_cli)
+    constraint fk_cli foreign key(rec_cli) references cliente
 );
 
 /* </jão> */
