@@ -122,7 +122,7 @@ create table recebimento (
     rec_recebimento date not null,
     rec_vencimento date,
     rec_status varchar(1),
-    check rec_status ('S' or 'N'),
+    check (rec_status='S' or rec_status='N'),
     constraint pk_rec primary key(rec_cod),
     constraint fk_cli foreign key(rec_cli) references cliente
 );

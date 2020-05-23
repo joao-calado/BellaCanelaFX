@@ -190,19 +190,6 @@ public class HomeController implements Initializable {
     }
 
     @FXML
-    private void clkComandas(ActionEvent event) {
-        try 
-        {
-            Parent root;
-            root = FXMLLoader.load(getClass().getResource("Recebimento.fxml"));
-            pnprincipal.setCenter(root);
-        } 
-        catch (IOException ex) {
-            System.out.println(ex);
-        }
-    }
-
-    @FXML
     private void clkSelecionarMesa(ActionEvent event) {
         try 
         {

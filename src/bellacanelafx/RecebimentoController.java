@@ -5,12 +5,18 @@
  */
 package bellacanelafx;
 
+import com.jfoenix.controls.JFXButton;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.animation.FadeTransition;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
+import javafx.util.Duration;
 
 /**
  * FXML Controller class
@@ -21,17 +27,30 @@ public class RecebimentoController implements Initializable {
 
     @FXML
     private SplitPane painel;
+    @FXML
+    private JFXButton btcancelar;
+    @FXML
+    private Label lbMesa;
 
-    /**
-     * Initializes the controller class.
-     */
+    private void fadeout() {
+        FadeTransition ft = new FadeTransition(Duration.millis(1000), painel);
+        ft.setFromValue(0);
+        ft.setToValue(1);
+        ft.play(); 
+    }
+    
+    public void setMesa(String num) {
+        lbMesa.setText(" "+num);
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        fadeout();
     }    
 
     @FXML
-    private void clkTabelaAddProduto(MouseEvent event) {
+    private void clkBtCancelar(ActionEvent event) {
+        ((Stage)(btcancelar.getParent().getScene().getWindow())).close();
     }
     
 }

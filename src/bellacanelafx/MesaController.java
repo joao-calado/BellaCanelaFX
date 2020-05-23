@@ -146,7 +146,7 @@ public class MesaController implements Initializable {
             RecebimentoController ctr = loader.getController();
 
             //pode adicionar atributos na outra tela
-            
+            ctr.setMesa(tfNMesa.getText());
             
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
