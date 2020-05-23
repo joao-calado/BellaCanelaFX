@@ -45,7 +45,7 @@
                         <Insets right="200.0" />
                      </HBox.margin>
                   </Label>
-                  <JFXComboBox fx:id="cbComanda" focusColor="#699933" labelFloat="true" opacity="0.75" prefHeight="25.0" prefWidth="139.0" promptText="Selecione a comanda" style="-fx-background-color: #D7CCC8;" unFocusColor="#212121">
+                  <JFXComboBox fx:id="cbComanda" focusColor="#699933" labelFloat="true" onAction="#clkCBComanda" opacity="0.75" prefHeight="25.0" prefWidth="139.0" promptText="Selecione a comanda" style="-fx-background-color: #D7CCC8;" unFocusColor="#212121">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor></JFXComboBox>
