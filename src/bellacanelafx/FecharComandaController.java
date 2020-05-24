@@ -38,7 +38,7 @@ import javafx.util.StringConverter;
  *
  * @author joao
  */
-public class RecebimentoController implements Initializable {
+public class FecharComandaController implements Initializable {
     
     DALComanda dalCom = new DALComanda();
     DALProduto dalPro = new DALProduto();
@@ -174,9 +174,10 @@ public class RecebimentoController implements Initializable {
         
         carregarTabelaItens();
         txValor.clear();
-        if(cbComanda.getValue().getCliente().getNome().equals("Outro")) {
-            carregarCBTipoRec();
-        }
+        carregarCBTipoRec();
+//        if(cbComanda.getValue().getCliente().getNome().equals("Outro")) {
+//            carregarCBTipoRec();
+//        }
     }
 
     @FXML

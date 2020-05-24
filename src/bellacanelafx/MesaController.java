@@ -141,9 +141,9 @@ public class MesaController implements Initializable {
     @FXML
     private void evtFecharComanda(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Recebimento.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("FecharComanda.fxml"));
             Parent root = (Parent) loader.load();
-            RecebimentoController ctr = loader.getController();
+            FecharComandaController ctr = loader.getController();
 
             //pode adicionar atributos na outra tela
             ctr.setMesa(tfNMesa.getText());
