@@ -14,6 +14,7 @@ import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -31,6 +32,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -73,6 +75,20 @@ public class FecharComandaController implements Initializable {
     private JFXDatePicker dtpVencimento;
     @FXML
     private JFXButton btInserir;
+    @FXML
+    private TableView<Recebimento> tabelaRecebimentos;
+    @FXML
+    private TableColumn<Recebimento, Integer> colCliente;
+    @FXML
+    private TableColumn<Recebimento, String> colTipo;
+    @FXML
+    private TableColumn<Recebimento, Double> colValor;
+    @FXML
+    private TableColumn<Recebimento, LocalDate> colRecebimento;
+    @FXML
+    private TableColumn<Recebimento, LocalDate> colVencimento;
+    @FXML
+    private TableColumn<Recebimento, Integer> colMesa;
     
     private void fadeout() {
         FadeTransition ft = new FadeTransition(Duration.millis(1000), painel);
@@ -148,20 +164,49 @@ public class FecharComandaController implements Initializable {
         lbTotal.setText(""+tot);
     }
     
+    public void carregarTabelaRecebimentos() {
+        
+        String filtro = "rec_cli="+cbComanda.getValue().getCliente().getCod()+" and rec_mesa="+lbMesa.getText().trim();
+        DALRecebimento dal = new DALRecebimento();
+        List<Recebimento> lista = dal.get(filtro);
+        
+        for (int i = 0; i < lista.size(); i++) {
+            
+            if(lista.get(i).getVencimento().isEqual(LocalDate.of(1900, 10, 10)))
+                lista.get(i).setVencimento(null);
+        }
+        
+        ObservableList<Recebimento> modelo;
+        modelo = FXCollections.observableArrayList(lista);
+        tabelaRecebimentos.setItems(modelo);
+        tabelaRecebimentos.refresh();
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
         fadeout();
         MaskFieldUtil.monetaryField(txValor);
+        
+        /* colunas da tabela de itens */
         colProduto.setCellValueFactory((TableColumn.CellDataFeatures<ItensDaComanda, String> p) -> new SimpleStringProperty(p.getValue().getProduto().getNome()));
         colQtd.setCellValueFactory((TableColumn.CellDataFeatures<ItensDaComanda, Integer> p) -> new SimpleObjectProperty(p.getValue().getQtde()));
         colTotal.setCellValueFactory((TableColumn.CellDataFeatures<ItensDaComanda, Double> p) -> new SimpleObjectProperty(p.getValue().getQtde()*p.getValue().getProduto().getPreco()));
+        
+        /* colunas da tabela de recebimentos */
+        colCliente.setCellValueFactory((TableColumn.CellDataFeatures<Recebimento, Integer> r) -> new SimpleObjectProperty(r.getValue().getCliente()));
+        colTipo.setCellValueFactory((TableColumn.CellDataFeatures<Recebimento, String> r) -> new SimpleStringProperty(r.getValue().getTipo()));
+        colValor.setCellValueFactory((TableColumn.CellDataFeatures<Recebimento, Double> r) -> new SimpleObjectProperty(r.getValue().getValor()));
+        colRecebimento.setCellValueFactory((TableColumn.CellDataFeatures<Recebimento, LocalDate> r) -> new SimpleObjectProperty(r.getValue().getRecebimento()));
+        colVencimento.setCellValueFactory((TableColumn.CellDataFeatures<Recebimento, LocalDate> r) -> new SimpleObjectProperty(r.getValue().getVencimento()));
+        colMesa.setCellValueFactory((TableColumn.CellDataFeatures<Recebimento, Integer> r) -> new SimpleObjectProperty(r.getValue().getMesa()));
         
         Platform.runLater(()->{
             try{
                 carregarCBComandas();
                 carregarTabelaItens();
                 carregarCBTipoRec();
+                carregarTabelaRecebimentos();
             }
             catch(Exception e){
                 System.out.println("Erro!");
@@ -178,11 +223,9 @@ public class FecharComandaController implements Initializable {
     private void clkCBComanda(ActionEvent event) {
         
         carregarTabelaItens();
+        carregarTabelaRecebimentos();
         txValor.clear();
         carregarCBTipoRec();
-//        if(cbComanda.getValue().getCliente().getNome().equals("Outro")) {
-//            carregarCBTipoRec();
-//        }
     }
 
     @FXML
@@ -209,44 +252,47 @@ public class FecharComandaController implements Initializable {
         
         Alert a = new Alert(Alert.AlertType.INFORMATION);
         a.setHeaderText(null);
-        Recebimento r;
         
-        int cliente = cbComanda.getValue().getCliente().getCod();
-        //System.out.println("cliente: "+cliente+"\n");
-        
-        String tipo = cbTipoRec.getValue();
-        //System.out.println("tipo: "+tipo+"\n");
-        
-        double valor = Double.parseDouble(txValor.getText().replaceAll(",", "."));
-        //System.out.println("valor: "+valor+"\n");
-        
-        
-        
-        if(cbTipoRec.getValue().equals("a ver")) {
-            r = new Recebimento(0,cliente,tipo,valor,LocalDate.now(),(LocalDate)dtpVencimento.getValue(),"N");
+        if(!txValor.getText().isEmpty()) {
+            
+            Recebimento r;
+            int cliente = cbComanda.getValue().getCliente().getCod();
+            String tipo = cbTipoRec.getValue();
+            double valor = Double.parseDouble(txValor.getText().replaceAll(",", "."));
+            int mesa = 0;
+            try {
+                mesa = Integer.parseInt(lbMesa.getText().trim());
+            }
+            catch(NumberFormatException nb) { mesa = 0;}
+
+            if(cbTipoRec.getValue().equals("a ver")) {
+                r = new Recebimento(0,cliente,tipo,valor,LocalDate.now(),(LocalDate)dtpVencimento.getValue(),"N",mesa);
+            }
+            else {
+                r = new Recebimento(0,cliente,tipo,valor,LocalDate.now(),LocalDate.of(1800, 10, 10),"S",mesa);
+                System.out.println(mesa);
+                System.out.println(lbMesa.getText().trim());
+            }
+
+            DALRecebimento dalRec = new DALRecebimento();
+
+            if(dalRec.gravar(r)) {
+                a.setTitle("Informação:");
+                a.setAlertType(Alert.AlertType.INFORMATION);
+                a.setContentText("Recebimento gravado com sucesso!");
+            }
+            else {
+                a.setTitle("Erro:");
+                a.setAlertType(Alert.AlertType.ERROR);
+                a.setContentText("Problemas ao tentar gravar recebimento!");
+            }
         }
         else {
-            r = new Recebimento(0,cliente,tipo,valor,LocalDate.now(),LocalDate.of(1800, 10, 10),"S");
+            
+            a.setTitle("Aviso:");
+            a.setAlertType(Alert.AlertType.WARNING);
+            a.setContentText("Informe um valor para efetuar o recebimento!");
         }
-        
-        DALRecebimento dalRec = new DALRecebimento();
-//        System.out.println(r.getCliente());
-//        System.out.println(r.getTipo());
-//        System.out.println(r.getValor());
-//        System.out.println(r.getRecebimento());
-//        System.out.println(r.getVencimento());
-//        System.out.println(r.getStatus());
-        if(dalRec.gravar(r)) {
-            a.setTitle("Informação:");
-            a.setAlertType(Alert.AlertType.INFORMATION);
-            a.setContentText("Recebimento gravado com sucesso!");
-        }
-        else {
-            a.setTitle("Erro:");
-            a.setAlertType(Alert.AlertType.ERROR);
-            a.setContentText("Problemas ao tentar gravar recebimento!");
-        }
-        
         a.showAndWait();
     }
     

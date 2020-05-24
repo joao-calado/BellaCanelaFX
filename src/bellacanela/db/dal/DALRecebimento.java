@@ -5,6 +5,7 @@ import bellacanelafx.db.util.Banco;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,52 +17,31 @@ public class DALRecebimento {
     
     public boolean gravar(Recebimento r) {
         
-        String sql = "";
+        String sql;
         
         if(r.getVencimento().isEqual(LocalDate.of(1800, 10, 10))) {
             
-            sql = "insert into recebimento(rec_cli,rec_tipo,rec_valor,rec_recebimento,rec_status) values ('#1','#2','#3','#4','#5')";
+            sql = "insert into recebimento(rec_cli,rec_tipo,rec_valor,rec_recebimento,rec_status,rec_mesa) values ('#1','#2','#3','#4','#5','#6')";
         
             sql = sql.replaceAll("#1", ""+r.getCliente());
-            System.out.println(r.getCliente());
-
             sql = sql.replaceAll("#2", ""+r.getTipo());
-            System.out.println(r.getTipo());
-
             sql = sql.replaceAll("#3", ""+r.getValor());
-            System.out.println(r.getValor());
-
             sql = sql.replaceAll("#4", ""+r.getRecebimento());
-            System.out.println(r.getRecebimento());
-            
             sql = sql.replaceAll("#5", ""+r.getStatus());
-            System.out.println(r.getStatus());
+            sql = sql.replaceAll("#6", ""+r.getMesa());
         }
         else {
             
-            sql = "insert into recebimento(rec_cli,rec_tipo,rec_valor,rec_recebimento,rec_vencimento,rec_status) values ('#1','#2','#3','#4','#5','#6')";
+            sql = "insert into recebimento(rec_cli,rec_tipo,rec_valor,rec_recebimento,rec_vencimento,rec_status,rec_mesa) values ('#1','#2','#3','#4','#5','#6','#7')";
         
             sql = sql.replaceAll("#1", ""+r.getCliente());
-            System.out.println(r.getCliente());
-
             sql = sql.replaceAll("#2", ""+r.getTipo());
-            System.out.println(r.getTipo());
-
             sql = sql.replaceAll("#3", ""+r.getValor());
-            System.out.println(r.getValor());
-
             sql = sql.replaceAll("#4", ""+r.getRecebimento());
-            System.out.println(r.getRecebimento());
-            
             sql = sql.replaceAll("#5", ""+r.getVencimento());
-            System.out.println(r.getVencimento());
-            
             sql = sql.replaceAll("#6", ""+r.getStatus());
-            System.out.println(r.getStatus());
+            sql = sql.replaceAll("#7", ""+r.getMesa());
         }
-        
-        System.out.println(sql);
-        
         return Banco.getCon().manipular(sql);
     }
     
@@ -94,7 +74,7 @@ public class DALRecebimento {
         ResultSet rs = Banco.getCon().consultar("select * from recebimento where rec_cod="+cod);
         try{
             if(rs.next())
-                aux = new Recebimento(rs.getInt("rec_cod"),rs.getInt("rec_cli"),rs.getString("rec_tipo"),rs.getDouble("rec_valor"),rs.getDate("rec_recebimento").toLocalDate(),rs.getDate("rec_vencimento").toLocalDate(),rs.getString("rec_status"));
+                aux = new Recebimento(rs.getInt("rec_cod"),rs.getInt("rec_cli"),rs.getString("rec_tipo"),rs.getDouble("rec_valor"),rs.getDate("rec_recebimento").toLocalDate(),rs.getDate("rec_vencimento").toLocalDate(),rs.getString("rec_status"),rs.getInt("rec_mesa"));
         }
         catch(SQLException sqlEx){}
         
@@ -107,14 +87,22 @@ public class DALRecebimento {
         if(!filtro.isEmpty())
             sql += " where "+filtro;
         
+        System.out.println(sql);
         List<Recebimento> aux = new ArrayList();
         ResultSet rs = Banco.getCon().consultar(sql);
         
         try {
-            while(rs.next())
-                aux.add(new Recebimento(rs.getInt("rec_cod"),rs.getInt("rec_cli"),rs.getString("rec_tipo"),rs.getDouble("rec_valor"),rs.getDate("rec_recebimento").toLocalDate(),rs.getDate("rec_vencimento").toLocalDate(),rs.getString("rec_status")));
+            while(rs.next()) {
+                
+                if(rs.getDate("rec_vencimento") != null) {
+                    aux.add(new Recebimento(rs.getInt("rec_cod"),rs.getInt("rec_cli"),rs.getString("rec_tipo"),rs.getDouble("rec_valor"),rs.getDate("rec_recebimento").toLocalDate(),rs.getDate("rec_vencimento").toLocalDate(),rs.getString("rec_status"),rs.getInt("rec_mesa")));
+                }
+                else {
+                    aux.add(new Recebimento(rs.getInt("rec_cod"),rs.getInt("rec_cli"),rs.getString("rec_tipo"),rs.getDouble("rec_valor"),rs.getDate("rec_recebimento").toLocalDate(),LocalDate.of(1900, 10, 10),rs.getString("rec_status"),rs.getInt("rec_mesa")));
+                }
+            }
         }
-        catch(SQLException sqlEx) {}
+        catch(SQLException sqlEx) {System.out.println("deu ruim");}
         
         return aux;
     }
