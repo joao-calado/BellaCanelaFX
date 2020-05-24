@@ -3,9 +3,11 @@ package bellacanelafx;
 import bellacanela.db.dal.DALComanda;
 import bellacanela.db.dal.DALItensDaComanda;
 import bellacanela.db.dal.DALProduto;
+import bellacanela.db.dal.DALRecebimento;
 import bellacanela.util.MaskFieldUtil;
 import bellacanelafx.db.entidades.Comanda;
 import bellacanelafx.db.entidades.ItensDaComanda;
+import bellacanelafx.db.entidades.Recebimento;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
@@ -24,6 +26,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
@@ -68,6 +71,8 @@ public class FecharComandaController implements Initializable {
     private JFXTextField txValor;
     @FXML
     private JFXDatePicker dtpVencimento;
+    @FXML
+    private JFXButton btInserir;
     
     private void fadeout() {
         FadeTransition ft = new FadeTransition(Duration.millis(1000), painel);
@@ -197,6 +202,52 @@ public class FecharComandaController implements Initializable {
             dtpVencimento.setValue(null);
             dtpVencimento.setPromptText("Vencimento");
         }
+    }
+
+    @FXML
+    private void clkBtInserir(ActionEvent event) {
+        
+        Alert a = new Alert(Alert.AlertType.INFORMATION);
+        a.setHeaderText(null);
+        Recebimento r;
+        
+        int cliente = cbComanda.getValue().getCliente().getCod();
+        //System.out.println("cliente: "+cliente+"\n");
+        
+        String tipo = cbTipoRec.getValue();
+        //System.out.println("tipo: "+tipo+"\n");
+        
+        double valor = Double.parseDouble(txValor.getText().replaceAll(",", "."));
+        //System.out.println("valor: "+valor+"\n");
+        
+        
+        
+        if(cbTipoRec.getValue().equals("a ver")) {
+            r = new Recebimento(0,cliente,tipo,valor,LocalDate.now(),(LocalDate)dtpVencimento.getValue(),"N");
+        }
+        else {
+            r = new Recebimento(0,cliente,tipo,valor,LocalDate.now(),LocalDate.of(1800, 10, 10),"S");
+        }
+        
+        DALRecebimento dalRec = new DALRecebimento();
+//        System.out.println(r.getCliente());
+//        System.out.println(r.getTipo());
+//        System.out.println(r.getValor());
+//        System.out.println(r.getRecebimento());
+//        System.out.println(r.getVencimento());
+//        System.out.println(r.getStatus());
+        if(dalRec.gravar(r)) {
+            a.setTitle("Informação:");
+            a.setAlertType(Alert.AlertType.INFORMATION);
+            a.setContentText("Recebimento gravado com sucesso!");
+        }
+        else {
+            a.setTitle("Erro:");
+            a.setAlertType(Alert.AlertType.ERROR);
+            a.setContentText("Problemas ao tentar gravar recebimento!");
+        }
+        
+        a.showAndWait();
     }
     
 }

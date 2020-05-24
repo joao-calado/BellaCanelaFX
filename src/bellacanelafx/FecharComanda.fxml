@@ -115,7 +115,7 @@
                         <Insets left="5.0" />
                      </padding>
                   </JFXDatePicker>
-                  <JFXButton text="Inserir">
+                  <JFXButton fx:id="btInserir" onAction="#clkBtInserir" text="Inserir">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>

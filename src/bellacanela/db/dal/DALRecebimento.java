@@ -4,6 +4,7 @@ import bellacanelafx.db.entidades.Recebimento;
 import bellacanelafx.db.util.Banco;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,14 +16,51 @@ public class DALRecebimento {
     
     public boolean gravar(Recebimento r) {
         
-        String sql = "insert into recebimento(rec_cli,rec_tipo,rec_valor,rec_recebimento,rec_vencimento,rec_status) values('#1','#2','#3','#4','#5','#6')";
+        String sql = "";
         
-        sql = sql.replaceAll("#1", ""+r.getCliente());
-        sql = sql.replaceAll("#2", r.getTipo());
-        sql = sql.replaceAll("#3", ""+r.getValor());
-        sql = sql.replaceAll("#4", ""+r.getRecebimento());
-        sql = sql.replaceAll("#5", ""+r.getVencimento());
-        sql = sql.replaceAll("#6", r.getStatus());
+        if(r.getVencimento().isEqual(LocalDate.of(1800, 10, 10))) {
+            
+            sql = "insert into recebimento(rec_cli,rec_tipo,rec_valor,rec_recebimento,rec_status) values ('#1','#2','#3','#4','#5')";
+        
+            sql = sql.replaceAll("#1", ""+r.getCliente());
+            System.out.println(r.getCliente());
+
+            sql = sql.replaceAll("#2", ""+r.getTipo());
+            System.out.println(r.getTipo());
+
+            sql = sql.replaceAll("#3", ""+r.getValor());
+            System.out.println(r.getValor());
+
+            sql = sql.replaceAll("#4", ""+r.getRecebimento());
+            System.out.println(r.getRecebimento());
+            
+            sql = sql.replaceAll("#5", ""+r.getStatus());
+            System.out.println(r.getStatus());
+        }
+        else {
+            
+            sql = "insert into recebimento(rec_cli,rec_tipo,rec_valor,rec_recebimento,rec_vencimento,rec_status) values ('#1','#2','#3','#4','#5','#6')";
+        
+            sql = sql.replaceAll("#1", ""+r.getCliente());
+            System.out.println(r.getCliente());
+
+            sql = sql.replaceAll("#2", ""+r.getTipo());
+            System.out.println(r.getTipo());
+
+            sql = sql.replaceAll("#3", ""+r.getValor());
+            System.out.println(r.getValor());
+
+            sql = sql.replaceAll("#4", ""+r.getRecebimento());
+            System.out.println(r.getRecebimento());
+            
+            sql = sql.replaceAll("#5", ""+r.getVencimento());
+            System.out.println(r.getVencimento());
+            
+            sql = sql.replaceAll("#6", ""+r.getStatus());
+            System.out.println(r.getStatus());
+        }
+        
+        System.out.println(sql);
         
         return Banco.getCon().manipular(sql);
     }
