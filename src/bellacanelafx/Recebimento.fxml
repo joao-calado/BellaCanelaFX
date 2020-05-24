@@ -62,11 +62,11 @@
                   <Insets />
                </opaqueInsets>
             </HBox>
-            <TableView prefHeight="161.0" prefWidth="798.0" styleClass="menubar" stylesheets="@css/green-brown-theme.css">
+            <TableView fx:id="tabelaItens" prefHeight="161.0" prefWidth="798.0" styleClass="menubar" stylesheets="@css/green-brown-theme.css">
                <columns>
-                  <TableColumn editable="false" maxWidth="1.7976931348623157E308" minWidth="397.0" prefWidth="545.0" text="Produto" />
-                  <TableColumn editable="false" maxWidth="316.0" minWidth="68.0" prefWidth="127.0" text="Quantidade" />
-                  <TableColumn editable="false" maxWidth="300.0" minWidth="82.0" prefWidth="125.0" text="Total" />
+                  <TableColumn fx:id="colProduto" editable="false" maxWidth="1.7976931348623157E308" minWidth="397.0" prefWidth="545.0" text="Produto" />
+                  <TableColumn fx:id="colQtd" editable="false" maxWidth="316.0" minWidth="68.0" prefWidth="127.0" text="Quantidade" />
+                  <TableColumn fx:id="colTotal" editable="false" maxWidth="300.0" minWidth="82.0" prefWidth="125.0" text="Total" />
                </columns>
             </TableView>
          </children>
@@ -75,7 +75,7 @@
          <children>
             <HBox alignment="CENTER" prefHeight="74.0" prefWidth="798.0" style="-fx-background-color: #5D4037;">
                <children>
-                  <Label opacity="0.75" text="Total (comanda):" textFill="WHITE">
+                  <Label opacity="0.75" text="Total (comanda): R$" textFill="WHITE">
                      <font>
                         <Font name="Tahoma Bold" size="12.0" />
                      </font>
@@ -85,7 +85,7 @@
                         <Font name="Tahoma Bold" size="12.0" />
                      </font>
                   </Label>
-                  <JFXComboBox focusColor="#699933" labelFloat="true" opacity="0.75" prefHeight="25.0" prefWidth="139.0" promptText="Tipo de recebimento" style="-fx-background-color: #D7CCC8;" unFocusColor="#212121">
+                  <JFXComboBox fx:id="cbTipoRec" focusColor="#699933" labelFloat="true" onAction="#clkCBTipoRec" opacity="0.75" prefHeight="25.0" prefWidth="139.0" promptText="Tipo de recebimento" style="-fx-background-color: #D7CCC8;" unFocusColor="#212121">
                      <HBox.margin>
                         <Insets left="30.0" right="30.0" />
                      </HBox.margin>
