@@ -3,11 +3,15 @@ package bellacanelafx;
 import bellacanela.db.dal.DALComanda;
 import bellacanela.db.dal.DALItensDaComanda;
 import bellacanela.db.dal.DALProduto;
+import bellacanela.util.MaskFieldUtil;
 import bellacanelafx.db.entidades.Comanda;
 import bellacanelafx.db.entidades.ItensDaComanda;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXDatePicker;
+import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -24,6 +28,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.util.StringConverter;
@@ -59,6 +64,10 @@ public class RecebimentoController implements Initializable {
     private TableView<ItensDaComanda> tabelaItens;
     @FXML
     private JFXComboBox<String> cbTipoRec;
+    @FXML
+    private JFXTextField txValor;
+    @FXML
+    private JFXDatePicker dtpVencimento;
     
     private void fadeout() {
         FadeTransition ft = new FadeTransition(Duration.millis(1000), painel);
@@ -104,7 +113,6 @@ public class RecebimentoController implements Initializable {
         }
         else {
                
-            System.out.println("aqui");
             cbTipoRec.getItems().clear();
             List<String> tr = new ArrayList();
             tr.add("à vista");
@@ -139,6 +147,7 @@ public class RecebimentoController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         
         fadeout();
+        MaskFieldUtil.monetaryField(txValor);
         colProduto.setCellValueFactory((TableColumn.CellDataFeatures<ItensDaComanda, String> p) -> new SimpleStringProperty(p.getValue().getProduto().getNome()));
         colQtd.setCellValueFactory((TableColumn.CellDataFeatures<ItensDaComanda, Integer> p) -> new SimpleObjectProperty(p.getValue().getQtde()));
         colTotal.setCellValueFactory((TableColumn.CellDataFeatures<ItensDaComanda, Double> p) -> new SimpleObjectProperty(p.getValue().getQtde()*p.getValue().getProduto().getPreco()));
@@ -164,14 +173,29 @@ public class RecebimentoController implements Initializable {
     private void clkCBComanda(ActionEvent event) {
         
         carregarTabelaItens();
+        txValor.clear();
         if(cbComanda.getValue().getCliente().getNome().equals("Outro")) {
-            System.out.println(cbComanda.getValue().getCliente());
             carregarCBTipoRec();
         }
     }
 
     @FXML
+    private void clkAddValor(MouseEvent event) {
+        txValor.setText(""+tabelaItens.getSelectionModel().getSelectedItem().getProduto().getPreco() * tabelaItens.getSelectionModel().getSelectedItem().getQtde()+"0");
+    }
+
+    @FXML
     private void clkCBTipoRec(ActionEvent event) {
+        
+        if(cbTipoRec.getValue().equals("a ver")) {
+            dtpVencimento.setDisable(false);
+            dtpVencimento.setValue(LocalDate.now());
+        }
+        else {
+            dtpVencimento.setDisable(true);
+            dtpVencimento.setValue(null);
+            dtpVencimento.setPromptText("Vencimento");
+        }
     }
     
 }
