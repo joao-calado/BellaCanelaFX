@@ -127,6 +127,9 @@ create table recebimento (
     constraint pk_rec primary key(rec_cod),
     constraint fk_cli foreign key(rec_cli) references cliente
 );
+
+/* </jão> */
+
 CREATE TABLE notaFiscal (
     not_cod SERIAL,
     not_NF varchar(50) NOT NULL,
@@ -163,5 +166,5 @@ create table Pagamentos (
 	CONSTRAINT pk_pag PRIMARY KEY (pag_cod, pag_parcela)
 );
 
-/* </jão> */
+
 >>>>>>> 45a86786c15eb411328c09ee115319f344ba7cc7

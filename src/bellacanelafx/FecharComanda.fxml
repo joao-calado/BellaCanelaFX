@@ -173,7 +173,7 @@
             </TableView>
             <HBox alignment="CENTER" prefHeight="48.0" prefWidth="798.0" style="-fx-background-color: #5D4037;">
                <children>
-                  <JFXButton fx:id="btFecharComanda" text="Fechar Comanda">
+                  <JFXButton fx:id="btFecharComanda" onAction="#clkFecharComanda" text="Fechar Comanda">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor></JFXButton>

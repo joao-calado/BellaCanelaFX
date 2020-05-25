@@ -14,7 +14,6 @@ import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
 import java.time.LocalDate;
-import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -32,7 +31,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -120,7 +118,7 @@ public class FecharComandaController implements Initializable {
                 throw new UnsupportedOperationException("Not supported yet.");
             }
         });
-        cbComanda.setItems(FXCollections.observableArrayList(new DALComanda().getComandas("mes_cod="+lbMesa.getText())));
+        cbComanda.setItems(FXCollections.observableArrayList(new DALComanda().getComandas("mes_cod="+lbMesa.getText() + "and com_aberta='true'")));
         cbComanda.setValue(cbComanda.getItems().get(0));
     }
     
@@ -395,6 +393,33 @@ public class FecharComandaController implements Initializable {
                 a.setAlertType(Alert.AlertType.ERROR);
                 a.setContentText("Problemas ao tentar apagar recebimento!");
             }
+        }
+        a.showAndWait();
+    }
+
+    @FXML
+    private void clkFecharComanda(ActionEvent event) {
+        
+        Alert a = new Alert(Alert.AlertType.INFORMATION);
+        a.setHeaderText(null);
+        cbComanda.getValue().setAberta(false);
+        
+        if(dalCom.update(cbComanda.getValue())) {
+            
+            if(cbComanda.getValue() == null)
+                System.out.println("DEU BOM");
+            else
+                System.out.println("DEU RUIM");
+            
+            a.setTitle("Informação:");
+            a.setAlertType(Alert.AlertType.INFORMATION);
+            a.setContentText("Comanda fechada com sucesso!");
+        }
+        else {
+            cbComanda.getValue().setAberta(true);
+            a.setTitle("Erro:");
+            a.setAlertType(Alert.AlertType.ERROR);
+            a.setContentText("Problemas ao tentar fechar comanda!");
         }
         a.showAndWait();
     }
