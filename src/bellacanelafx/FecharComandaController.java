@@ -372,13 +372,29 @@ public class FecharComandaController implements Initializable {
         Alert a = new Alert(Alert.AlertType.INFORMATION);
         a.setHeaderText(null);
         
-        if(tabelaRecebimentos.getSelectionModel().getSelectedIndex() <= 0) {
+        if(tabelaRecebimentos.getSelectionModel().getSelectedIndex() < 0) {
             a.setTitle("Aviso:");
             a.setAlertType(Alert.AlertType.WARNING);
             a.setContentText("Seleione um recebimento!");
         }
         else {
             
+            DALRecebimento dal = new DALRecebimento();
+            Recebimento r = tabelaRecebimentos.getSelectionModel().getSelectedItem();
+            if(dal.apagar(r)) {
+                
+                a.setTitle("Informação:");
+                a.setAlertType(Alert.AlertType.INFORMATION);
+                a.setContentText("Recebimento apagado com sucesso!");
+                
+                carregarTabelaRecebimentos();
+                verificarFechamento();
+            }
+            else {
+                a.setTitle("Erro:");
+                a.setAlertType(Alert.AlertType.ERROR);
+                a.setContentText("Problemas ao tentar apagar recebimento!");
+            }
         }
         a.showAndWait();
     }

@@ -87,7 +87,6 @@ public class DALRecebimento {
         if(!filtro.isEmpty())
             sql += " where "+filtro;
         
-        System.out.println(sql);
         List<Recebimento> aux = new ArrayList();
         ResultSet rs = Banco.getCon().consultar(sql);
         
@@ -102,7 +101,7 @@ public class DALRecebimento {
                 }
             }
         }
-        catch(SQLException sqlEx) {System.out.println("deu ruim");}
+        catch(SQLException sqlEx) {}
         
         return aux;
     }
