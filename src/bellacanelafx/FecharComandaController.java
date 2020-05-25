@@ -89,6 +89,12 @@ public class FecharComandaController implements Initializable {
     private TableColumn<Recebimento, LocalDate> colVencimento;
     @FXML
     private TableColumn<Recebimento, Integer> colMesa;
+    @FXML
+    private Label lbPago;
+    @FXML
+    private JFXButton btFecharComanda;
+    @FXML
+    private JFXButton btExcluir;
     
     private void fadeout() {
         FadeTransition ft = new FadeTransition(Duration.millis(1000), painel);
@@ -180,12 +186,63 @@ public class FecharComandaController implements Initializable {
         modelo = FXCollections.observableArrayList(lista);
         tabelaRecebimentos.setItems(modelo);
         tabelaRecebimentos.refresh();
+        
+        /*setar valor pago da comanda*/
+        double pago = 0;
+        List<Recebimento> recs = tabelaRecebimentos.getItems();
+        for(Recebimento rdc: recs) {
+            pago += rdc.getValor();
+        }
+        lbPago.setText(""+pago);
+    }
+    
+    private void verificarFechamento() {
+        
+        double total = 0;
+        double pago = 0;
+        
+        try {
+            
+            total = Double.parseDouble(lbTotal.getText().trim().replaceAll(",", "."));
+            pago = Double.parseDouble(lbPago.getText().trim().replaceAll(",", "."));
+            
+            if(pago >= total) {
+                btInserir.setDisable(true);
+                btFecharComanda.setDisable(false);
+            }
+            else {
+                btInserir.setDisable(false);
+                btFecharComanda.setDisable(true);
+            }
+        }
+        catch(NumberFormatException e) {}
+    }
+    
+    private Double gorjeta() {
+        
+        double total = 0;
+        double pago = 0;
+        double gorjeta = 0;
+        
+        try {
+            
+            total = Double.parseDouble(lbTotal.getText().trim().replaceAll(",", "."));
+            pago = Double.parseDouble(lbPago.getText().trim().replaceAll(",", "."));
+            
+            if(pago >= total) {
+                gorjeta += pago-total;
+            }
+        }
+        catch(NumberFormatException e) {}
+        
+        return gorjeta;
     }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
         fadeout();
+        btFecharComanda.setDisable(true);
         MaskFieldUtil.monetaryField(txValor);
         
         /* colunas da tabela de itens */
@@ -207,6 +264,7 @@ public class FecharComandaController implements Initializable {
                 carregarTabelaItens();
                 carregarCBTipoRec();
                 carregarTabelaRecebimentos();
+                verificarFechamento();
             }
             catch(Exception e){
                 System.out.println("Erro!");
@@ -226,6 +284,7 @@ public class FecharComandaController implements Initializable {
         carregarTabelaRecebimentos();
         txValor.clear();
         carregarCBTipoRec();
+        verificarFechamento();
     }
 
     @FXML
@@ -277,9 +336,18 @@ public class FecharComandaController implements Initializable {
             DALRecebimento dalRec = new DALRecebimento();
 
             if(dalRec.gravar(r)) {
-                a.setTitle("Informação:");
-                a.setAlertType(Alert.AlertType.INFORMATION);
-                a.setContentText("Recebimento gravado com sucesso!");
+                
+                carregarTabelaRecebimentos();
+                if(gorjeta() != 0.0) {
+                    a.setTitle("Informação:");
+                    a.setAlertType(Alert.AlertType.INFORMATION);
+                    a.setContentText("Recebimento gravado com sucesso!\nGorjeta: R$"+gorjeta());
+                }
+                else {
+                    a.setTitle("Informação:");
+                    a.setAlertType(Alert.AlertType.INFORMATION);
+                    a.setContentText("Recebimento gravado com sucesso!");
+                }
             }
             else {
                 a.setTitle("Erro:");
@@ -292,6 +360,25 @@ public class FecharComandaController implements Initializable {
             a.setTitle("Aviso:");
             a.setAlertType(Alert.AlertType.WARNING);
             a.setContentText("Informe um valor para efetuar o recebimento!");
+        }
+        
+        verificarFechamento();
+        a.showAndWait();
+    }
+
+    @FXML
+    private void clkBtExcluir(ActionEvent event) {
+        
+        Alert a = new Alert(Alert.AlertType.INFORMATION);
+        a.setHeaderText(null);
+        
+        if(tabelaRecebimentos.getSelectionModel().getSelectedIndex() <= 0) {
+            a.setTitle("Aviso:");
+            a.setAlertType(Alert.AlertType.WARNING);
+            a.setContentText("Seleione um recebimento!");
+        }
+        else {
+            
         }
         a.showAndWait();
     }

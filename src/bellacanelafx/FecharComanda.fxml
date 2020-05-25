@@ -64,9 +64,9 @@
             </HBox>
             <TableView fx:id="tabelaItens" onMouseClicked="#clkAddValor" prefHeight="161.0" prefWidth="798.0" styleClass="menubar" stylesheets="@css/green-brown-theme.css">
                <columns>
-                  <TableColumn fx:id="colProduto" editable="false" maxWidth="1.7976931348623157E308" minWidth="397.0" prefWidth="545.0" text="Produto" />
-                  <TableColumn fx:id="colQtd" editable="false" maxWidth="316.0" minWidth="68.0" prefWidth="127.0" text="Quantidade" />
-                  <TableColumn fx:id="colTotal" editable="false" maxWidth="300.0" minWidth="82.0" prefWidth="125.0" text="Total" />
+                  <TableColumn fx:id="colProduto" editable="false" maxWidth="500.0" minWidth="500.0" prefWidth="500.0" text="Produto" />
+                  <TableColumn fx:id="colQtd" editable="false" maxWidth="125.0" minWidth="125.0" prefWidth="125.0" text="Quantidade" />
+                  <TableColumn fx:id="colTotal" editable="false" maxWidth="170.0" minWidth="170.0" prefWidth="170.0" text="Total" />
                </columns>
             </TableView>
          </children>
@@ -75,16 +75,44 @@
          <children>
             <HBox alignment="CENTER" prefHeight="74.0" prefWidth="798.0" style="-fx-background-color: #5D4037;">
                <children>
-                  <Label opacity="0.75" text="Total (comanda): R$" textFill="WHITE">
-                     <font>
-                        <Font name="Tahoma Bold" size="12.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="lbTotal" opacity="0.75" textFill="WHITE">
-                     <font>
-                        <Font name="Tahoma Bold" size="12.0" />
-                     </font>
-                  </Label>
+                  <VBox prefHeight="74.0" prefWidth="187.0">
+                     <children>
+                        <HBox prefHeight="32.0" prefWidth="158.0">
+                           <children>
+                              <Label opacity="0.75" text="Total (comanda): R$" textFill="WHITE">
+                                 <font>
+                                    <Font name="Tahoma Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="lbTotal" opacity="0.75" textFill="WHITE">
+                                 <font>
+                                    <Font name="Tahoma Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                           <VBox.margin>
+                              <Insets left="10.0" top="10.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox prefHeight="34.0" prefWidth="187.0">
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="10.0" />
+                           </VBox.margin>
+                           <children>
+                              <Label opacity="0.75" text="Pago (comanda): R$" textFill="WHITE">
+                                 <font>
+                                    <Font name="Tahoma Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="lbPago" opacity="0.75" textFill="WHITE">
+                                 <font>
+                                    <Font name="Tahoma Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
                   <JFXComboBox fx:id="cbTipoRec" focusColor="#699933" labelFloat="true" onAction="#clkCBTipoRec" opacity="0.75" prefHeight="25.0" prefWidth="139.0" promptText="Tipo de recebimento" style="-fx-background-color: #D7CCC8;" unFocusColor="#699933">
                      <HBox.margin>
                         <Insets left="30.0" right="30.0" />
@@ -120,10 +148,10 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                      <HBox.margin>
-                        <Insets left="100.0" />
+                        <Insets left="30.0" />
                      </HBox.margin>
                   </JFXButton>
-                  <JFXButton text="Excluir">
+                  <JFXButton fx:id="btExcluir" onAction="#clkBtExcluir" text="Excluir">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -145,7 +173,7 @@
             </TableView>
             <HBox alignment="CENTER" prefHeight="48.0" prefWidth="798.0" style="-fx-background-color: #5D4037;">
                <children>
-                  <JFXButton text="Fechar Comanda">
+                  <JFXButton fx:id="btFecharComanda" text="Fechar Comanda">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor></JFXButton>
