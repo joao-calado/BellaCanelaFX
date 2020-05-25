@@ -13,9 +13,8 @@ public class DALItensNF {
    public boolean gravar(ItensNF nf) {
         
         String sql = "insert into itensnf(ite_cod, ite_notafiscal, ite_produto, ite_qtde, ite_preco, ite_total)	"
-                + "VALUES ('#1', '#2', '#3', '#4', '#5', '#6')";
+                + "VALUES (default, '#2', '#3', '#4', '#5', '#6')";
         
-        sql = sql.replaceAll("#1", ""+nf.getCod());
         sql = sql.replaceAll("#2", ""+nf.getNf().getCod());
         sql = sql.replaceAll("#3", ""+nf.getProd().getCod());
         sql = sql.replaceAll("#4", ""+nf.getQtde());

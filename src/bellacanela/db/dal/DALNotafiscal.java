@@ -12,9 +12,8 @@ public class DALNotafiscal {
     public boolean gravar(NotaFiscal nf) {
         
         String sql = "insert into notafiscal(not_cod, not_nf, not_fornecedor, not_desc, not_vencimento, not_parcelas, not_total)"
-                + "VALUES ('#1', '#2', '#3', '#4', '#5', '#6', '#7')";
+                + "VALUES (default, '#2', '#3', '#4', '#5', '#6', '#7')";
         
-        sql = sql.replaceAll("#1", ""+nf.getCod());
         sql = sql.replaceAll("#2", ""+nf.getNumero());
         sql = sql.replaceAll("#3", ""+nf.getFornecedor().getCod());
         sql = sql.replaceAll("#4", ""+nf.getDesc());

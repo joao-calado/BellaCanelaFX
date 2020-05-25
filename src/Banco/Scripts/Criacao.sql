@@ -79,6 +79,8 @@ CREATE TABLE Produto (
     prod_cat INTEGER NOT NULL,
     prod_med INTEGER NOT NULL,
     prod_preco decimal(10,2),	
+    prod_avenda character(1),
+    prod_estoque integer,
     CONSTRAINT pk_prod PRIMARY KEY (prod_cod),	
     CONSTRAINT fK_prodcat FOREIGN KEY (prod_cat) REFERENCES Categoria,
     CONSTRAINT fK_prodmed FOREIGN KEY (prod_med) REFERENCES Medida    

@@ -11,8 +11,8 @@ import java.util.ArrayList;
 public class DALPagamentos {
     public boolean gravar(Pagamento p) {
         
-        String sql = "insert into pagamentos(pag_parcela, pag_desc, pag_valor, pag_valorpago, pag_desjur, pag_vencimento, pag_pagamento)"
-                + "VALUES ('#2', '#3', '#4', '#5', '#6', '#7', '#8')";
+        String sql = "insert into pagamentos(pag_cod, pag_parcela, pag_desc, pag_valor, pag_valorpago, pag_desjur, pag_vencimento, pag_pagamento)"
+                + "VALUES (default, '#2', '#3', '#4', '#5', '#6', '#7', '#8')";
         
         sql = sql.replaceAll("#2", ""+p.getParcela());
         sql = sql.replaceAll("#3", ""+p.getDesc());
