@@ -8,6 +8,8 @@ public class Produtos {
     private Categoria cat;
     private Medida med;
     private double preco;
+    private char AVenda;
+    private int Estoque;
 
     public Produtos(String nome) {
         
@@ -18,7 +20,6 @@ public class Produtos {
         this.nome = nome;    
         this.preco = preco;
     }
-    
     public Produtos(int cod, String nome, Categoria cat, Medida med, double preco) {
         this.cod = cod;
         this.nome = nome;
@@ -26,13 +27,33 @@ public class Produtos {
         this.med = med;
         this.preco = preco;
     }
-    
-    public Produtos(String nome, Categoria cat, Medida med, double preco) {
+    public Produtos(int cod, String nome, Categoria cat, Medida med, double preco, char AVenda) {
+        this.cod = cod;
         this.nome = nome;
         this.cat = cat;
         this.med = med;
-        this.preco = preco;        
+        this.preco = preco;
+        this.AVenda = AVenda;
     }
+    
+    public Produtos(String nome, Categoria cat, Medida med, double preco, char AVenda) {
+        this.nome = nome;
+        this.cat = cat;
+        this.med = med;
+        this.preco = preco;
+        this.AVenda = AVenda;        
+    }
+
+    public Produtos(int cod, String nome, Categoria cat, Medida med, double preco, char AVenda, int Estoque) {
+        this.cod = cod;
+        this.nome = nome;
+        this.cat = cat;
+        this.med = med;
+        this.preco = preco;
+        this.AVenda = AVenda;
+        this.Estoque = Estoque;
+    }
+    
     
     
     public int getCod() {
@@ -74,5 +95,21 @@ public class Produtos {
     public void setPreco(double preco) {
         this.preco = preco;
     }    
+
+    public char getAVenda() {
+        return AVenda;
+    }
+
+    public void setAVenda(char AVenda) {
+        this.AVenda = AVenda;
+    }
+
+    public int getEstoque() {
+        return Estoque;
+    }
+
+    public void setEstoque(int Estoque) {
+        this.Estoque = Estoque;
+    }
     
 }
