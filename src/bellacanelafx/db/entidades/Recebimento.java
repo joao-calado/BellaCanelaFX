@@ -16,10 +16,11 @@ public class Recebimento {
     private LocalDate vencimento;
     private String status;
     private int mesa;
+    private int comanda;
 
     public Recebimento() {}
 
-    public Recebimento(int cod, int cliente, String tipo, double valor, LocalDate recebimento, LocalDate vencimento, String status, int mesa) {
+    public Recebimento(int cod, int cliente, String tipo, double valor, LocalDate recebimento, LocalDate vencimento, String status, int mesa, int comanda) {
         this.cod = cod;
         this.cliente = cliente;
         this.tipo = tipo;
@@ -28,6 +29,7 @@ public class Recebimento {
         this.vencimento = vencimento;
         this.status = status;
         this.mesa = mesa;
+        this.comanda = comanda;
     }
     
     public int getCod() {
@@ -92,6 +94,14 @@ public class Recebimento {
 
     public void setMesa(int mesa) {
         this.mesa = mesa;
+    }
+
+    public int getComanda() {
+        return comanda;
+    }
+
+    public void setComanda(int comanda) {
+        this.comanda = comanda;
     }
     
 }

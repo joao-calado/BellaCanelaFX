@@ -2,11 +2,13 @@ package bellacanelafx;
 
 import bellacanela.db.dal.DALComanda;
 import bellacanela.db.dal.DALItensDaComanda;
+import bellacanela.db.dal.DALMesa;
 import bellacanela.db.dal.DALProduto;
 import bellacanela.db.dal.DALRecebimento;
 import bellacanela.util.MaskFieldUtil;
 import bellacanelafx.db.entidades.Comanda;
 import bellacanelafx.db.entidades.ItensDaComanda;
+import bellacanelafx.db.entidades.Mesa;
 import bellacanelafx.db.entidades.Recebimento;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
@@ -46,6 +48,8 @@ public class FecharComandaController implements Initializable {
     DALComanda dalCom = new DALComanda();
     DALProduto dalPro = new DALProduto();
     DALItensDaComanda dalItens = new DALItensDaComanda();
+    DALMesa dalMesa = new DALMesa();
+    Mesa m;
 
     @FXML
     private SplitPane painel;
@@ -101,8 +105,33 @@ public class FecharComandaController implements Initializable {
         ft.play(); 
     }
     
-    public void setMesa(String num) {
-        lbMesa.setText(" "+num);
+    public String formatarPreco(double preco){
+        String str = preco+"";
+        int i = (str).indexOf(".");
+            if(str.length() - i == 2)
+                str += "0";
+        return str;
+    }
+    
+    public void setMesa(Mesa mesa) {
+        System.out.println("oie");
+        m = mesa;
+        lbMesa.setText(""+m.getCod());
+    }
+    
+    public Mesa getMesa() {
+        return m;
+    }
+    
+    private void verificarMesa() {
+        
+        if(cbComanda.getValue() == null) {
+            
+            m.setLiberada(true);
+            dalMesa.update(m);
+            
+            ((Stage)(btcancelar.getParent().getScene().getWindow())).close();
+        } 
     }
     
     public void carregarCBComandas() {
@@ -123,14 +152,7 @@ public class FecharComandaController implements Initializable {
             cbComanda.setItems(FXCollections.observableArrayList(new DALComanda().getComandas("mes_cod="+lbMesa.getText() + "and com_aberta='true'")));
             cbComanda.setValue(cbComanda.getItems().get(0));
         }
-        catch(Exception e) {System.out.println("DEU RUIM");}
-        
-        if(cbComanda.getValue() == null) {
-               System.out.println("DEU BOM");
-               ((Stage)(btcancelar.getParent().getScene().getWindow())).close();
-        } 
-        else
-            System.out.println("DEU RUIM");
+        catch(Exception e) {verificarMesa();}
     }
     
     public void carregarCBTipoRec() {
@@ -181,7 +203,7 @@ public class FecharComandaController implements Initializable {
     
     public void carregarTabelaRecebimentos() {
         
-        String filtro = "rec_cli="+cbComanda.getValue().getCliente().getCod()+" and rec_mesa="+lbMesa.getText().trim();
+        String filtro = "rec_cli="+cbComanda.getValue().getCliente().getCod()+" and rec_mesa="+lbMesa.getText().trim() +" and rec_comanda="+cbComanda.getValue().getCom_num();
         DALRecebimento dal = new DALRecebimento();
         List<Recebimento> lista = dal.get(filtro);
         
@@ -274,6 +296,7 @@ public class FecharComandaController implements Initializable {
                 carregarCBTipoRec();
                 carregarTabelaRecebimentos();
                 verificarFechamento();
+                verificarMesa();
             }
             catch(Exception e){
                 System.out.println("Erro!");
@@ -298,7 +321,7 @@ public class FecharComandaController implements Initializable {
 
     @FXML
     private void clkAddValor(MouseEvent event) {
-        txValor.setText(""+tabelaItens.getSelectionModel().getSelectedItem().getProduto().getPreco() * tabelaItens.getSelectionModel().getSelectedItem().getQtde()+"0");
+        txValor.setText(formatarPreco(tabelaItens.getSelectionModel().getSelectedItem().getProduto().getPreco() * tabelaItens.getSelectionModel().getSelectedItem().getQtde()));
     }
 
     @FXML
@@ -328,16 +351,18 @@ public class FecharComandaController implements Initializable {
             String tipo = cbTipoRec.getValue();
             double valor = Double.parseDouble(txValor.getText().replaceAll(",", "."));
             int mesa = 0;
+            int comanda = 0;
             try {
                 mesa = Integer.parseInt(lbMesa.getText().trim());
+                comanda = cbComanda.getValue().getCom_num();
             }
-            catch(NumberFormatException nb) { mesa = 0;}
+            catch(NumberFormatException nb) { mesa = 0;comanda=0;}
 
             if(cbTipoRec.getValue().equals("a ver")) {
-                r = new Recebimento(0,cliente,tipo,valor,LocalDate.now(),(LocalDate)dtpVencimento.getValue(),"N",mesa);
+                r = new Recebimento(0,cliente,tipo,valor,LocalDate.now(),(LocalDate)dtpVencimento.getValue(),"N",mesa,comanda);
             }
             else {
-                r = new Recebimento(0,cliente,tipo,valor,LocalDate.now(),LocalDate.of(1800, 10, 10),"S",mesa);
+                r = new Recebimento(0,cliente,tipo,valor,LocalDate.now(),LocalDate.of(1800, 10, 10),"S",mesa,comanda);
                 System.out.println(mesa);
                 System.out.println(lbMesa.getText().trim());
             }
@@ -372,6 +397,7 @@ public class FecharComandaController implements Initializable {
         }
         
         verificarFechamento();
+        verificarMesa();
         a.showAndWait();
     }
 
