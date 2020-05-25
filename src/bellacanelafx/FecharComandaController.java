@@ -118,8 +118,19 @@ public class FecharComandaController implements Initializable {
                 throw new UnsupportedOperationException("Not supported yet.");
             }
         });
-        cbComanda.setItems(FXCollections.observableArrayList(new DALComanda().getComandas("mes_cod="+lbMesa.getText() + "and com_aberta='true'")));
-        cbComanda.setValue(cbComanda.getItems().get(0));
+        
+        try {
+            cbComanda.setItems(FXCollections.observableArrayList(new DALComanda().getComandas("mes_cod="+lbMesa.getText() + "and com_aberta='true'")));
+            cbComanda.setValue(cbComanda.getItems().get(0));
+        }
+        catch(Exception e) {System.out.println("DEU RUIM");}
+        
+        if(cbComanda.getValue() == null) {
+               System.out.println("DEU BOM");
+               ((Stage)(btcancelar.getParent().getScene().getWindow())).close();
+        } 
+        else
+            System.out.println("DEU RUIM");
     }
     
     public void carregarCBTipoRec() {
@@ -406,11 +417,7 @@ public class FecharComandaController implements Initializable {
         
         if(dalCom.update(cbComanda.getValue())) {
             
-            if(cbComanda.getValue() == null)
-                System.out.println("DEU BOM");
-            else
-                System.out.println("DEU RUIM");
-            
+            carregarCBComandas();
             a.setTitle("Informação:");
             a.setAlertType(Alert.AlertType.INFORMATION);
             a.setContentText("Comanda fechada com sucesso!");
