@@ -8,6 +8,11 @@ public class Mesa {
         this.cod = cod;
         this.liberada = liberada;
     }
+    
+    public Mesa(boolean liberada) {
+        this.cod = 0;
+        this.liberada = liberada;
+    }
 
     public int getCod() {
         return cod;

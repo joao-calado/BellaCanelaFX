@@ -96,6 +96,7 @@ public class AbrirComandaController implements Initializable {
                     new Comanda(
                             Integer.parseInt(tfNumComanda.getText()),
                             Integer.parseInt(tfNMesa.getText()),
+                            true,
                             dpData.getValue(),
                             tfDescricao.getText(),
                             cbNome.getValue(),

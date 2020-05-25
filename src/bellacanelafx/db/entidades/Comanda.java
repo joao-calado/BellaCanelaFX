@@ -5,14 +5,16 @@ import java.util.ArrayList;
 
 public class Comanda {
     private int com_num, mes_cod;
+    private boolean aberta;
     private LocalDate data;
     private String descricao;
     private Cliente cliente;
     private ArrayList<ItensDaComanda> itens;
 
-    public Comanda(int com_num, int mes_cod, LocalDate data, String descricao, Cliente cliente, ArrayList<ItensDaComanda> itens) {
+    public Comanda(int com_num, int mes_cod, boolean aberta, LocalDate data, String descricao, Cliente cliente, ArrayList<ItensDaComanda> itens) {
         this.com_num = com_num;
         this.mes_cod = mes_cod;
+        this.aberta = aberta;
         this.data = data;
         this.descricao = descricao;
         this.cliente = cliente;
@@ -35,6 +37,14 @@ public class Comanda {
         this.mes_cod = mes_cod;
     }
 
+    public boolean isAberta() {
+        return aberta;
+    }
+
+    public void setAberta(boolean aberta) {
+        this.aberta = aberta;
+    }
+    
     public LocalDate getData() {
         return data;
     }
@@ -67,6 +77,19 @@ public class Comanda {
             }
         itens.add(item);
         return true;
+    }
+    
+    public int deletarItem(ItensDaComanda item, int qtde){
+        for(int i = 0; i < itens.size(); i++){
+            if(itens.get(i).getProduto().getCod() == item.getProduto().getCod()){
+                if(itens.get(i).getQtde() > qtde){
+                    itens.get(i).setQtde(itens.get(i).getQtde() - qtde);
+                    return 0;
+                }
+                return 1;
+            }
+        }
+        return 2;
     }
     
     public ArrayList<ItensDaComanda> getItens() {

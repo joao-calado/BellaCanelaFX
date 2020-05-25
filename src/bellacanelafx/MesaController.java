@@ -81,6 +81,7 @@ public class MesaController implements Initializable {
     public void setMesaDesocupada() {
         apPane.getStyleClass().add("mesa-ocupada");
         btAbrirComanda.getStyleClass().add("buttonMesaOcupada");
+        btFecharComanda.setDisable(false);
         btFecharComanda.getStyleClass().add("buttonMesaOcupada");
     }
 

@@ -1,4 +1,3 @@
-
 package bellacanelafx;
 
 import bellacanela.db.dal.DALComanda;
@@ -92,62 +91,63 @@ public class RegistrarPedidoController implements Initializable {
     private JFXButton btSair;
     @FXML
     private JFXTextField tfPrecoUni;
-    
+
     DALComanda dalCom = new DALComanda();
     DALProduto dalPro = new DALProduto();
     DALItensDaComanda dalItens = new DALItensDaComanda();
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         colComanda.setCellValueFactory(new PropertyValueFactory("com_num"));
         colNome.setCellValueFactory((TableColumn.CellDataFeatures<ItensDaComanda, String> p) -> new SimpleStringProperty(p.getValue().getProduto().getNome()));
         colQtde.setCellValueFactory((TableColumn.CellDataFeatures<ItensDaComanda, Integer> p) -> new SimpleObjectProperty(p.getValue().getQtde()));
-        colPrecoTot.setCellValueFactory((TableColumn.CellDataFeatures<ItensDaComanda, Double> p) -> new SimpleObjectProperty(p.getValue().getQtde()*p.getValue().getProduto().getPreco()));
-        
+        colPrecoTot.setCellValueFactory((TableColumn.CellDataFeatures<ItensDaComanda, Double> p) -> new SimpleObjectProperty(p.getValue().getQtde() * p.getValue().getProduto().getPreco()));
+
         SpinnerValueFactory<Integer> valueSpinner = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100, 1);
         spQtde.setValueFactory(valueSpinner);
+
+        btDeletar.setDisable(true);
         
-        Platform.runLater(()->{
-            try{
+        Platform.runLater(() -> {
+            try {
                 loadMasks();
                 loadCBComanda();
                 loadCBProdutos();
-                atualizarComponentesEstaticos();
                 loadTable("com_num = " + cbComanda.getValue().getCom_num() + " AND mes_cod = " + cbComanda.getValue().getMes_cod());
+                atualizarComponentesEstaticos();
             }
-            catch(Exception e){
+            catch (Exception e) {
                 System.out.println("Erro ao carregar a janela de registrar pedidos!");
             }
         });
-        
-        
-    }    
-    
-    public void loadTable(String filtro){
-        ObservableList<ItensDaComanda> olItens = FXCollections.observableArrayList(cbComanda.getSelectionModel().getSelectedItem().getItens());
+
+    }
+
+    public void loadTable(String filtro) {
+        ObservableList<ItensDaComanda> olItens = FXCollections.observableArrayList(dalItens.getItens(filtro));
         tabela.setItems(olItens);
         tabela.refresh();
     }
-    
-    public void loadCBComanda(){
-        cbComanda.setConverter(new StringConverter<Comanda>(){
+
+    public void loadCBComanda() {
+        cbComanda.setConverter(new StringConverter<Comanda>() {
             @Override
             public String toString(Comanda com) {
                 return com.getCom_num() + " - " + com.getDescricao();
             }
-            
+
             @Override
             public Comanda fromString(String string) {
                 throw new UnsupportedOperationException("Not supported yet.");
             }
         });
-        ObservableList<Comanda> olCom = FXCollections.observableArrayList(dalCom.getComandas("mes_cod = " + lbNMesa.getText()));
+        ObservableList<Comanda> olCom = FXCollections.observableArrayList(dalCom.getComandas("mes_cod = " + lbNMesa.getText() + " AND com_aberta = 'true'"));
         cbComanda.setItems(olCom);
         cbComanda.setValue(cbComanda.getItems().get(0));
     }
-    
-    public void loadCBProdutos(){
-        cbProdutos.setConverter(new StringConverter<Produtos>(){
+
+    public void loadCBProdutos() {
+        cbProdutos.setConverter(new StringConverter<Produtos>() {
             @Override
             public String toString(Produtos prod) {
                 return prod.getNome() + ", " + prod.getMed().getNome();
@@ -160,33 +160,67 @@ public class RegistrarPedidoController implements Initializable {
         });
         ObservableList<Produtos> olPro = FXCollections.observableArrayList(dalPro.get(""));
         cbProdutos.setItems(olPro);
+        cbProdutos.setValue(cbProdutos.getItems().get(0));
     }
 
-    public void loadMasks(){
+    public void loadMasks() {
         MaskFieldUtil.monetaryField(tfPrecoUni);
+        MaskFieldUtil.monetaryField(tfPrecoTotComanda);
     }
-    
+
     @FXML
-    public void atualizarComponentesEstaticos(){
+    public void atualizarComponentesEstaticos() {
         tfNome.setText(cbComanda.getValue().getCliente().getNome());
         dpData.setValue(cbComanda.getValue().getData());
         tfDescricao.setText(cbComanda.getValue().getDescricao());
-        if(cbProdutos.getValue() != null)
-            tfPrecoUni.setText(cbProdutos.getValue().getPreco()+"0");
+        if (cbProdutos.getValue() != null)
+            tfPrecoUni.setText(formatarPreco(cbProdutos.getValue().getPreco()));
+        atualizarValorComanda();
+        atualizarValorMesa();
     }
-    
-    public void setNMesa(String num){
+
+    public void setNMesa(String num) {
         lbNMesa.setText(num);
     }
 
-    public void fecharJanela(){
+    public void fecharJanela() {
         salvarComandas();
-        ((Stage)(btSair.getParent().getScene().getWindow())).close();
+        ((Stage) (btSair.getParent().getScene().getWindow())).close();
+    }
+
+    public void salvarComandas() {
+        cbComanda.getItems().forEach((c) -> {
+            dalCom.update(c);
+        });
+    }
+
+    public String formatarPreco(double preco){
+        String str = preco+"";
+        int i = (str).indexOf(".");
+            if(str.length() - i == 2)
+                str += "0";
+        return str;
     }
     
-    public void salvarComandas(){
-        for(Comanda c : cbComanda.getItems())
-            dalCom.update(c);
+    public void atualizarValorMesa(){
+        double total = 0.0;
+        for(Comanda com : cbComanda.getItems()){
+            for(ItensDaComanda itens : dalItens.getItens("mes_cod = " + lbNMesa.getText() + " AND com_num = " + com.getCom_num())){
+                total += itens.getQtde() * itens.getProduto().getPreco();
+            }
+        }
+        lbPrecoTotMesa.setText(formatarPreco(total));
+    }
+    
+    public void atualizarValorComanda(){
+        double total = 0.0;
+        
+        for(ItensDaComanda itens : tabela.getItems()){
+            if(cbComanda.getValue().getCom_num() == itens.getCom_num())
+                total += itens.getQtde() * itens.getProduto().getPreco();
+        }
+        
+        tfPrecoTotComanda.setText(formatarPreco(total));
     }
     
     private void efeito(ActionEvent event, boolean on) {
@@ -201,22 +235,24 @@ public class RegistrarPedidoController implements Initializable {
         ft.setToValue(opf);
         ft.play();
     }
-    
+
     @FXML
     private void evtSair(ActionEvent event) {
         fecharJanela();
     }
-    
+
     @FXML
     private void clkTabela(MouseEvent event) {
-        
+        if(tabela.getSelectionModel().getSelectedItem() != null){
+            btDeletar.setDisable(false);
+        }
     }
 
     @FXML
     private void evtAddComanda(ActionEvent event) {
-        try{
+        try {
             salvarComandas();
-                
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource("AbrirComanda.fxml"));
             Parent root = (Parent) loader.load();
             AbrirComandaController ctr = loader.getController();
@@ -233,39 +269,49 @@ public class RegistrarPedidoController implements Initializable {
             efeito(event, false);
             loadCBComanda();
         }
-        catch(Exception e){
+        catch (Exception e) {
             System.out.println("ERRO AO ABRIR NOVA COMANDA.");
         }
     }
 
     @FXML
     private void evtInserirProduto(ActionEvent event) {
-        if(cbProdutos.getValue() != null){
+        if (cbProdutos.getValue() != null) {
             Comanda c = cbComanda.getValue();
             Produtos p = cbProdutos.getValue();
             c.inserirItem(new ItensDaComanda(c.getCom_num(), c.getMes_cod(), p, spQtde.getValue()));
+            salvarComandas();
             evtMostrarTodasAsComandas(event);
+            atualizarComponentesEstaticos();
         }
     }
 
     @FXML
     private void evtDeletarProduto(ActionEvent event) {
+        Comanda c = cbComanda.getValue();
+        c.deletarItem(tabela.getSelectionModel().getSelectedItem(), spQtde.getValue());
+        salvarComandas();
+        evtMostrarTodasAsComandas(event);
+        atualizarComponentesEstaticos();
+        btDeletar.setDisable(true);
     }
 
     @FXML
     private void evtMostrarTodasAsComandas(ActionEvent event) {
-        if(checkTodasComandas.isSelected())
-            loadTable("");
-        else
+        if (checkTodasComandas.isSelected()) {
+            loadTable("mes_cod = " + lbNMesa.getText());
+        }
+        else {
             loadTable("com_num = " + cbComanda.getValue().getCom_num() + " AND mes_cod = " + cbComanda.getValue().getMes_cod());
+        }
     }
 
     @FXML
     private void evtTrocarComanda(ActionEvent event) {
-        Platform.runLater(()->{
-            atualizarComponentesEstaticos();
+        Platform.runLater(() -> {
             evtMostrarTodasAsComandas(event);
+            atualizarComponentesEstaticos();
         });
     }
-    
+
 }

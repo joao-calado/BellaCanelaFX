@@ -10,28 +10,29 @@ import java.util.ArrayList;
 public class DALComanda {
 
     public boolean insert(Comanda c) {
-        String SQL = "INSERT INTO Comanda(com_num, mes_cod, cli_cod, com_data, com_descricao) VALUES('#1', '#2', '#3', '#4', '#5')";
+        String SQL = "INSERT INTO Comanda(com_num, mes_cod, cli_cod, com_data, com_descricao, com_aberta) VALUES('#1', '#2', '#3', '#4', '#5', '#6')";
 
         SQL = SQL.replaceAll("#1", c.getCom_num() + "");
         SQL = SQL.replaceAll("#2", c.getMes_cod() + "");
         SQL = SQL.replaceAll("#3", c.getCliente().getCod() + "");
         SQL = SQL.replaceAll("#4", c.getData().toString());
         SQL = SQL.replaceAll("#5", c.getDescricao());
-
+        SQL = SQL.replaceAll("#6", c.isAberta()+"");
+        
         return Banco.getCon().manipular(SQL);
     }
 
     public boolean update(Comanda c) {
         boolean ans;
 
-        String SQL = "UPDATE Comanda SET cli_cod = '#1', com_data = '#2', com_descricao = '#3' WHERE com_num = '#4' AND mes_cod = '#5'";
+        String SQL = "UPDATE Comanda SET cli_cod = '#1', com_data = '#2', com_descricao = '#3', com_aberta = '#4' WHERE com_num = '#5' AND mes_cod = '#6'";
 
         SQL = SQL.replaceAll("#1", c.getCliente().getCod() + "");
         SQL = SQL.replaceAll("#2", c.getData().toString());
         SQL = SQL.replaceAll("#3", c.getDescricao());
-        SQL = SQL.replaceAll("#4", c.getCom_num() + "");
-        SQL = SQL.replaceAll("#5", c.getMes_cod() + "");
-
+        SQL = SQL.replaceAll("#4", c.isAberta()+"");
+        SQL = SQL.replaceAll("#5", c.getCom_num() + "");
+        SQL = SQL.replaceAll("#6", c.getMes_cod() + "");
         ans = Banco.getCon().manipular(SQL);
         
         if (ans) {
@@ -97,7 +98,9 @@ public class DALComanda {
             while (rs.next()) {
                 c = new Comanda(
                             rs.getInt("com_num"), rs.getInt("mes_cod"),
-                            rs.getDate("com_data").toLocalDate(), rs.getString("com_descricao"),
+                            rs.getBoolean("com_aberta"),
+                            rs.getDate("com_data").toLocalDate(),
+                            rs.getString("com_descricao"),
                             new DALCliente().get(rs.getInt("cli_cod")),
                             new DALItensDaComanda().getItens("com_num = " + rs.getInt("com_num") + " AND mes_cod = " + rs.getInt("mes_cod"))
                         );
@@ -117,7 +120,7 @@ public class DALComanda {
         if (!filter.equals("")) {
             SQL += " WHERE " + filter;
         }
-
+        
         ResultSet rs = Banco.getCon().consultar(SQL), rsAux;
         try {
             while (rs.next()) {
@@ -125,7 +128,9 @@ public class DALComanda {
                 comandas.add(
                         new Comanda(
                             rs.getInt("com_num"), rs.getInt("mes_cod"),
-                            rs.getDate("com_data").toLocalDate(), rs.getString("com_descricao"),
+                            rs.getBoolean("com_aberta"),
+                            rs.getDate("com_data").toLocalDate(),
+                            rs.getString("com_descricao"),
                             new DALCliente().get(rs.getInt("cli_cod")),
                             new DALItensDaComanda().getItens("com_num = " + rs.getInt("com_num") + " AND mes_cod = " + rs.getInt("mes_cod"))
                         )

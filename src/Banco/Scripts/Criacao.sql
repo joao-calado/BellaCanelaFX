@@ -31,6 +31,7 @@ CREATE TABLE Comanda (
     cli_cod INTEGER NOT NULL,
     com_data DATE NOT NULL,
     com_descricao VARCHAR(200),
+    com_aberta BOOLEAN,
 
     CONSTRAINT pk_com PRIMARY KEY (com_num, mes_cod),
     CONSTRAINT fk_mes_com FOREIGN KEY (mes_cod) REFERENCES Mesa,
