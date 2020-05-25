@@ -7,6 +7,7 @@ package bellacanelafx;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -40,35 +41,59 @@ public class RegistrarCompraController implements Initializable {
     @FXML
     private AnchorPane apDados;
     @FXML
-    private JFXComboBox<?> cbCategoria;
-    @FXML
     private JFXTextField tfCod;
-    @FXML
-    private JFXTextField tfNome;
-    @FXML
-    private JFXTextField tfPreço;
-    @FXML
-    private JFXTextField tfPreço1;
-    @FXML
-    private JFXComboBox<?> cbCategoria1;
     @FXML
     private VBox pnSearch;
     @FXML
     private JFXTextField tfSearch;
     @FXML
-    private JFXComboBox<?> cbCategoriaSearch;
-    @FXML
     private TableView<?> tbProdutos;
     @FXML
-    private TableColumn<?, ?> colCod;
+    private JFXComboBox<?> cbProduto;
     @FXML
-    private TableColumn<?, ?> colNome;
+    private JFXTextField tfNotaFiscal;
     @FXML
-    private TableColumn<?, ?> colPreço;
+    private JFXTextField tfPrecoTotal;
     @FXML
-    private TableColumn<?, ?> colCategoria;
+    private JFXTextField tfQTDProduto;
     @FXML
-    private TableColumn<?, ?> colMedida;
+    private JFXComboBox<?> cbFornecedor;
+    @FXML
+    private TableColumn<?, ?> colPrCod;
+    @FXML
+    private TableColumn<?, ?> colPrProduto;
+    @FXML
+    private TableColumn<?, ?> colPrQuantidade;
+    @FXML
+    private TableColumn<?, ?> colPrPreco;
+    @FXML
+    private TableColumn<?, ?> colPrTotal;
+    @FXML
+    private JFXButton btApagarProd;
+    @FXML
+    private JFXButton btSalvarProd;
+    @FXML
+    private JFXButton btCancelarProd;
+    @FXML
+    private JFXComboBox<?> cbFornecedorSearch;
+    @FXML
+    private TableView<?> tbCompras;
+    @FXML
+    private TableColumn<?, ?> colNFCod;
+    @FXML
+    private TableColumn<?, ?> colNFNotaFiscal;
+    @FXML
+    private TableColumn<?, ?> colNFFornecedor;
+    @FXML
+    private TableColumn<?, ?> colNFParcelas;
+    @FXML
+    private TableColumn<?, ?> colNFValorTotal;
+    @FXML
+    private JFXTextField tfDescricao;
+    @FXML
+    private JFXTextField tfParcelas;
+    @FXML
+    private JFXDatePicker dpVencimento;
 
     /**
      * Initializes the controller class.
@@ -104,6 +129,18 @@ public class RegistrarCompraController implements Initializable {
 
     @FXML
     private void clkTable(MouseEvent event) {
+    }
+
+    @FXML
+    private void clkApagarProd(ActionEvent event) {
+    }
+
+    @FXML
+    private void clkSalvarProd(ActionEvent event) {
+    }
+
+    @FXML
+    private void clkCancelarProd(ActionEvent event) {
     }
     
 }

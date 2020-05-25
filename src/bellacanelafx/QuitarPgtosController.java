@@ -35,8 +35,6 @@ public class QuitarPgtosController implements Initializable {
     @FXML
     private JFXTextField txCod;
     @FXML
-    private JFXTextField txNome;
-    @FXML
     private JFXTextField txDesc;
     @FXML
     private JFXTextField txValorpago;
@@ -52,8 +50,6 @@ public class QuitarPgtosController implements Initializable {
     private TableView<?> tabela;
     @FXML
     private TableColumn<?, ?> colCod;
-    @FXML
-    private TableColumn<?, ?> colNome;
     @FXML
     private TableColumn<?, ?> colDesc;
     @FXML
