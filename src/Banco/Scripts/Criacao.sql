@@ -79,6 +79,8 @@ CREATE TABLE Produto (
     prod_cat INTEGER NOT NULL,
     prod_med INTEGER NOT NULL,
     prod_preco decimal(10,2),	
+    prod_avenda character(1),
+    prod_estoque integer,
     CONSTRAINT pk_prod PRIMARY KEY (prod_cod),	
     CONSTRAINT fK_prodcat FOREIGN KEY (prod_cat) REFERENCES Categoria,
     CONSTRAINT fK_prodmed FOREIGN KEY (prod_med) REFERENCES Medida    
@@ -127,24 +129,28 @@ create table recebimento (
     constraint pk_rec primary key(rec_cod),
     constraint fk_cli foreign key(rec_cli) references cliente
 );
+
+/* </jão> */
+
 CREATE TABLE notaFiscal (
-    not_cod SERIAL,
-    not_NF varchar(50) NOT NULL,
+        not_cod SERIAL,
+        not_NF varchar(50) NOT NULL,
 	not_fornecedor integer NOT NULL,
 	not_desc varchar(50),
 	not_vencimento date,
 	not_parcelas integer NOT NULL,
 	not_total decimal(10,2)NOT NULL,
+
     CONSTRAINT pk_not PRIMARY KEY (not_cod)
 );
 
 CREATE TABLE itensNF (
     ite_cod SERIAL,
-	ite_notafiscal integer NOT NULL,
-	ite_produto integer NOT NULL,
-	ite_qtde integer NOT NULL,
-	ite_preco decimal(10,2)NOT NULL,
-	ite_total decimal(10,2)NOT NULL,
+    ite_notafiscal integer NOT NULL,
+    ite_produto integer NOT NULL,
+    ite_qtde integer NOT NULL,
+    ite_preco decimal(10,2)NOT NULL,
+    ite_total decimal(10,2)NOT NULL,
 	
     CONSTRAINT pk_ite PRIMARY KEY (ite_cod),
 	CONSTRAINT fk_iteprod FOREIGN KEY (ite_notafiscal) REFERENCES notaFiscal
@@ -160,8 +166,8 @@ create table Pagamentos (
 	pag_vencimento date NOT NULL,
 	pag_pagamento date,
 	
-	CONSTRAINT pk_pag PRIMARY KEY (pag_cod, pag_parcela)
+	CONSTRAINT pk_pag PRIMARY KEY (pag_cod)
 );
 
-/* </jão> */
+
 >>>>>>> 45a86786c15eb411328c09ee115319f344ba7cc7

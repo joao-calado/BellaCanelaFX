@@ -48,8 +48,8 @@
             </HBox>
             <AnchorPane fx:id="apDados" prefHeight="167.0" prefWidth="748.0" style="-fx-background-color: #D7CCC8;">
                <children>
-                  <JFXComboBox fx:id="cbMedida" labelFloat="true" layoutX="446.0" layoutY="110.0" prefHeight="29.0" prefWidth="289.0" promptText="Medida *" />
-                  <JFXComboBox fx:id="cbCategoria" labelFloat="true" layoutX="66.0" layoutY="110.0" prefHeight="29.0" prefWidth="289.0" promptText="Categoria *" />
+                  <JFXComboBox fx:id="cbMedida" labelFloat="true" layoutX="352.0" layoutY="110.0" prefHeight="29.0" prefWidth="210.0" promptText="Medida *" />
+                  <JFXComboBox fx:id="cbCategoria" labelFloat="true" layoutX="66.0" layoutY="110.0" prefHeight="29.0" prefWidth="210.0" promptText="Categoria *" />
                   <JFXTextField fx:id="tfCod" disable="true" editable="false" focusColor="#699933" layoutX="66.0" layoutY="61.0" prefHeight="25.0" prefWidth="101.0" promptText="Código" styleClass="textFild" unFocusColor="#212121">
                      <cursor>
                         <Cursor fx:constant="CLOSED_HAND" />
@@ -71,6 +71,7 @@
                         <Font size="20.0" />
                      </font>
                   </Label>
+                  <JFXComboBox fx:id="cbAVenda" labelFloat="true" layoutX="618.0" layoutY="110.0" prefHeight="29.0" prefWidth="117.0" promptText="A Venda*" />
                </children>
             </AnchorPane>
          </children>
@@ -90,10 +91,11 @@
             <TableView fx:id="tbProdutos" onMouseClicked="#clkTable" prefHeight="242.0" prefWidth="798.0" style="-fx-background-color: #D7CCC8;">
                <columns>
                   <TableColumn fx:id="colCod" editable="false" maxWidth="60.0" minWidth="60.0" prefWidth="60.0" text="Código" />
-                  <TableColumn fx:id="colNome" editable="false" maxWidth="1.7976931348623157E308" minWidth="260.0" prefWidth="260.0" text="Nome" />
-                  <TableColumn fx:id="colPreço" editable="false" maxWidth="130.0" minWidth="100.0" prefWidth="130.0" text="Preço" />
-                  <TableColumn fx:id="colCategoria" editable="false" maxWidth="250.0" minWidth="76.0" prefWidth="220.0" text="Categoria" />
-                  <TableColumn fx:id="colMedida" editable="false" maxWidth="125.0" minWidth="100.0" prefWidth="125.0" text="Medida" />
+                  <TableColumn fx:id="colNome" editable="false" maxWidth="1.7976931348623157E308" minWidth="247.0" prefWidth="247.0" text="Nome" />
+                  <TableColumn fx:id="colPreço" editable="false" maxWidth="143.0" minWidth="100.0" prefWidth="126.0" text="Preço" />
+                  <TableColumn fx:id="colCategoria" editable="false" maxWidth="250.0" minWidth="76.0" prefWidth="143.0" text="Categoria" />
+                  <TableColumn fx:id="colMedida" editable="false" maxWidth="205.0" minWidth="100.0" prefWidth="133.0" text="Medida" />
+                  <TableColumn fx:id="colAVenda" editable="false" maxWidth="205.0" minWidth="71.0" prefWidth="88.0" text="A Venda" />
                </columns>
             </TableView>
          </children>

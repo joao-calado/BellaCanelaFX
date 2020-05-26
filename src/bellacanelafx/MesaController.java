@@ -147,7 +147,7 @@ public class MesaController implements Initializable {
             FecharComandaController ctr = loader.getController();
 
             //pode adicionar atributos na outra tela
-            ctr.setMesa(tfNMesa.getText());
+            ctr.setMesa(mesa);
             
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
@@ -155,6 +155,8 @@ public class MesaController implements Initializable {
             stage.initModality(Modality.APPLICATION_MODAL);
             efeito(event, true);
             stage.showAndWait();
+            mesa = ctr.getMesa();
+            verificarMesa();
             efeito(event, false);
         }
         catch (Exception e) {
