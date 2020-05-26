@@ -82,8 +82,11 @@ public class Comanda {
     public int deletarItem(ItensDaComanda item, int qtde){
         for(int i = 0; i < itens.size(); i++){
             if(itens.get(i).getProduto().getCod() == item.getProduto().getCod()){
-                if(itens.get(i).getQtde() > qtde){
-                    itens.get(i).setQtde(itens.get(i).getQtde() - qtde);
+                if(itens.get(i).getQtde() >= qtde){
+                    if(itens.get(i).getQtde() == qtde)
+                        itens.remove(i);
+                    else
+                        itens.get(i).setQtde(itens.get(i).getQtde() - qtde);
                     return 0;
                 }
                 return 1;
