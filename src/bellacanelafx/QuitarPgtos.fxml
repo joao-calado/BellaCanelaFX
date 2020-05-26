@@ -45,24 +45,24 @@
             </HBox>
             <AnchorPane fx:id="apDados" prefHeight="173.0" prefWidth="798.0" style="-fx-background-color: #D7CCC8;">
                <children>
-                  <JFXTextField fx:id="txCod" disable="true" focusColor="#699933" layoutX="87.0" layoutY="57.0" prefHeight="25.0" prefWidth="78.0" promptText="Código" styleClass="textFild" unFocusColor="#212121">
+                  <JFXTextField fx:id="txCod" disable="true" focusColor="#699933" layoutX="100.0" layoutY="57.0" prefHeight="25.0" prefWidth="78.0" promptText="Código" styleClass="textFild" unFocusColor="#212121">
                      <cursor>
                         <Cursor fx:constant="CLOSED_HAND" />
                      </cursor>
                   </JFXTextField>
-                  <JFXTextField fx:id="txDesc" disable="true" focusColor="#699933" labelFloat="true" layoutX="223.0" layoutY="57.0" prefHeight="25.0" prefWidth="319.0" promptText="Descrição" styleClass="textFild" unFocusColor="#212121">
+                  <JFXTextField fx:id="txDesc" disable="true" focusColor="#699933" labelFloat="true" layoutX="236.0" layoutY="57.0" prefHeight="25.0" prefWidth="319.0" promptText="Descrição" styleClass="textFild" unFocusColor="#212121">
                      <cursor>
                         <Cursor fx:constant="TEXT" />
                      </cursor>
                   </JFXTextField>
-                  <JFXTextField fx:id="txValorpago" disable="true" focusColor="#699933" labelFloat="true" layoutX="438.0" layoutY="114.0" prefHeight="25.0" prefWidth="102.0" promptText="Valor Pago" styleClass="textFild" unFocusColor="#212121">
+                  <JFXTextField fx:id="txValorpago" focusColor="#699933" labelFloat="true" layoutX="361.0" layoutY="114.0" prefHeight="25.0" prefWidth="102.0" promptText="Valor Pago" styleClass="textFild" unFocusColor="#212121">
                      <cursor>
                         <Cursor fx:constant="TEXT" />
                      </cursor>
                   </JFXTextField>
-                  <JFXDatePicker fx:id="dtVencimento" disable="true" layoutX="87.0" layoutY="114.0" prefHeight="25.0" prefWidth="136.0" promptText="Vencimento" />
-                  <JFXDatePicker fx:id="dtPagamento" disable="true" layoutX="263.0" layoutY="114.0" prefHeight="25.0" prefWidth="136.0" promptText="Pagamento" />
-                  <JFXTextField fx:id="txValor" disable="true" focusColor="#699933" labelFloat="true" layoutX="579.0" layoutY="57.0" prefHeight="25.0" prefWidth="104.0" promptText="Valor" styleClass="textFild" unFocusColor="#212121">
+                  <JFXDatePicker fx:id="dtVencimento" disable="true" layoutX="100.0" layoutY="114.0" prefHeight="25.0" prefWidth="104.0" promptText="Vencimento" />
+                  <JFXDatePicker fx:id="dtPagamento" layoutX="227.0" layoutY="115.0" prefHeight="25.0" prefWidth="104.0" promptText="Pagamento" />
+                  <JFXTextField fx:id="txValor" disable="true" focusColor="#699933" labelFloat="true" layoutX="592.0" layoutY="57.0" prefHeight="25.0" prefWidth="104.0" promptText="Valor" styleClass="textFild" unFocusColor="#212121">
                      <cursor>
                         <Cursor fx:constant="TEXT" />
                      </cursor>
@@ -72,12 +72,12 @@
                         <Font size="20.0" />
                      </font>
                   </Label>
-                  <JFXTextField fx:id="txDescJuros" disable="true" focusColor="#699933" labelFloat="true" layoutX="581.0" layoutY="114.0" prefHeight="25.0" prefWidth="102.0" promptText="Desconto/Juros" styleClass="textFild" unFocusColor="#212121">
+                  <JFXTextField fx:id="txDescJuros" focusColor="#699933" labelFloat="true" layoutX="504.0" layoutY="114.0" prefHeight="25.0" prefWidth="102.0" promptText="Desconto/Juros" styleClass="textFild" unFocusColor="#212121">
                      <cursor>
                         <Cursor fx:constant="TEXT" />
                      </cursor>
                   </JFXTextField>
-                  <Label layoutX="536.0" layoutY="122.0" text="*" textFill="RED">
+                  <Label layoutX="463.0" layoutY="119.0" text="*" textFill="RED">
                      <tooltip>
                         <Tooltip style="-fx-opacity: 0.5; -fx-background-color: red;" text="campo obrigatório" />
                      </tooltip>
@@ -88,7 +88,7 @@
                         <Font name="Tahoma Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Label layoutX="395.0" layoutY="122.0" text="*" textFill="RED">
+                  <Label layoutX="327.0" layoutY="120.0" text="*" textFill="RED">
                      <tooltip>
                         <Tooltip style="-fx-opacity: 0.5; -fx-background-color: red;" text="campo obrigatório" />
                      </tooltip>
@@ -99,7 +99,7 @@
                         <Font name="Tahoma Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Label layoutX="683.0" layoutY="119.0" prefHeight="15.0" prefWidth="8.0" text="*" textFill="RED">
+                  <Label layoutX="606.0" layoutY="119.0" prefHeight="15.0" prefWidth="8.0" text="*" textFill="RED">
                      <tooltip>
                         <Tooltip style="-fx-opacity: 0.5; -fx-background-color: red;" text="campo obrigatório" />
                      </tooltip>
@@ -110,6 +110,7 @@
                         <Font name="Tahoma Bold" size="12.0" />
                      </font>
                   </Label>
+                  <RadioButton fx:id="rbParcial" layoutX="640.0" layoutY="119.0" mnemonicParsing="false" text="Parcial" />
                </children>
             </AnchorPane>
          </children>

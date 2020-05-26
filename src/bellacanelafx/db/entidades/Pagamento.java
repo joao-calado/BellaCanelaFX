@@ -1,5 +1,5 @@
 package bellacanelafx.db.entidades;
-import java.util.Date;
+import java.sql.Date;
 
 public class Pagamento {    
     private int cod;
@@ -10,11 +10,12 @@ public class Pagamento {
     private double DesJur;
     private Date vencimento;
     private Date pagamento;
+    private boolean parcial;
 
     public Pagamento() {
     }
 
-    public Pagamento(int cod, int parcela, String desc, double valor, double valorpago, double DesJur, Date vencimento, Date pagamento) {
+    public Pagamento(int cod, int parcela, String desc, double valor, double valorpago, double DesJur, Date vencimento, Date pagamento, boolean parcial) {
         this.cod = cod;
         this.parcela = parcela;
         this.desc = desc;
@@ -23,7 +24,17 @@ public class Pagamento {
         this.DesJur = DesJur;
         this.vencimento = vencimento;
         this.pagamento = pagamento;
+        this.parcial = parcial;
     }
+
+    public boolean isParcial() {
+        return parcial;
+    }
+
+    public void setParcial(boolean parcial) {
+        this.parcial = parcial;
+    }   
+    
 
     public int getCod() {
         return cod;

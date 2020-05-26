@@ -1,18 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package bellacanelafx;
 
 import bellacanela.db.dal.DALPagamentos;
-import bellacanela.util.MaskFieldUtil;
+
 import bellacanelafx.db.entidades.Pagamento;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
+import com.jfoenix.controls.JFXSnackbar;
 import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.sql.Date;
 import java.util.ResourceBundle;
 import javafx.animation.FadeTransition;
 import javafx.collections.FXCollections;
@@ -21,7 +20,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
@@ -32,6 +31,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
+
+
 
 
 public class QuitarPgtosController implements Initializable {
@@ -91,6 +92,8 @@ public class QuitarPgtosController implements Initializable {
     private TableColumn<Pagamento, String> colVencimento;
     @FXML
     private TableColumn<Pagamento, String> colPagamento;
+    @FXML
+    private RadioButton rbParcial;
 
 
     @Override
@@ -106,10 +109,10 @@ public class QuitarPgtosController implements Initializable {
        original(); 
         
     }
-    
+
     private void loadMasks() {
-        //MaskFieldUtil.monetaryField(this.tfPreço);
-        //MaskFieldUtil.onlyAlfa(tfNome);
+        //MaskFieldUtil.monetaryField(this.txDescJuros);
+        //MaskFieldUtil.monetaryField(this.txValorpago);
     }
     private void fadeout() {
         FadeTransition ft = new FadeTransition(Duration.millis(1000), this.pane);
@@ -127,9 +130,22 @@ public class QuitarPgtosController implements Initializable {
         
         this.tabela.setItems(modelo);
         this.tabela.refresh();       
-        
-        
     }   
+    private void Status(boolean aux){ 
+        dtPagamento.setDisable(aux);
+        txValorpago.setDisable(aux);
+        txDescJuros.setDisable(aux);
+        rbParcial.setDisable(aux);
+        this.btEstornar.setDisable(!aux);
+        this.btQuitar.setDisable(aux);
+        this.btSelecionar.setDisable(aux);
+        
+        this.pnSearch.setDisable(true);
+        this.pnSearch.setOpacity(0.5);
+        this.apDados.setDisable(false);
+        this.apDados.setOpacity(1);
+    }    
+     
     private void original() {
         this.pnSearch.setDisable(false);
         this.pnSearch.setOpacity(1);
@@ -139,7 +155,6 @@ public class QuitarPgtosController implements Initializable {
         this.btEstornar.setDisable(true);
         this.btQuitar.setDisable(true);
         this.btSelecionar.setDisable(true);
-        this.btcancelar.setDisable(true);
         
         ObservableList <Node> componentes = this.apDados.getChildren(); //”limpa” os componentes
         for(Node n : componentes)
@@ -148,7 +163,6 @@ public class QuitarPgtosController implements Initializable {
                 ((TextInputControl)n).setText("");
             
         }
-        
         loadTable("");
     }
     
@@ -159,24 +173,198 @@ public class QuitarPgtosController implements Initializable {
         else 
             HomeController.spnprincipal.setCenter(null);
     }
+    private String convertStr(String s){
+        String dst = "";
+        
+        for(char c : s.toCharArray())
+            if(c != '.')
+                dst += c == ',' ? '.' : c;
+        
+        return dst;
+    } 
+    private void snackbar(String message, String cor){
+        JFXSnackbar sb = new JFXSnackbar(this.apDados);
+        Label mens = new Label(message);
+        mens.setStyle("-fx-text-fill: "+cor+";"
+                    + "-fx-font-size: 14px;"
+                    + "-fx-padding: 10px;");
+        sb.enqueue(new JFXSnackbar.SnackbarEvent(mens));
+    }  
 
   
     @FXML
     private void clkBtQuitar(ActionEvent event) {
+        boolean flag = true;
+        double valor = 0, total = 0, dife = 0, novo=0;
+        Pagamento p = new Pagamento();
+        DALPagamentos dal = new DALPagamentos();
+
+        
+        this.txValorpago.setStyle("-fx-background-color: transparent");
+        this.txDescJuros.setStyle("-fx-background-color: transparent");
+        this.dtPagamento.setStyle("-fx-background-color: transparent");
+
+        if("".equals(this.txValorpago.getText())){
+            this.txValorpago.setStyle("-fx-background-color: #FF6347");
+            flag = false;
+        }else{                        
+            try {                            
+                valor = Double.parseDouble(convertStr(txValorpago.getText()+""));
+                System.out.println(valor);
+
+                total = Double.parseDouble(txValor.getText());
+                System.out.println(total);
+                
+                if(!"".equals(this.txDescJuros.getText()))
+                    dife = Double.parseDouble(convertStr(txDescJuros.getText()+""));                    
+                
+                System.out.println(dife);
+
+                if(rbParcial.isSelected() && valor - total != 0){
+                     novo = total - valor - dife;
+                }
+                else if((total - valor + dife) != 0){
+                        this.txValorpago.setStyle("-fx-background-color: #FF6347");
+                        this.txDescJuros.setStyle("-fx-background-color: #FF6347"); 
+                        flag = false;
+                    }
+                
+            } catch (Exception e) {
+                this.txValorpago.setStyle("-fx-background-color: #FF6347");
+                this.txDescJuros.setStyle("-fx-background-color: #FF6347"); 
+                flag= false;
+            }
+        }
+        if(dtPagamento.getValue() == null){
+            this.dtPagamento.setStyle("-fx-background-color: #FF6347");
+            flag = false;
+        }
+        
+        if(flag){
+            p.setCod(Integer.parseInt( txCod.getText()));
+            p.setValorpago(valor);
+            p.setDesJur(dife);
+            p.setPagamento(java.sql.Date.valueOf(dtPagamento.getValue()));
+            if(novo != 0){
+                p.setParcial(rbParcial.isSelected());
+                Pagamento n = dal.get(Integer.parseInt( txCod.getText()));
+                n.setParcial(false);
+                n.setValor(novo);
+                n.setParcela(-1);
+                dal.gravar(n);    
+            }else
+                p.setParcial(false);
+            
+            
+            if(dal.quitar(p)){
+                this.snackbar("Pagamento quitado com sucesso!", "green");
+                
+                this.original();
+                this.loadTable("");
+            }
+            else{
+                this.snackbar("Problemas ao quitar Pagamento!", "red");
+            }
+            
+        }
+        else{
+            this.snackbar("Problemas ao quitar Pagamento!", "red");
+        }
+        
     }
 
     @FXML
     private void clkBtEstornar(ActionEvent event) {
+        double valor = 0;
+        DALPagamentos dal = new DALPagamentos();
+        
+        if(rbParcial.isSelected()){
+            valor = Double.parseDouble(txValorpago.getText()) + Double.parseDouble(txDescJuros.getText()) ;
+        }
+        else
+            valor = Double.parseDouble(txValor.getText());
+        
+        
+        if(dal.estornar(Integer.parseInt( txCod.getText()), valor)){
+                this.snackbar("Pagamento estornado com sucesso!", "green");
+                
+                this.original();
+                this.loadTable("");
+            }
+            else{
+                this.snackbar("Problemas ao estornar Pagamento!", "red");
+            }
+        
     }
 
     @FXML
     private void clkBtSelecionar(ActionEvent event) {
+        if(this.tabela.getSelectionModel().getSelectedItem() != null){            
+            Pagamento p = new DALPagamentos().get(this.tabela.getSelectionModel().getSelectedItem().getCod());
+            
+            txCod.setText(""+ p.getCod());
+            txDesc.setText(""+ p.getDesc());            
+            txValor.setText(""+ p.getValor());
+            dtPagamento.setValue(null);
+            rbParcial.setSelected(p.isParcial());
+            
+            dtVencimento.setValue(p.getVencimento().toLocalDate());
+            if(p.getPagamento() != null){
+                dtPagamento.setValue(p.getPagamento().toLocalDate());
+                txValorpago.setText(""+ p.getValorpago());                
+                txDescJuros.setText(""+ p.getDesJur());
+                Status(true);
+            }else{
+                Status(false);                
+            }
+                               
+     }
     }
     
     
     @FXML
     private void clkTabela(MouseEvent event) {
+        if(this.tabela.getSelectionModel().getSelectedItem() != null){
+            this.btSelecionar.setDisable(false);
+        }
+    }
+
+    @FXML
+    private void clkfiltro(ActionEvent event) {
+        boolean flag = false;
+        String filtro = "";        
+        Date data = new Date(System.currentTimeMillis()); 
+        SimpleDateFormat formatarDate = new SimpleDateFormat("yyyy-MM-dd"); 
         
+        if(rbPago.isSelected()){
+            flag = true;
+            filtro+= "pag_pagamento IS NOT NULL";
+        }
+        if(rbAPagar.isSelected()){
+            if(flag)
+               filtro+=" and ";
+            filtro+= "pag_pagamento IS NULL";
+            flag = true;
+        }
+        if(rbVencido.isSelected()){
+            if(flag)
+               filtro+=" and ";
+            filtro+= "pag_vencimento < '"+formatarDate.format(data)+"'";
+            flag = true;
+        }
+        if(rbAntesde.isSelected() && dpAntesde.getValue() != null){
+            if(flag)
+                filtro+=" and ";
+            filtro+= "pag_vencimento < '"+ dpAntesde.getValue()+"'";
+            flag = true;
+        } 
+        if(rbDepoisde.isSelected() && dpDepoisde.getValue() != null){
+            if(flag)
+               filtro+=" and ";
+            filtro+= "pag_vencimento >= '"+ dpDepoisde.getValue()+"'";
+        }
+        
+        loadTable(filtro);
     }
 
     
