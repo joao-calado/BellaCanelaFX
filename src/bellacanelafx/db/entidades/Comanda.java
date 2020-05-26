@@ -1,5 +1,6 @@
 package bellacanelafx.db.entidades;
 
+import bellacanela.db.dal.DALProduto;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -83,6 +84,10 @@ public class Comanda {
         for(int i = 0; i < itens.size(); i++){
             if(itens.get(i).getProduto().getCod() == item.getProduto().getCod()){
                 if(itens.get(i).getQtde() >= qtde){
+                    if(itens.get(i).getProduto().getEstoque() != -1){
+                        itens.get(i).getProduto().setEstoque(itens.get(i).getProduto().getEstoque() + qtde);
+                        new DALProduto().alterEstoque(itens.get(i).getProduto());
+                    }
                     if(itens.get(i).getQtde() == qtde)
                         itens.remove(i);
                     else

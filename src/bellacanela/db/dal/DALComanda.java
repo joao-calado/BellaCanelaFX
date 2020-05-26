@@ -40,6 +40,7 @@ public class DALComanda {
 
             if (ans) {
                 c.getItens().forEach((itens) -> {
+                    new DALProduto().alterEstoque(itens.getProduto());
                     new DALItensDaComanda().insert(itens);
                 });
             }

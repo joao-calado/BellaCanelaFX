@@ -6,13 +6,11 @@
 <?import com.jfoenix.controls.JFXDatePicker?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -65,17 +63,6 @@
             </HBox>
             <AnchorPane fx:id="apdados" prefHeight="224.0" prefWidth="798.0" style="-fx-background-color: #D7CCC8;">
                <children>
-                  <Label layoutX="780.0" layoutY="196.0" text="*" textFill="RED">
-                     <tooltip>
-                        <Tooltip style="-fx-opacity: 0.5; -fx-background-color: red;" text="campo obrigatório" />
-                     </tooltip>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                     <font>
-                        <Font name="Tahoma Bold" size="12.0" />
-                     </font>
-                  </Label>
                   <JFXTextField fx:id="tfNome" disable="true" focusColor="#699933" labelFloat="true" layoutX="36.0" layoutY="29.0" prefHeight="25.0" prefWidth="524.0" promptText="Nome do cliente" />
                   <JFXDatePicker fx:id="dpData" defaultColor="#699933" disable="true" layoutX="583.0" layoutY="29.0" prefHeight="25.0" prefWidth="187.0" promptText="Data de abertura" />
                   <JFXTextField fx:id="tfDescricao" disable="true" focusColor="#699933" labelFloat="true" layoutX="36.0" layoutY="68.0" prefHeight="25.0" prefWidth="727.0" promptText="Descrição" />

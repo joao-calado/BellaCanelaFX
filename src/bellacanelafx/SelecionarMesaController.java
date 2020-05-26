@@ -31,7 +31,8 @@ public class SelecionarMesaController implements Initializable {
     }    
     
     public void loadMesas(){
-        tpPane.getChildren().clear();
+        for(int i = tpPane.getChildren().size()-1; i > 0; i--)
+            tpPane.getChildren().remove(i);
         dal.getMesas("").forEach((m) -> {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("Mesa.fxml"));
