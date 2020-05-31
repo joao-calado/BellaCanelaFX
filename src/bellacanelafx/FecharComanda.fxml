@@ -75,6 +75,52 @@
          <children>
             <HBox alignment="CENTER" prefHeight="74.0" prefWidth="798.0" style="-fx-background-color: #5D4037;">
                <children>
+                  <JFXButton fx:id="btInserir" onAction="#clkBtInserir" text="Inserir">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <HBox.margin>
+                        <Insets left="10.0" right="30.0" />
+                     </HBox.margin>
+                  </JFXButton>
+                  <JFXButton fx:id="btExcluir" onAction="#clkBtExcluir" text="Excluir">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <HBox.margin>
+                        <Insets right="30.0" />
+                     </HBox.margin>
+                  </JFXButton>
+                  <JFXComboBox fx:id="cbTipoRec" focusColor="#699933" labelFloat="true" onAction="#clkCBTipoRec" opacity="0.75" prefHeight="25.0" prefWidth="139.0" promptText="Tipo de recebimento" style="-fx-background-color: #D7CCC8;" unFocusColor="#699933">
+                     <HBox.margin>
+                        <Insets right="30.0" />
+                     </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXComboBox>
+                  <JFXTextField fx:id="txValor" focusColor="#699933" labelFloat="true" opacity="0.75" prefHeight="25.0" prefWidth="41.0" promptText="Valor" style="-fx-background-color: #D7CCC8;" unFocusColor="#699933">
+                     <HBox.margin>
+                        <Insets right="30.0" />
+                     </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                     <padding>
+                        <Insets left="5.0" right="5.0" />
+                     </padding>
+                  </JFXTextField>
+                  <JFXDatePicker fx:id="dtpVencimento" defaultColor="#699933" opacity="0.75" prefHeight="25.0" prefWidth="105.0" promptText="Vencimento" style="-fx-background-color: #D7CCC8;">
+                     <HBox.margin>
+                        <Insets right="30.0" />
+                     </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <padding>
+                        <Insets left="5.0" />
+                     </padding>
+                  </JFXDatePicker>
                   <VBox prefHeight="74.0" prefWidth="187.0">
                      <children>
                         <HBox prefHeight="32.0" prefWidth="158.0">
@@ -113,52 +159,6 @@
                         </HBox>
                      </children>
                   </VBox>
-                  <JFXComboBox fx:id="cbTipoRec" focusColor="#699933" labelFloat="true" onAction="#clkCBTipoRec" opacity="0.75" prefHeight="25.0" prefWidth="139.0" promptText="Tipo de recebimento" style="-fx-background-color: #D7CCC8;" unFocusColor="#699933">
-                     <HBox.margin>
-                        <Insets left="30.0" right="30.0" />
-                     </HBox.margin>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </JFXComboBox>
-                  <JFXTextField fx:id="txValor" focusColor="#699933" labelFloat="true" opacity="0.75" prefHeight="25.0" prefWidth="41.0" promptText="Valor" style="-fx-background-color: #D7CCC8;" unFocusColor="#699933">
-                     <HBox.margin>
-                        <Insets right="30.0" />
-                     </HBox.margin>
-                     <cursor>
-                        <Cursor fx:constant="TEXT" />
-                     </cursor>
-                     <padding>
-                        <Insets left="5.0" right="5.0" />
-                     </padding>
-                  </JFXTextField>
-                  <JFXDatePicker fx:id="dtpVencimento" defaultColor="#699933" opacity="0.75" prefHeight="25.0" prefWidth="105.0" promptText="Vencimento" style="-fx-background-color: #D7CCC8;">
-                     <HBox.margin>
-                        <Insets right="30.0" />
-                     </HBox.margin>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                     <padding>
-                        <Insets left="5.0" />
-                     </padding>
-                  </JFXDatePicker>
-                  <JFXButton fx:id="btInserir" onAction="#clkBtInserir" text="Inserir">
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                     <HBox.margin>
-                        <Insets left="30.0" />
-                     </HBox.margin>
-                  </JFXButton>
-                  <JFXButton fx:id="btExcluir" onAction="#clkBtExcluir" text="Excluir">
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                     <HBox.margin>
-                        <Insets left="30.0" />
-                     </HBox.margin>
-                  </JFXButton>
                </children>
             </HBox>
             <TableView fx:id="tabelaRecebimentos" prefHeight="136.0" prefWidth="798.0" styleClass="menubar">

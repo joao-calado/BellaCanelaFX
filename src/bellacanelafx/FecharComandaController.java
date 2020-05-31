@@ -253,16 +253,31 @@ public class FecharComandaController implements Initializable {
         
         double total = 0;
         double pago = 0;
+        double npag = 0;
         double gorjeta = 0;
+        double resta;
         
         try {
             
-            total = Double.parseDouble(lbTotal.getText().trim().replaceAll(",", "."));
+            List<ItensDaComanda> itens = tabelaItens.getItems();
+            total = itens.stream().map((idc) -> idc.getProduto().getPreco() * idc.getQtde()).reduce(total, (accumulator, _item) -> accumulator + _item);
             pago = Double.parseDouble(lbPago.getText().trim().replaceAll(",", "."));
+            npag = Double.parseDouble(txValor.getText().trim().replaceAll(",", "."));
             
-            if(pago >= total) {
-                gorjeta += pago-total;
+            /*
+            total = 100
+            pago = 50
+            noag = 200
+            gorjeta = 150
+            */
+            
+            if(total != 0.0) {
+                resta = total-pago;
+                if(npag > resta) {
+                    gorjeta = npag - resta;
+                }
             }
+            
         }
         catch(NumberFormatException e) {}
         
@@ -280,6 +295,8 @@ public class FecharComandaController implements Initializable {
         colProduto.setCellValueFactory((TableColumn.CellDataFeatures<ItensDaComanda, String> p) -> new SimpleStringProperty(p.getValue().getProduto().getNome()));
         colQtd.setCellValueFactory((TableColumn.CellDataFeatures<ItensDaComanda, Integer> p) -> new SimpleObjectProperty(p.getValue().getQtde()));
         colTotal.setCellValueFactory((TableColumn.CellDataFeatures<ItensDaComanda, Double> p) -> new SimpleObjectProperty(p.getValue().getQtde()*p.getValue().getProduto().getPreco()));
+        
+        colTotal.setStyle("-fx-alignment: center-right;");
         
         /* colunas da tabela de recebimentos */
         colCliente.setCellValueFactory((TableColumn.CellDataFeatures<Recebimento, Integer> r) -> new SimpleObjectProperty(r.getValue().getCliente()));
@@ -352,6 +369,8 @@ public class FecharComandaController implements Initializable {
             double valor = Double.parseDouble(txValor.getText().replaceAll(",", "."));
             int mesa = 0;
             int comanda = 0;
+            double gorjeta = gorjeta();
+            
             try {
                 mesa = Integer.parseInt(lbMesa.getText().trim());
                 comanda = cbComanda.getValue().getCom_num();
@@ -368,25 +387,42 @@ public class FecharComandaController implements Initializable {
             }
 
             DALRecebimento dalRec = new DALRecebimento();
-
-            if(dalRec.gravar(r)) {
-                
-                carregarTabelaRecebimentos();
-                if(gorjeta() != 0.0) {
-                    a.setTitle("Informação:");
-                    a.setAlertType(Alert.AlertType.INFORMATION);
-                    a.setContentText("Recebimento gravado com sucesso!\nGorjeta: R$"+gorjeta());
-                }
-                else {
+            
+            if(gorjeta() == 0.0) {
+                if(dalRec.gravar(r)) {
+                    carregarTabelaRecebimentos();
                     a.setTitle("Informação:");
                     a.setAlertType(Alert.AlertType.INFORMATION);
                     a.setContentText("Recebimento gravado com sucesso!");
                 }
+                else {
+                    a.setTitle("Erro:");
+                    a.setAlertType(Alert.AlertType.ERROR);
+                    a.setContentText("Problemas ao tentar gravar recebimento!");
+                }
             }
             else {
-                a.setTitle("Erro:");
-                a.setAlertType(Alert.AlertType.ERROR);
-                a.setContentText("Problemas ao tentar gravar recebimento!");
+                r.setValor(valor - gorjeta());
+                if(dalRec.gravar(r)) {
+                    r.setValor(gorjeta());
+                    r.setTipo("Gorjeta");
+                    if(dalRec.gravar(r)) {
+                        carregarTabelaRecebimentos();
+                        a.setTitle("Informação:");
+                        a.setAlertType(Alert.AlertType.INFORMATION);
+                        a.setContentText("Recebimento gravado com sucesso!\nGorjeta: R$"+gorjeta());
+                    }
+                    else {
+                        a.setTitle("Erro:");
+                        a.setAlertType(Alert.AlertType.ERROR);
+                        a.setContentText("Problemas ao tentar gravar recebimento com gorjeta!");
+                    }
+                }
+                else {
+                    a.setTitle("Erro:");
+                    a.setAlertType(Alert.AlertType.ERROR);
+                    a.setContentText("Problemas ao tentar gravar recebimento!");
+                }
             }
         }
         else {
