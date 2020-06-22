@@ -85,8 +85,11 @@ public class DALProduto {
                 
                 cat = new DALCategoria().get(rs.getInt("prod_cat"));
                 med = new DALMedida().get(rs.getInt("prod_med"));                
-                aux.add(new Produtos(rs.getInt("prod_cod"),rs.getString("prod_nome"), cat , med ,
-                        rs.getDouble("prod_preco"),rs.getString("prod_avenda").charAt(0)));
+                aux.add(new Produtos(rs.getInt("prod_cod"),rs.getString("prod_nome"),
+                        new DALCategoria().get(rs.getInt("prod_cat")),
+                        new DALMedida().get(rs.getInt("prod_med")),
+                        rs.getDouble("prod_preco"),
+                        rs.getString("prod_avenda").charAt(0), rs.getInt("prod_estoque")));
             }
                 
         }
