@@ -214,5 +214,18 @@ public class HomeController implements Initializable {
             System.out.println(ex);
         }
     }
+
+    @FXML
+    private void clkBaixaProduto(ActionEvent event) {
+        try 
+        {
+            Parent root;
+            root = FXMLLoader.load(getClass().getResource("BaixaDeProduto.fxml"));
+            pnprincipal.setCenter(root);
+        } 
+        catch (IOException ex) {
+            System.out.println(ex);
+        }
+    }
     
 }

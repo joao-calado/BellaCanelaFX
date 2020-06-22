@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXRadioButton?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<SplitPane fx:id="painel" dividerPositions="0.5055555555555555" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="542.0" prefWidth="800.0" stylesheets="@css/green-brown-theme.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bellacanelafx.BaixaDeProdutoController">
+   <items>
+      <VBox prefHeight="156.0" prefWidth="598.0">
+         <children>
+            <HBox alignment="CENTER" prefHeight="61.0" prefWidth="798.0" styleClass="root">
+               <children>
+                  <Label opacity="0.75" text="Baixa de Produto" textFill="WHITE">
+                     <font>
+                        <Font name="Tahoma Bold" size="24.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="40.0" prefWidth="598.0" spacing="40.0" style="-fx-background-color: #5D4037;">
+               <children>
+                  <JFXButton fx:id="btnovo" onAction="#clkBtNovo" text="Novo">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                  <JFXButton fx:id="btalterar" onAction="#clkBtAlterar" text="Alterar">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                  <JFXButton fx:id="btapagar" onAction="#clkBtApagar" text="Apagar">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                  <JFXButton fx:id="btsalvar" onAction="#clkBtSalvar" text="Salvar">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                  <JFXButton fx:id="btcancelar" onAction="#clkBtCancelar" text="Cancelar">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+               </children>
+            </HBox>
+            <AnchorPane fx:id="apdados" prefHeight="172.0" prefWidth="798.0" style="-fx-background-color: #D7CCC8;">
+               <children>
+                  <Label layoutX="771.0" layoutY="123.0" text="*" textFill="RED">
+                     <tooltip>
+                        <Tooltip style="-fx-opacity: 0.5; -fx-background-color: red;" text="campo obrigatório" />
+                     </tooltip>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <font>
+                        <Font name="Tahoma Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <JFXTextArea fx:id="txtMotivo" focusColor="#699933" labelFloat="true" layoutX="29.0" layoutY="116.0" prefHeight="39.0" prefWidth="743.0" promptText="Motivo da baixa" />
+                  <JFXComboBox fx:id="cbProdutos" focusColor="#699933" labelFloat="true" layoutX="29.0" layoutY="73.0" prefHeight="25.0" prefWidth="176.0" promptText="Produto" />
+                  <JFXComboBox fx:id="cbFuncionarios" focusColor="#699933" labelFloat="true" layoutX="29.0" layoutY="31.0" prefHeight="25.0" prefWidth="176.0" promptText="Funcionario" />
+                  <Spinner fx:id="spnQuantidade" layoutX="218.0" layoutY="74.0" prefHeight="29.0" prefWidth="91.0" />
+                  <JFXDatePicker fx:id="dtpDataBaixa" defaultColor="#699933" layoutX="322.0" layoutY="73.0" prefHeight="25.0" prefWidth="112.0" promptText="Data da baixa" />
+                  <Label layoutX="206.0" layoutY="36.0" text="*" textFill="RED">
+                     <tooltip>
+                        <Tooltip style="-fx-opacity: 0.5; -fx-background-color: red;" text="campo obrigatório" />
+                     </tooltip>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <font>
+                        <Font name="Tahoma Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="206.0" layoutY="78.0" text="*" textFill="RED">
+                     <tooltip>
+                        <Tooltip style="-fx-opacity: 0.5; -fx-background-color: red;" text="campo obrigatório" />
+                     </tooltip>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <font>
+                        <Font name="Tahoma Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="307.0" layoutY="78.0" text="*" textFill="RED">
+                     <tooltip>
+                        <Tooltip style="-fx-opacity: 0.5; -fx-background-color: red;" text="campo obrigatório" />
+                     </tooltip>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <font>
+                        <Font name="Tahoma Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="430.0" layoutY="78.0" text="*" textFill="RED">
+                     <tooltip>
+                        <Tooltip style="-fx-opacity: 0.5; -fx-background-color: red;" text="campo obrigatório" />
+                     </tooltip>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <font>
+                        <Font name="Tahoma Bold" size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+         </children>
+      </VBox>
+      <VBox fx:id="pnpesquisa" prefHeight="206.0" prefWidth="598.0">
+         <children>
+            <HBox alignment="CENTER" prefHeight="81.0" prefWidth="748.0" spacing="20.0" style="-fx-background-color: #D7CCC8;">
+               <children>
+                  <JFXTextField fx:id="txtPesquisa" focusColor="#699933" labelFloat="true" prefHeight="25.0" prefWidth="278.0" promptText="Nome do produto" styleClass="textFild" unFocusColor="#212121">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </JFXTextField>
+                  <JFXDatePicker fx:id="dtpInicio" defaultColor="#699933" prefHeight="25.0" prefWidth="112.0" promptText="Inicio" />
+                  <JFXRadioButton fx:id="checkInicio" text=" " />
+                  <JFXDatePicker fx:id="dtpFim" defaultColor="#699933" prefHeight="25.0" prefWidth="112.0" promptText="Fim" />
+                  <JFXRadioButton fx:id="checkFim" prefWidth="14.0" text=" " />
+                  <JFXButton fx:id="btnPesquisa" onAction="#evtPesquisar" prefHeight="25.0" prefWidth="77.0" styleClass="buttonTelas" text="Pesquisar" />
+               </children>
+            </HBox>
+            <TableView fx:id="tabela" onMouseClicked="#clkTabela" prefHeight="247.0" prefWidth="798.0" style="-fx-background-color: #D7CCC8;">
+               <columns>
+                  <TableColumn fx:id="colProduto" editable="false" maxWidth="1.7976931348623157E308" minWidth="135.0" prefWidth="186.0" text="Produto" />
+                  <TableColumn fx:id="colQuantidade" editable="false" maxWidth="169.0" minWidth="47.0" prefWidth="103.0" text="Quantidade" />
+                  <TableColumn fx:id="colData" editable="false" maxWidth="250.0" minWidth="71.0" prefWidth="129.0" text="Data" />
+                  <TableColumn fx:id="colFuncionario" editable="false" maxWidth="296.0" minWidth="60.0" prefWidth="140.0" text="Funcionario" />
+                  <TableColumn fx:id="colMotivo" editable="false" maxWidth="416.0" minWidth="60.0" prefWidth="239.0" text="Motivo" />
+               </columns>
+            </TableView>
+         </children>
+      </VBox>
+   </items>
+</SplitPane>

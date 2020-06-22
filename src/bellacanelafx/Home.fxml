@@ -42,6 +42,7 @@
                         <MenuItem mnemonicParsing="false" onAction="#clkQuitarpagamento" text="Quitar Pagamentos" />
                         <MenuItem mnemonicParsing="false" onAction="#clkResgistrarcompra" text="Resgistrar Compra" />
                         <MenuItem mnemonicParsing="false" onAction="#clkEfetuarRecebimento" text="Efetuar Recebimento" />
+                        <MenuItem mnemonicParsing="false" onAction="#clkBaixaProduto" text="Baixa de Produto" />
                   </items>
                 </Menu>
                   <Menu mnemonicParsing="false" text="Ajuda">
