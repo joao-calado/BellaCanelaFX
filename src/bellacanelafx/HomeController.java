@@ -51,7 +51,7 @@ public class HomeController implements Initializable {
         try 
         {
             Parent root;
-            root = FXMLLoader.load(getClass().getResource("RegistrarCompra.fxml"));
+            root = FXMLLoader.load(getClass().getResource("login.fxml"));
             pnprincipal.setCenter(root);
         } 
         catch (IOException ex) {
@@ -195,6 +195,19 @@ public class HomeController implements Initializable {
         {
             Parent root;
             root = FXMLLoader.load(getClass().getResource("SelecionarMesa.fxml"));
+            pnprincipal.setCenter(root);
+        } 
+        catch (IOException ex) {
+            System.out.println(ex);
+        }
+    }
+
+    @FXML
+    private void clkEfetuarRecebimento(ActionEvent event) {
+        try 
+        {
+            Parent root;
+            root = FXMLLoader.load(getClass().getResource("EfetuarRecebimento.fxml"));
             pnprincipal.setCenter(root);
         } 
         catch (IOException ex) {
