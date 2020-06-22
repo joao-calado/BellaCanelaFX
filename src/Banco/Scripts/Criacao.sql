@@ -50,6 +50,20 @@ CREATE TABLE ItensDaComanda (
     CONSTRAINT fk_prod_itens FOREIGN KEY (prod_cod) REFERENCES Produto
 );
 
+CREATE TABLE BaixaDeProduto (
+    bai_cod SERIAL,
+    
+    prod_cod INTEGER NOT NULL,
+    fun_cod INTEGER NOT NULL,
+    bai_qtde INTEGER NOT NULL,
+    bai_data DATE NOT NULL,
+    bai_motivo VARCHAR(200),
+
+    CONSTRAINT pk_baixa PRIMARY KEY (bai_cod),
+    CONSTRAINT fk_baifun FOREIGN KEY (fun_cod) REFERENCES Funcionarios,
+    CONSTRAINT fk_baiprod FOREIGN KEY (prod_cod) REFERENCES Produto
+);
+
 CREATE TABLE Fornecedor (
     for_cod SERIAL,
     for_nome varchar(50) NOT NULL,	
