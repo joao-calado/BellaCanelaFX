@@ -51,7 +51,7 @@ public class HomeController implements Initializable {
         try 
         {
             Parent root;
-            root = FXMLLoader.load(getClass().getResource("login.fxml"));
+            root = FXMLLoader.load(getClass().getResource("RegistrarCompra.fxml"));
             pnprincipal.setCenter(root);
         } 
         catch (IOException ex) {

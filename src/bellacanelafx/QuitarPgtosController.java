@@ -164,12 +164,19 @@ public class QuitarPgtosController implements Initializable {
             
         }
         loadTable("");
+        dtPagamento.setValue(null);
+        dtVencimento.setValue(null);
     }
     
     @FXML
     private void clkBtCancelar(ActionEvent event) {
-        if (!this.apDados.isDisabled())
+        if (!this.apDados.isDisabled()){
+            this.txValorpago.setStyle("-fx-background-color: transparent");
+            this.txDescJuros.setStyle("-fx-background-color: transparent");
+            this.dtPagamento.setStyle("-fx-background-color: transparent");
             this.original();
+        }
+            
         else 
             HomeController.spnprincipal.setCenter(null);
     }
@@ -241,16 +248,18 @@ public class QuitarPgtosController implements Initializable {
         }
         
         if(flag){
-            p.setCod(Integer.parseInt( txCod.getText()));
+            p=dal.get(Integer.parseInt( txCod.getText()));            
             p.setValorpago(valor);
             p.setDesJur(dife);
             p.setPagamento(java.sql.Date.valueOf(dtPagamento.getValue()));
             if(novo != 0){
                 p.setParcial(rbParcial.isSelected());
                 Pagamento n = dal.get(Integer.parseInt( txCod.getText()));
+                n.setDesc(n.getDesc() + " - Faltante");                
                 n.setParcial(false);
                 n.setValor(novo);
                 n.setParcela(-1);
+                n.setPai(p.getCod());
                 dal.gravar(n);    
             }else
                 p.setParcial(false);
@@ -285,9 +294,10 @@ public class QuitarPgtosController implements Initializable {
             valor = Double.parseDouble(txValor.getText());
         
         
-        if(dal.estornar(Integer.parseInt( txCod.getText()), valor)){
-                this.snackbar("Pagamento estornado com sucesso!", "green");
+        if(dal.estornar(Integer.parseInt( txCod.getText()))){
                 
+                this.snackbar("Pagamento estornado com sucesso!", "green");
+                dal.apagarEstonro(Integer.parseInt( txCod.getText()));
                 this.original();
                 this.loadTable("");
             }
@@ -304,8 +314,7 @@ public class QuitarPgtosController implements Initializable {
             
             txCod.setText(""+ p.getCod());
             txDesc.setText(""+ p.getDesc());            
-            txValor.setText(""+ p.getValor());
-            dtPagamento.setValue(null);
+            txValor.setText(""+ p.getValor());            
             rbParcial.setSelected(p.isParcial());
             
             dtVencimento.setValue(p.getVencimento().toLocalDate());

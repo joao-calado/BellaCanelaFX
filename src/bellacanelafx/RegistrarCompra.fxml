@@ -3,12 +3,14 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXRadioButton?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
@@ -50,18 +52,17 @@
             </HBox>
             <AnchorPane fx:id="apDados" prefHeight="262.0" prefWidth="798.0" style="-fx-background-color: #D7CCC8;">
                <children>
-                  <JFXComboBox fx:id="cbProduto" disable="true" labelFloat="true" layoutX="44.0" layoutY="118.0" prefHeight="25.0" prefWidth="101.0" promptText="Produto" />
                   <JFXTextField fx:id="tfCod" disable="true" editable="false" focusColor="#699933" layoutX="15.0" layoutY="45.0" prefHeight="25.0" prefWidth="62.0" promptText="Código" styleClass="textFild" unFocusColor="#212121">
                      <cursor>
                         <Cursor fx:constant="CLOSED_HAND" />
                      </cursor>
                   </JFXTextField>
-                  <JFXTextField fx:id="tfNotaFiscal" disable="true" focusColor="#699933" labelFloat="true" layoutX="97.0" layoutY="44.0" prefHeight="25.0" prefWidth="155.0" promptText="Nota Fiscal" styleClass="textFild" unFocusColor="#212121">
+                  <JFXTextField fx:id="tfNotaFiscal" focusColor="#699933" labelFloat="true" layoutX="97.0" layoutY="44.0" prefHeight="25.0" prefWidth="155.0" promptText="Nota Fiscal" styleClass="textFild" unFocusColor="#212121">
                      <cursor>
                         <Cursor fx:constant="TEXT" />
                      </cursor>
                   </JFXTextField>
-                  <JFXTextField fx:id="tfPrecoTotal" disable="true" focusColor="#699933" labelFloat="true" layoutX="705.0" layoutY="7.0" prefHeight="25.0" prefWidth="69.0" promptText="Preço Total" styleClass="textFild" unFocusColor="#212121">
+                  <JFXTextField fx:id="tfPrecoTotal" disable="true" focusColor="#699933" labelFloat="true" layoutX="705.0" layoutY="10.0" prefHeight="25.0" prefWidth="69.0" promptText="Valor Total" styleClass="textFild" unFocusColor="#212121">
                      <cursor>
                         <Cursor fx:constant="TEXT" />
                      </cursor>
@@ -71,38 +72,8 @@
                         <Font size="20.0" />
                      </font>
                   </Label>
-                  <JFXTextField fx:id="tfQTDProduto" disable="true" focusColor="#699933" labelFloat="true" layoutX="178.0" layoutY="118.0" prefHeight="25.0" prefWidth="69.0" promptText="Quantidade" styleClass="textFild" unFocusColor="#212121">
-                     <cursor>
-                        <Cursor fx:constant="TEXT" />
-                     </cursor>
-                  </JFXTextField>
-                  <JFXComboBox fx:id="cbFornecedor" disable="true" labelFloat="true" layoutX="277.0" layoutY="44.0" prefHeight="25.0" prefWidth="114.0" promptText="Fornecedor" />
-                  <TableView fx:id="tbProdutos" disable="true" layoutX="288.0" layoutY="104.0" prefHeight="141.0" prefWidth="482.0" style="-fx-background-color: #eae4e1;">
-                    <columns>
-                      <TableColumn fx:id="colPrCod" prefWidth="69.0" text="Código" />
-                        <TableColumn fx:id="colPrProduto" prefWidth="102.0" text="Produto" />
-                      <TableColumn fx:id="colPrQuantidade" prefWidth="81.0" text="Quantidade" />
-                        <TableColumn fx:id="colPrPreco" prefWidth="79.0" text="Preço" />
-                        <TableColumn fx:id="colPrTotal" prefWidth="74.0" text="Total" />
-                        <TableColumn fx:id="colPrEstoque" prefWidth="74.0" text="Estoque" />
-                    </columns>
-                  </TableView>
-                  <JFXButton fx:id="btApagarProd" disable="true" layoutX="113.0" layoutY="222.0" onAction="#clkApagarProd" text="Apagar">
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </JFXButton>
-                  <JFXButton fx:id="btSalvarProd" disable="true" layoutX="26.0" layoutY="222.0" onAction="#clkSalvarProd" text="Salvar">
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </JFXButton>
-                  <JFXButton fx:id="btCancelarProd" disable="true" layoutX="203.0" layoutY="222.0" onAction="#clkCancelarProd" text="Cancelar">
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </JFXButton>
-                  <JFXTextField fx:id="tfDescricao" disable="true" layoutX="407.0" layoutY="44.0" prefHeight="25.0" prefWidth="135.0" promptText="Descrição" />
+                  <JFXComboBox fx:id="cbFornecedor" labelFloat="true" layoutX="277.0" layoutY="44.0" prefHeight="25.0" prefWidth="114.0" promptText="Fornecedor" />
+                  <JFXTextField fx:id="tfDescricao" layoutX="407.0" layoutY="44.0" prefHeight="25.0" prefWidth="135.0" promptText="Descrição" />
                   <Label disable="true" layoutX="538.0" layoutY="50.0" text="*" textFill="RED">
                      <tooltip>
                         <Tooltip style="-fx-opacity: 0.5; -fx-background-color: red;" text="campo obrigatório" />
@@ -136,17 +107,6 @@
                         <Font name="Tahoma Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Label disable="true" layoutX="766.0" layoutY="89.0" text="*" textFill="RED">
-                     <tooltip>
-                        <Tooltip style="-fx-opacity: 0.5; -fx-background-color: red;" text="campo obrigatório" />
-                     </tooltip>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                     <font>
-                        <Font name="Tahoma Bold" size="12.0" />
-                     </font>
-                  </Label>
                   <Label disable="true" layoutX="647.0" layoutY="50.0" text="*" textFill="RED">
                      <tooltip>
                         <Tooltip style="-fx-opacity: 0.5; -fx-background-color: red;" text="campo obrigatório" />
@@ -158,8 +118,8 @@
                         <Font name="Tahoma Bold" size="12.0" />
                      </font>
                   </Label>
-                  <JFXTextField fx:id="tfParcelas" disable="true" layoutX="566.0" layoutY="45.0" prefHeight="25.0" prefWidth="77.0" promptText="Parcelas" />
-                  <JFXDatePicker fx:id="dpVencimento" disable="true" layoutX="677.0" layoutY="44.0" prefHeight="25.0" prefWidth="101.0" promptText="Vencimento" />
+                  <JFXTextField fx:id="tfParcelas" layoutX="566.0" layoutY="45.0" prefHeight="25.0" prefWidth="77.0" promptText="Parcelas" />
+                  <JFXDatePicker fx:id="dpVencimento" layoutX="677.0" layoutY="44.0" prefHeight="25.0" prefWidth="101.0" promptText="Vencimento" />
                   <Label layoutX="774.0" layoutY="49.0" text="*" textFill="RED">
                      <tooltip>
                         <Tooltip style="-fx-opacity: 0.5; -fx-background-color: red;" text="campo obrigatório" />
@@ -171,12 +131,96 @@
                         <Font name="Tahoma Bold" size="12.0" />
                      </font>
                   </Label>
-                  <JFXTextField fx:id="tfPrecoProduto" disable="true" focusColor="#699933" labelFloat="true" layoutX="43.0" layoutY="169.0" prefHeight="25.0" prefWidth="101.0" promptText="Preço" styleClass="textFild" unFocusColor="#212121">
-                     <cursor>
-                        <Cursor fx:constant="TEXT" />
-                     </cursor>
-                  </JFXTextField>
-                  <JFXComboBox fx:id="cbProdEstoque" disable="true" labelFloat="true" layoutX="178.0" layoutY="169.0" prefHeight="25.0" prefWidth="69.0" promptText="Estoque" />
+                  <JFXRadioButton fx:id="GroupProd" layoutX="15.0" layoutY="81.0" onAction="#clkgroup" selected="true" text="Produtos">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="propar" />
+                     </toggleGroup>
+                  </JFXRadioButton>
+                  <JFXRadioButton fx:id="GroupParc" layoutX="107.0" layoutY="81.0" onAction="#clkgroup" text="Parcelas" toggleGroup="$propar" />
+                  <AnchorPane fx:id="paneParcelas" layoutY="101.0" prefHeight="157.0" prefWidth="798.0" visible="false">
+                     <children>
+                        <TableView fx:id="tbParcelas" layoutX="332.0" layoutY="2.0" prefHeight="141.0" prefWidth="411.0" style="-fx-background-color: #eae4e1;">
+                           <columns>
+                              <TableColumn fx:id="colParParcela" prefWidth="75.0" text="Parcela" />
+                              <TableColumn fx:id="colParDescricao" prefWidth="145.0" text="Descrição" />
+                              <TableColumn fx:id="colParValor" prefWidth="91.0" text="Valor" />
+                              <TableColumn fx:id="colParVencimento" prefWidth="98.0" text="Vencimento" />
+                           </columns>
+                        </TableView>
+                        <JFXTextField fx:id="tfParcelaParc" focusColor="#699933" labelFloat="true" layoutX="98.0" layoutY="19.0" prefHeight="25.0" prefWidth="69.0" promptText="Parcela" styleClass="textFild" unFocusColor="#212121">
+                           <cursor>
+                              <Cursor fx:constant="TEXT" />
+                           </cursor>
+                        </JFXTextField>
+                        <JFXButton fx:id="btApagarParc" layoutX="216.0" layoutY="116.0" onAction="#clkApagarParc" prefHeight="25.0" prefWidth="69.0" style="-fx-background-color: #5D4037;" text="Remover">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </JFXButton>
+                        <JFXButton fx:id="btSalvarParc" layoutX="108.0" layoutY="116.0" onAction="#clkSalvarParc" prefHeight="25.0" prefWidth="69.0" style="-fx-background-color: #5D4037;" text="Inserir">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </JFXButton>
+                        <JFXTextField fx:id="tfValorParc" focusColor="#699933" labelFloat="true" layoutX="203.0" layoutY="19.0" prefHeight="25.0" prefWidth="89.0" promptText="Valor" styleClass="textFild" unFocusColor="#212121">
+                           <cursor>
+                              <Cursor fx:constant="TEXT" />
+                           </cursor>
+                        </JFXTextField>
+                        <JFXDatePicker fx:id="dpParVencimento" layoutX="114.0" layoutY="70.0" prefHeight="25.0" prefWidth="166.0" promptText="Vencimento da Parcela" />
+                        <JFXTextField fx:id="tfValorFaltante" disable="true" focusColor="#699933" labelFloat="true" layoutX="4.0" layoutY="127.0" prefHeight="25.0" prefWidth="77.0" promptText="Valor Faltante" styleClass="textFild" unFocusColor="#212121">
+                           <cursor>
+                              <Cursor fx:constant="TEXT" />
+                           </cursor>
+                        </JFXTextField>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="paneProdutos" layoutX="-1.0" layoutY="98.0" prefHeight="157.0" prefWidth="798.0">
+                     <children>
+                        <JFXComboBox fx:id="cbProduto" labelFloat="true" layoutX="81.0" layoutY="18.0" onAction="#clkProduto" prefHeight="25.0" prefWidth="101.0" promptText="Produto" />
+                        <JFXTextField fx:id="tfQTDProduto" focusColor="#699933" labelFloat="true" layoutX="215.0" layoutY="18.0" prefHeight="25.0" prefWidth="69.0" promptText="Quantidade" styleClass="textFild" unFocusColor="#212121">
+                           <cursor>
+                              <Cursor fx:constant="TEXT" />
+                           </cursor>
+                        </JFXTextField>
+                        <TableView fx:id="tbProdutos" layoutX="325.0" layoutY="4.0" prefHeight="141.0" prefWidth="411.0" style="-fx-background-color: #eae4e1;">
+                          <columns>
+                              <TableColumn fx:id="colPrProduto" prefWidth="102.0" text="Produto" />
+                            <TableColumn fx:id="colPrQuantidade" prefWidth="81.0" text="Quantidade" />
+                              <TableColumn fx:id="colPrPreco" prefWidth="79.0" text="Preço" />
+                              <TableColumn fx:id="colPrTotal" prefWidth="74.0" text="Total" />
+                              <TableColumn fx:id="colPrEstoque" prefWidth="74.0" text="Estoque" />
+                          </columns>
+                        </TableView>
+                        <JFXButton fx:id="btApagarProd" layoutX="207.0" layoutY="122.0" onAction="#clkApagarProd" prefHeight="25.0" prefWidth="69.0" style="-fx-background-color: #5D4037;" text="Remover">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </JFXButton>
+                        <JFXButton fx:id="btSalvarProd" layoutX="99.0" layoutY="122.0" onAction="#clkSalvarProd" prefHeight="25.0" prefWidth="69.0" style="-fx-background-color: #5D4037;" text="Inserir">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </JFXButton>
+                        <JFXTextField fx:id="tfPrecoProduto" focusColor="#699933" labelFloat="true" layoutX="80.0" layoutY="69.0" prefHeight="25.0" prefWidth="101.0" promptText="Preço" styleClass="textFild" unFocusColor="#212121">
+                           <cursor>
+                              <Cursor fx:constant="TEXT" />
+                           </cursor>
+                        </JFXTextField>
+                        <JFXComboBox fx:id="cbProdEstoque" labelFloat="true" layoutX="215.0" layoutY="69.0" prefHeight="25.0" prefWidth="69.0" promptText="Estoque" />
+                        <Label disable="true" layoutX="739.0" layoutY="3.0" text="*" textFill="RED">
+                           <tooltip>
+                              <Tooltip style="-fx-opacity: 0.5; -fx-background-color: red;" text="campo obrigatório" />
+                           </tooltip>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <font>
+                              <Font name="Tahoma Bold" size="12.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
                </children>
             </AnchorPane>
          </children>

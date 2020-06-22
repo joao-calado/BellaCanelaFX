@@ -11,11 +11,10 @@ public class Pagamento {
     private Date vencimento;
     private Date pagamento;
     private boolean parcial;
+    private Integer pai = null;
 
-    public Pagamento() {
-    }
 
-    public Pagamento(int cod, int parcela, String desc, double valor, double valorpago, double DesJur, Date vencimento, Date pagamento, boolean parcial) {
+    public Pagamento(int cod, int parcela, String desc, double valor, double valorpago, double DesJur, Date vencimento, Date pagamento, boolean parcial, Integer pai) {
         this.cod = cod;
         this.parcela = parcela;
         this.desc = desc;
@@ -25,8 +24,30 @@ public class Pagamento {
         this.vencimento = vencimento;
         this.pagamento = pagamento;
         this.parcial = parcial;
+        this.pai = pai;
     }
 
+    public Pagamento() {
+        
+    }
+
+    public Pagamento(int parcela, String desc, double valor, Date vencimento) {
+        this.parcela = parcela;
+        this.desc = desc;
+        this.valor = valor;
+        this.vencimento = vencimento;
+    }
+    
+
+    public Integer getPai() {
+        return pai;
+    }
+
+    public void setPai(Integer pai) {
+        this.pai = pai;
+    }
+
+    
     public boolean isParcial() {
         return parcial;
     }

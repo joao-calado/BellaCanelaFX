@@ -144,6 +144,7 @@ public class CadProdutosController implements Initializable {
         ObservableList<Produtos> modelo = FXCollections.observableArrayList(Prod);
         
         this.tbProdutos.setItems(modelo);
+        
         this.tbProdutos.refresh();       
         
         
@@ -303,6 +304,7 @@ public class CadProdutosController implements Initializable {
         if(a.showAndWait().get() == ButtonType.OK){
             DALProduto dal = new DALProduto();
             
+           
             if(dal.apagar(this.tbProdutos.getSelectionModel().getSelectedItem())){
                 this.snackbar("Excluido com sucesso!", "green");
                 

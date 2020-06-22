@@ -8,19 +8,37 @@ public class ItensNF {
     private int qtde;
     private double preco;
     private double total;
+    private char ctrl;
 
     public ItensNF() {
     }
 
-    public ItensNF(int cod, NotaFiscal nf, Produtos prod, int qtde, double preco, double total) {
+    public ItensNF(int cod, NotaFiscal nf, Produtos prod, int qtde, double preco, double total, char ctrl) {
         this.cod = cod;
         this.nf = nf;
         this.prod = prod;
         this.qtde = qtde;
         this.preco = preco;
         this.total = total;
+        this.ctrl = ctrl;
+    }
+    public ItensNF(Produtos prod, int qtde, double preco, char ctrl) {
+        this.prod = prod;
+        this.qtde = qtde;
+        this.preco = preco;
+        this.total = preco * qtde;
+        this.ctrl = ctrl;
     }
 
+    public char getCtrl() {
+        return ctrl;
+    }
+
+    public void setCtrl(char Ctrl) {
+        this.ctrl = Ctrl;
+    }
+
+    
     public int getCod() {
         return cod;
     }

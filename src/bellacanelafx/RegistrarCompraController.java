@@ -1,13 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package bellacanelafx;
 
 import bellacanela.db.dal.DALFornecedor;
 import bellacanela.db.dal.DALNotafiscal;
 import bellacanela.db.dal.DALProduto;
+import bellacanela.util.MaskFieldUtil;
 import bellacanelafx.db.entidades.Fornecedor;
 import bellacanelafx.db.entidades.ItensNF;
 import bellacanelafx.db.entidades.NotaFiscal;
@@ -15,10 +12,13 @@ import bellacanelafx.db.entidades.Produtos;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
+import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -29,6 +29,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextInputControl;
+import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -68,17 +70,17 @@ public class RegistrarCompraController implements Initializable {
     
     
     @FXML
-    private TableView<Produtos> tbProdutos;  
+    private TableView<ItensNF> tbProdutos;
     @FXML
-    private TableColumn<Produtos, String> colPrCod;
+    private TableColumn<ItensNF, String> colPrProduto;
     @FXML
-    private TableColumn<Produtos, String> colPrProduto;
+    private TableColumn<ItensNF, String> colPrQuantidade;
     @FXML
-    private TableColumn<Produtos, String> colPrQuantidade;
+    private TableColumn<ItensNF, String> colPrPreco;
     @FXML
-    private TableColumn<Produtos, String> colPrPreco;
+    private TableColumn<ItensNF, String> colPrTotal;
     @FXML
-    private TableColumn<Produtos, String> colPrTotal;
+    private TableColumn<ItensNF, String> colPrEstoque;
     
     
     
@@ -86,8 +88,6 @@ public class RegistrarCompraController implements Initializable {
     private JFXButton btApagarProd;
     @FXML
     private JFXButton btSalvarProd;
-    @FXML
-    private JFXButton btCancelarProd;
     @FXML
     private JFXComboBox<Fornecedor> cbFornecedorSearch;
     @FXML
@@ -107,16 +107,78 @@ public class RegistrarCompraController implements Initializable {
     @FXML
     private JFXTextField tfParcelas;
     @FXML
-    private JFXDatePicker dpVencimento;
+    private JFXDatePicker dpVencimento;    
+    @FXML
+    private JFXTextField tfPrecoProduto;
+    @FXML
+    private JFXComboBox<Character> cbProdEstoque;
+    @FXML
+    private JFXRadioButton GroupProd;
+    @FXML
+    private ToggleGroup propar;
+    @FXML
+    private JFXRadioButton GroupParc;
+    @FXML
+    private AnchorPane paneProdutos;
+    @FXML
+    private AnchorPane paneParcelas;
+    @FXML
+    private TableView<?> tbParcelas;
+    @FXML
+    private TableColumn<?, ?> colParParcela;
+    @FXML
+    private TableColumn<?, ?> colParDescricao;
+    @FXML
+    private TableColumn<?, ?> colParValor;
+    @FXML
+    private TableColumn<?, ?> colParVencimento;
+    @FXML
+    private JFXTextField tfParcelaParc;
+    @FXML
+    private JFXButton btApagarParc;
+    @FXML
+    private JFXButton btSalvarParc;
+    @FXML
+    private JFXTextField tfValorParc;
+    @FXML
+    private JFXDatePicker dpParVencimento;
+    @FXML
+    private JFXTextField tfValorFaltante;
+    
 
-    /**
-     * Initializes the controller class.
-     */
+  
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        colNFCod.setCellValueFactory(new PropertyValueFactory("cod"));   
+        colNFNotaFiscal.setCellValueFactory(new PropertyValueFactory("numero"));
+        colNFParcelas.setCellValueFactory(new PropertyValueFactory("parcelas"));
+        colNFValorTotal.setCellValueFactory(new PropertyValueFactory("total"));
+        colNFFornecedor.setCellValueFactory((TableColumn.CellDataFeatures<NotaFiscal, String> nf) -> new SimpleStringProperty(nf.getValue().getFornecedor().getNome()));
+        
+        colPrProduto.setCellValueFactory((TableColumn.CellDataFeatures<ItensNF, String> nf) -> new SimpleStringProperty(nf.getValue().getProd().getNome()));
+        colPrQuantidade.setCellValueFactory(new PropertyValueFactory("qtde"));
+        colPrTotal.setCellValueFactory(new PropertyValueFactory("total"));
+        colPrPreco.setCellValueFactory(new PropertyValueFactory("preco"));
+        colPrEstoque.setCellValueFactory(new PropertyValueFactory("ctrl"));
+        
+        
+        
+        Platform.runLater(() -> {
+            try {
+                MaskFieldUtil.monetaryField(this.tfPrecoProduto);
+            } catch (Exception e) {
+            }
+            
+        
+        });
+        iniciar();
+        
+        
     }    
-
+    private void iniciar(){
+        loadTable("");
+        loadCB();
+    }
     private void loadTable(String filtro) {
         DALNotafiscal dal = new DALNotafiscal();
         
@@ -131,11 +193,16 @@ public class RegistrarCompraController implements Initializable {
     }
        
     private void loadCB (){
+        ArrayList <Character> auxc = new ArrayList<>();
+        auxc.add('S');
+        auxc.add('N');
         
+        this.cbProdEstoque.setItems(FXCollections.observableArrayList(auxc));
         
         this.cbFornecedor.setItems(FXCollections.observableArrayList(new DALFornecedor().get("")));
         this.cbFornecedorSearch.setItems(FXCollections.observableArrayList(new DALFornecedor().get("")));
         this.cbProduto.setItems(FXCollections.observableArrayList(new DALProduto().get("")));    
+        
         
         
         this.cbFornecedor.setConverter(new StringConverter<Fornecedor>(){
@@ -250,15 +317,66 @@ public class RegistrarCompraController implements Initializable {
 
     @FXML
     private void clkApagarProd(ActionEvent event) {
+        double dou = 0;
+        if(this.tbProdutos.getSelectionModel().getSelectedItem() != null){
+            dou = tbProdutos.getItems().get(tbProdutos.getSelectionModel().getSelectedIndex()).getPreco();
+            tbProdutos.getItems().remove(tbProdutos.getSelectionModel().getSelectedIndex()); 
+        }  
+        
+        tfPrecoTotal.setText(("" +  ( Double.parseDouble((tfPrecoTotal.getText())) - dou )));
+
     }
 
     @FXML
     private void clkSalvarProd(ActionEvent event) {
+        boolean flag = true;
+        
+        this.tfPrecoProduto.setStyle("-fx-background-color: transparent");
+        this.cbProdEstoque.setStyle("-fx-background-color: transparent");
+        this.cbProduto.setStyle("-fx-background-color: transparent");
+        this.tfQTDProduto.setStyle("-fx-background-color: transparent");
+        
+        
+        if("".equals(tfPrecoProduto.getText())){
+            flag = false;
+            this.tfPrecoProduto.setStyle("-fx-background-color: #FF6347");
+        }
+        if("".equals(tfQTDProduto.getText())){
+            flag = false;
+            this.tfQTDProduto.setStyle("-fx-background-color: #FF6347");
+        }
+        if(cbProduto.getValue()== null){
+            flag = false;
+            this.cbProduto.setStyle("-fx-background-color: #FF6347");
+        }
+        if(cbProdEstoque.getValue()== null){
+            flag = false;
+            this.cbProdEstoque.setStyle("-fx-background-color: #FF6347");
+        }
+        
+        
+        if(flag){
+            if(tbProdutos.getItems().isEmpty()){
+                tfPrecoTotal.setText("0");                
+            }
+            try {
+                int qtde = Integer.parseInt(convertStr(tfQTDProduto.getText()));
+                double preco = Double.parseDouble(convertStr2(tfPrecoProduto.getText()));
+                
+            tbProdutos.getItems().add(new ItensNF(cbProduto.getValue(), qtde,
+                preco,cbProdEstoque.getValue()));   
+            
+                System.out.println(tfPrecoTotal.getText());
+                
+                tfPrecoTotal.setText(("" +  ( Double.parseDouble((tfPrecoTotal.getText())) + preco*qtde)));
+            } catch (Exception e) {                
+             
+            }       
+   
+        }
+        
     }
 
-    @FXML
-    private void clkCancelarProd(ActionEvent event) {
-    }
     
     
     @FXML
@@ -268,5 +386,49 @@ public class RegistrarCompraController implements Initializable {
         else 
             HomeController.spnprincipal.setCenter(null);
     }
+
+    @FXML
+    private void clkProduto(ActionEvent event) {
+        tfPrecoProduto.setText(convertStr(""+cbProduto.getValue().getPreco()));
+    }
     
+    private String convertStr(String s){
+        String dst = "";
+        
+        
+        if(s.contains(".") && (s.length() - s.indexOf('.') - 1) < 2){
+            s+=0;
+        }
+        
+        for(char c : s.toCharArray())
+            if(c != '.')
+                dst += c == ',' ? '.' : c;
+        
+        
+        return dst;
+    }
+    
+    private String convertStr2(String s){
+        String dst = "";
+        
+        for(char c : s.toCharArray())
+            if(c != '.')
+                dst += c == ',' ? '.' : c;
+        
+        return dst;
+    } 
+
+    @FXML
+    private void clkgroup(ActionEvent event) {
+        paneParcelas.setVisible(GroupParc.isSelected());
+        paneProdutos.setVisible(GroupProd.isSelected());        
+    }
+
+    @FXML
+    private void clkApagarParc(ActionEvent event) {
+    }
+
+    @FXML
+    private void clkSalvarParc(ActionEvent event) {
+    }
 }

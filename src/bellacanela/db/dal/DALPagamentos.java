@@ -11,8 +11,8 @@ import java.util.ArrayList;
 public class DALPagamentos {
     public boolean gravar(Pagamento p) {
         
-        String sql = "insert into pagamentos(pag_cod, pag_parcela, pag_desc, pag_valor, pag_valorpago, pag_desjur, pag_vencimento, pag_pagamento, pag_parcial)"
-                + "VALUES (default, '#2', '#3', '#4', '#5', '#6', '#7', null, false)";
+        String sql = "insert into pagamentos(pag_cod, pag_parcela, pag_desc, pag_valor, pag_valorpago, pag_desjur, pag_vencimento, pag_pagamento, pag_parcial, pag_father)"
+                + "VALUES (default, '#2', '#3', '#4', '#5', '#6', '#7', null, false, '#8')";
         
         sql = sql.replaceAll("#2", ""+p.getParcela());
         sql = sql.replaceAll("#3", ""+p.getDesc());
@@ -20,9 +20,13 @@ public class DALPagamentos {
         sql = sql.replaceAll("#5", ""+0);
         sql = sql.replaceAll("#6", ""+0);
         sql = sql.replaceAll("#7", ""+p.getVencimento());
+        if(p.getPai() == 0)
+            sql = sql.replaceAll("#8", ""+ null);
+        else
+            sql = sql.replaceAll("#8", ""+p.getPai());
         
         
-        
+        System.out.println(sql);
         return Banco.getCon().manipular(sql);
     }
     
@@ -55,14 +59,15 @@ public class DALPagamentos {
         return Banco.getCon().manipular(sql);
     }
     
-    public boolean estornar(int p, double valor) {
+    public boolean estornar(int p) {
         
-        String sql = "update pagamentos SET pag_valor='#1', pag_valorpago=0, pag_desjur=0, pag_pagamento = null, pag_parcial = false WHERE pag_cod = " +p;
+        String sql = "update pagamentos SET pag_valorpago=0, pag_desjur=0, pag_pagamento = null, pag_parcial = false WHERE pag_cod = " +p;    
         
-        sql = sql.replaceAll("#1", ""+valor);
         return Banco.getCon().manipular(sql);
     }
-    
+    public boolean apagarEstonro(int p) {
+        return Banco.getCon().manipular("delete from pagamentos where pag_father= "+p);
+    }
     public boolean apagar(Pagamento p) {
         return Banco.getCon().manipular("delete from pagamentos where pag_cod= '"+p.getCod()+"'");
     }
@@ -80,7 +85,7 @@ public class DALPagamentos {
             if(rs.next())               
                 aux = new Pagamento(rs.getInt("pag_cod"),rs.getInt("pag_parcela"), rs.getString("pag_desc"),
                                     rs.getDouble("pag_valor"), rs.getDouble("pag_valorpago"),rs.getDouble("pag_desjur"),
-                                    rs.getDate("pag_vencimento"),rs.getDate("pag_pagamento"), rs.getBoolean("pag_parcial"));
+                                    rs.getDate("pag_vencimento"),rs.getDate("pag_pagamento"), rs.getBoolean("pag_parcial"), rs.getInt("pag_father"));
         }
         catch(SQLException sqlEx){}
         
@@ -100,7 +105,7 @@ public class DALPagamentos {
             while(rs.next())
                 aux.add(new Pagamento(rs.getInt("pag_cod"),rs.getInt("pag_parcela"), rs.getString("pag_desc"),
                                     rs.getDouble("pag_valor"), rs.getDouble("pag_valorpago"),rs.getDouble("pag_desjur"),
-                                    rs.getDate("pag_vencimento"),rs.getDate("pag_pagamento"), rs.getBoolean("pag_parcial")));
+                                    rs.getDate("pag_vencimento"),rs.getDate("pag_pagamento"), rs.getBoolean("pag_parcial"), rs.getInt("pag_father")));
         }
         catch(SQLException sqlEx) {}
         

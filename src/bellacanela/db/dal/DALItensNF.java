@@ -12,27 +12,29 @@ public class DALItensNF {
     
    public boolean gravar(ItensNF nf) {
         
-        String sql = "insert into itensnf(ite_cod, ite_notafiscal, ite_produto, ite_qtde, ite_preco, ite_total)	"
-                + "VALUES (default, '#2', '#3', '#4', '#5', '#6')";
+        String sql = "insert into itensnf(ite_cod, ite_notafiscal, ite_produto, ite_qtde, ite_preco, ite_total, ite_ctrl)	"
+                + "VALUES (default, '#2', '#3', '#4', '#5', '#6', '#7')";
         
         sql = sql.replaceAll("#2", ""+nf.getNf().getCod());
         sql = sql.replaceAll("#3", ""+nf.getProd().getCod());
         sql = sql.replaceAll("#4", ""+nf.getQtde());
         sql = sql.replaceAll("#5", ""+nf.getPreco());
         sql = sql.replaceAll("#6", ""+nf.getTotal());
+        sql = sql.replaceAll("#7", ""+nf.getCtrl());
         
         return Banco.getCon().manipular(sql);
     }
     
     public boolean alterar(ItensNF nf) {
         
-        String sql = "update itensnf SET ite_notafiscal='#1', ite_produto='#2', ite_qtde='#3', ite_preco='#4', ite_total='#5' WHERE ite_cod = " +nf.getCod();
+        String sql = "update itensnf SET ite_notafiscal='#2', ite_produto='#3', ite_qtde='#4', ite_preco='#5', ite_total='#6', ite_ctrl = '#7' WHERE ite_cod = " +nf.getCod();
         
         sql = sql.replaceAll("#2", ""+nf.getNf().getCod());
         sql = sql.replaceAll("#3", ""+nf.getProd().getCod());
         sql = sql.replaceAll("#4", ""+nf.getQtde());
         sql = sql.replaceAll("#5", ""+nf.getPreco());
         sql = sql.replaceAll("#6", ""+nf.getTotal());
+        sql = sql.replaceAll("#7", ""+nf.getCtrl());
 
         
         return Banco.getCon().manipular(sql);
@@ -56,7 +58,7 @@ public class DALItensNF {
                 //(ite_cod, ite_notafiscal, ite_produto, ite_qtde, ite_preco, ite_total)
                 aux = new ItensNF(rs.getInt("ite_cod"), new DALNotafiscal().get(rs.getInt("ite_notafiscal")),
                                   new DALProduto().get(rs.getInt("ite_produto")), rs.getInt("ite_qtde"),
-                                  rs.getDouble("ite_preco"), rs.getDouble("ite_total"));
+                                  rs.getDouble("ite_preco"), rs.getDouble("ite_total"),rs.getString("ite_ctrl").charAt(0));
         }
         catch(SQLException sqlEx){}
         
@@ -76,7 +78,7 @@ public class DALItensNF {
             while(rs.next())
                 aux.add(new ItensNF(rs.getInt("ite_cod"), new DALNotafiscal().get(rs.getInt("ite_notafiscal")),
                                   new DALProduto().get(rs.getInt("ite_produto")), rs.getInt("ite_qtde"),
-                                  rs.getDouble("ite_preco"), rs.getDouble("ite_total")));
+                                  rs.getDouble("ite_preco"), rs.getDouble("ite_total"),rs.getString("ite_ctrl").charAt(0)));
         }
         catch(SQLException sqlEx) {}
         

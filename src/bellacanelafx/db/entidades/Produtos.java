@@ -11,8 +11,7 @@ public class Produtos {
     private char AVenda;
     private int Estoque;
 
-    public Produtos(String nome) {
-        
+    public Produtos() {        
     }
 
     public Produtos(int cod, String nome, double preco) {
