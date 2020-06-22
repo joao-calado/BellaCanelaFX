@@ -1,7 +1,9 @@
 package bellacanelafx;
 
+import bellacanela.db.dal.DALComanda;
 import bellacanela.db.dal.DALRecebimento;
 import bellacanela.util.MaskFieldUtil;
+import bellacanelafx.db.entidades.Comanda;
 import bellacanelafx.db.entidades.Recebimento;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
@@ -109,6 +111,7 @@ public class EfetuarRecebimentoController implements Initializable {
         carregarCB("pesquisa");
         tabela.setDisable(true);
         cbTipoRec.setPromptText("Tipo de recebimento");
+        cbTipoRec.setDisable(false);
         
         txValor.clear();
         txValor.setDisable(true);
@@ -121,9 +124,13 @@ public class EfetuarRecebimentoController implements Initializable {
     
     private void modoAltera() {
         
+        btExcluir.setVisible(false);
+        btExcluir.setDisable(true);
+        
         carregarCB("altera");
         tabela.setDisable(false);
         cbTipoRec.setPromptText("Tipo de recebimento");
+        cbTipoRec.setDisable(true);
         
         txValor.clear();
         txValor.setDisable(false);
@@ -149,6 +156,8 @@ public class EfetuarRecebimentoController implements Initializable {
     
         Platform.runLater(()->{
             try{
+                btExcluir.setVisible(false);
+                btExcluir.setDisable(true);
                 modoPesquisa();
             }
             catch(Exception e){
@@ -168,46 +177,40 @@ public class EfetuarRecebimentoController implements Initializable {
         DALRecebimento dalRec = new DALRecebimento();
         Alert a = new Alert(Alert.AlertType.INFORMATION);
         a.setHeaderText(null);
-        Double pgto = Double.parseDouble(txValor.getText().replaceAll(",", "."));
         
-        if(tabela.getSelectionModel().getSelectedItem().getStatus().equals("N")) {
+        if(tabela.getSelectionModel().getSelectedIndex() >= 0 && tabela.getSelectionModel().getSelectedItem().getStatus().equals("N")) {
             
-            r = new Recebimento(0, tabela.getSelectionModel().getSelectedItem().getCliente(), 
-                                   tabela.getSelectionModel().getSelectedItem().getTipo(), 
-                                   tabela.getSelectionModel().getSelectedItem().getValor(), 
-                                   tabela.getSelectionModel().getSelectedItem().getRecebimento(), 
-                                   tabela.getSelectionModel().getSelectedItem().getVencimento(), 
-                                   "S", 
-                                   tabela.getSelectionModel().getSelectedItem().getMesa(), 
-                                   tabela.getSelectionModel().getSelectedItem().getComanda());
+            Double pgto = Double.parseDouble(txValor.getText().replaceAll(",", "."));
+            r = new Recebimento(tabela.getSelectionModel().getSelectedItem().getCod(), 
+                                tabela.getSelectionModel().getSelectedItem().getCliente(), 
+                                tabela.getSelectionModel().getSelectedItem().getTipo(), 
+                                tabela.getSelectionModel().getSelectedItem().getValor(), 
+                                tabela.getSelectionModel().getSelectedItem().getRecebimento(), 
+                                tabela.getSelectionModel().getSelectedItem().getVencimento(), 
+                                "S", 
+                                tabela.getSelectionModel().getSelectedItem().getMesa(), 
+                                tabela.getSelectionModel().getSelectedItem().getComanda());
             
             if(pgto > tabela.getSelectionModel().getSelectedItem().getValor()) {
                 // pagar com gorjeta - update em rec_status
-                if(cbTipoRec.getValue() != null) {
-                    if(dalRec.alterar(r)) {
-                        r.setValor(r.getValor() - pgto);
-                        r.setTipo("gorjeta");
-                        if(dalRec.gravar(r)) {
-                            a.setTitle("Informação:");
-                            a.setAlertType(Alert.AlertType.INFORMATION);
-                            a.setContentText("Recebimento gravado com sucesso!\nGorjeta: R$"+r.getValor());
-                        }
-                        else {
-                            a.setTitle("Erro:");
-                            a.setAlertType(Alert.AlertType.ERROR);
-                            a.setContentText("Problemas ao tentar gravar recebimento com Gorjeta!");
-                        }
+                if(dalRec.alterar(r)) {
+                    r.setValor(pgto - r.getValor());
+                    r.setTipo("gorjeta");
+                    if(dalRec.gravar(r)) {
+                        a.setTitle("Informação:");
+                        a.setAlertType(Alert.AlertType.INFORMATION);
+                        a.setContentText("Recebimento gravado com sucesso!\nGorjeta: R$"+r.getValor());
                     }
                     else {
                         a.setTitle("Erro:");
                         a.setAlertType(Alert.AlertType.ERROR);
-                        a.setContentText("Problemas ao tentar gravar recebimento!");
+                        a.setContentText("Problemas ao tentar gravar recebimento com Gorjeta!");
                     }
                 }
                 else {
                     a.setTitle("Erro:");
                     a.setAlertType(Alert.AlertType.ERROR);
-                    a.setContentText("Selecione um tipo de pagamento!");
+                    a.setContentText("Problemas ao tentar gravar recebimento!");
                 }
             }
             else {
@@ -273,13 +276,21 @@ public class EfetuarRecebimentoController implements Initializable {
                 filtro += "rec_tipo like '%"+cbTipoRec.getValue()+"%' and rec_vencimento <='"+dtpVencimento.getValue()+"'";
         }
         
+        DALComanda dalCOM = new DALComanda();
+        Comanda com;
+        
         DALRecebimento dal = new DALRecebimento();
         List<Recebimento> lista = dal.get(filtro);
         
         for (int i = 0; i < lista.size(); i++) {
             
-            if(lista.get(i).getVencimento().isEqual(LocalDate.of(1900, 10, 10)))
-                lista.get(i).setVencimento(null);
+            com = dalCOM.getComanda(lista.get(i).getComanda(), lista.get(i).getMesa());
+            if(com.isAberta())
+                lista.remove(i);
+            else {
+                if(lista.get(i).getVencimento().isEqual(LocalDate.of(1900, 10, 10)))
+                    lista.get(i).setVencimento(null);
+            }
         }
         
         ObservableList<Recebimento> modelo;
