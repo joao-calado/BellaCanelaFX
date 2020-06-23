@@ -44,7 +44,8 @@ public class DALFuncionario {
         
         ResultSet rs = Banco.getCon().consultar(SQL);
         try{
-            f = new Funcionario(rs.getInt("fun_cod"), rs.getDate("fun_datanascimento").toLocalDate(), rs.getString("fun_nome"), rs.getString("fun_telefone"), rs.getDouble("fun_salario"));
+            while(rs.next())
+                f = new Funcionario(rs.getInt("fun_cod"), rs.getDate("fun_datanascimento").toLocalDate(), rs.getString("fun_nome"), rs.getString("fun_telefone"), rs.getDouble("fun_salario"));
         }
         catch(SQLException e){
             System.out.println("ERRO AO CONSULTAR FUNCIONARIO.");
