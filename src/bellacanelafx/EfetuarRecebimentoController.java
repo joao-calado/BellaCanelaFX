@@ -175,6 +175,49 @@ public class EfetuarRecebimentoController implements Initializable {
 
     @FXML
     private void clkBtExcluir(ActionEvent event) {
+        
+        Recebimento r;
+        DALRecebimento dalRec = new DALRecebimento();
+        
+        Alert a = new Alert(Alert.AlertType.INFORMATION);
+        a.setHeaderText(null);
+        
+        if(tabela.getSelectionModel().getSelectedIndex() >= 0) {
+            r = tabela.getSelectionModel().getSelectedItem();
+            if(dalRec.apagar(r)) {
+                
+                if(r.getPai() != 0 && !r.getTipo().equals("gorjeta")) {
+                    
+                    Recebimento rPai = dalRec.get(r.getPai());
+                    rPai.setValor(rPai.getValor()-r.getValor());
+                    
+                    if(dalRec.alterar(rPai)) {
+                        a.setTitle("Informação:");
+                        a.setAlertType(Alert.AlertType.INFORMATION);
+                        a.setContentText("Recebimento estornado com sucesso!");
+                    }
+                    else {
+                        a.setTitle("Erro:");
+                        a.setAlertType(Alert.AlertType.ERROR);
+                        a.setContentText("Problemas ao estornar recebimento!");
+                    }
+                }
+                else {
+                    a.setTitle("Informação:");
+                    a.setAlertType(Alert.AlertType.INFORMATION);
+                    a.setContentText("Recebimento estornado com sucesso!");
+                }
+            }
+            else {
+                a.setTitle("Erro:");
+                a.setAlertType(Alert.AlertType.ERROR);
+                a.setContentText("Problemas ao estornar recebimento!");
+            }
+        }
+        
+        modoPesquisa();
+        btPesquisar.requestFocus();
+        a.showAndWait();
     }
 
     @FXML

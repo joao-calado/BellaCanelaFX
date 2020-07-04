@@ -50,7 +50,7 @@ public class DALRecebimento {
     
     public boolean alterar(Recebimento r) {
         
-        String sql = "update recebimento set rec_cli='#1',rec_tipo='#2',rec_valor='#3',rec_recebimento='#4',rec_vencimento='#5',rec_status='#6',rec_mesa='#7',rec_comanda='#8' where rec_cod="+r.getCod();
+        String sql = "update recebimento set rec_cli='#1',rec_tipo='#2',rec_valor='#3',rec_recebimento='#4',rec_vencimento='#5',rec_status='#6',rec_mesa='#7',rec_comanda='#8',rec_pai='#9' where rec_cod="+r.getCod();
         
         sql = sql.replaceAll("#1", ""+r.getCliente());
         sql = sql.replaceAll("#2", r.getTipo());
@@ -60,6 +60,7 @@ public class DALRecebimento {
         sql = sql.replaceAll("#6", r.getStatus());
         sql = sql.replaceAll("#7", ""+r.getMesa());
         sql = sql.replaceAll("#8", ""+r.getComanda());
+        sql = sql.replaceAll("#9", ""+r.getPai());
         
         return Banco.getCon().manipular(sql);
     }
@@ -99,10 +100,10 @@ public class DALRecebimento {
             while(rs.next()) {
                 
                 if(rs.getDate("rec_vencimento") != null) {
-                    aux.add(new Recebimento(rs.getInt("rec_cod"),rs.getInt("rec_cli"),rs.getString("rec_tipo"),rs.getDouble("rec_valor"),rs.getDate("rec_recebimento").toLocalDate(),rs.getDate("rec_vencimento").toLocalDate(),rs.getString("rec_status"),rs.getInt("rec_mesa"),rs.getInt("rec_comanda")));
+                    aux.add(new Recebimento(rs.getInt("rec_cod"),rs.getInt("rec_cli"),rs.getString("rec_tipo"),rs.getDouble("rec_valor"),rs.getDate("rec_recebimento").toLocalDate(),rs.getDate("rec_vencimento").toLocalDate(),rs.getString("rec_status"),rs.getInt("rec_mesa"),rs.getInt("rec_comanda"),rs.getInt("rec_pai")));
                 }
                 else {
-                    aux.add(new Recebimento(rs.getInt("rec_cod"),rs.getInt("rec_cli"),rs.getString("rec_tipo"),rs.getDouble("rec_valor"),rs.getDate("rec_recebimento").toLocalDate(),LocalDate.of(1900, 10, 10),rs.getString("rec_status"),rs.getInt("rec_mesa"),rs.getInt("rec_comanda")));
+                    aux.add(new Recebimento(rs.getInt("rec_cod"),rs.getInt("rec_cli"),rs.getString("rec_tipo"),rs.getDouble("rec_valor"),rs.getDate("rec_recebimento").toLocalDate(),LocalDate.of(1900, 10, 10),rs.getString("rec_status"),rs.getInt("rec_mesa"),rs.getInt("rec_comanda"),rs.getInt("rec_pai")));
                 }
             }
         }
