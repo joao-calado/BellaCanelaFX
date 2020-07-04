@@ -90,13 +90,14 @@ public class EfetuarRecebimentoController implements Initializable {
         cbTipoRec.getItems().clear();
         List<String> tr = new ArrayList();
         if(modo.equals("pesquisa")) {
-            tr.add("à vista");
+            tr.add("dinheiro");
             tr.add("crédito");
             tr.add("débito");
             tr.add("a ver");
+            tr.add("gorjeta");
         }
         else {
-            tr.add("à vista");
+            tr.add("dinheiro");
             tr.add("crédito");
             tr.add("débito");
         }
@@ -184,7 +185,7 @@ public class EfetuarRecebimentoController implements Initializable {
         Alert a = new Alert(Alert.AlertType.INFORMATION);
         a.setHeaderText(null);
         
-        if(tabela.getSelectionModel().getSelectedIndex() >= 0 && tabela.getSelectionModel().getSelectedItem().getStatus().equals("N")) {
+        if(tabela.getSelectionModel().getSelectedIndex() >= 0 && tabela.getSelectionModel().getSelectedItem().getStatus().equals("N") && !txValor.getText().isEmpty()) {
             
             Double pgto = Double.parseDouble(txValor.getText().replaceAll(",", "."));
             r = new Recebimento(tabela.getSelectionModel().getSelectedItem().getCod(), 
@@ -204,13 +205,10 @@ public class EfetuarRecebimentoController implements Initializable {
                     r.setValor(pgto - r.getValor());
                     r.setTipo("gorjeta");
                     
-                    try {
-                        int p = r.getPai();
-                        r.setPai(p);
-                    }
-                    catch(Exception e) {
+                    if(r.getPai() == 0)
                         r.setPai(r.getCod());
-                    }
+                    else 
+                        r.setPai(r.getPai());
                     
                     if(dalRec.gravar(r)) {
                         a.setTitle("Informação:");
@@ -234,7 +232,7 @@ public class EfetuarRecebimentoController implements Initializable {
                     // update e gerar rec
                     r.setValor(r.getValor() - pgto);
                     r.setStatus("N");
-                    if(cbTipoRec.getValue().isEmpty()) {
+                    if(cbTipoRec.getValue() == null || cbTipoRec.getValue().isEmpty()) {
                         a.setTitle("Erro:");
                         a.setAlertType(Alert.AlertType.ERROR);
                         a.setContentText("Selecione um tipo para o novo recebimento!");
@@ -242,17 +240,14 @@ public class EfetuarRecebimentoController implements Initializable {
                     else {
                         if(dalRec.alterar(r)) {
 
-                            r.setValor(pgto - r.getValor());
+                            r.setValor(pgto);
                             r.setTipo(cbTipoRec.getValue());
                             r.setStatus("S");
                             
-                            try {
-                                int p = r.getPai();
-                                r.setPai(p);
-                            }
-                            catch(Exception e) {
+                            if(r.getPai() == 0)
                                 r.setPai(r.getCod());
-                            }
+                            else 
+                                r.setPai(r.getPai());
                             
                             if(dalRec.gravar(r)) {
                                 a.setTitle("Informação:");
@@ -292,9 +287,17 @@ public class EfetuarRecebimentoController implements Initializable {
             }
         }
         else {
-            a.setTitle("Erro:");
-            a.setAlertType(Alert.AlertType.ERROR);
-            a.setContentText("Recebimento já efetuado");
+            
+            if(txValor.getText().isEmpty()) {
+                a.setTitle("Erro:");
+                a.setAlertType(Alert.AlertType.ERROR);
+                a.setContentText("Informe um valor");
+            }
+            else {
+                a.setTitle("Erro:");
+                a.setAlertType(Alert.AlertType.ERROR);
+                a.setContentText("Recebimento já efetuado");
+            }
         }
        
         modoPesquisa();

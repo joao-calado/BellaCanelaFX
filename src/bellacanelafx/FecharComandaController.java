@@ -114,7 +114,7 @@ public class FecharComandaController implements Initializable {
     }
     
     public void setMesa(Mesa mesa) {
-        System.out.println("oie");
+        System.out.println("oie, setei mesa");
         m = mesa;
         lbMesa.setText(""+m.getCod());
     }
@@ -161,7 +161,7 @@ public class FecharComandaController implements Initializable {
             
             cbTipoRec.getItems().clear();
             List<String> tr = new ArrayList();
-            tr.add("à vista");
+            tr.add("dinheiro");
             tr.add("crédito");
             tr.add("débito");
             tr.add("a ver");
@@ -173,7 +173,7 @@ public class FecharComandaController implements Initializable {
                
             cbTipoRec.getItems().clear();
             List<String> tr = new ArrayList();
-            tr.add("à vista");
+            tr.add("dinheiro");
             tr.add("crédito");
             tr.add("débito");
             ObservableList<String> mod = FXCollections.observableArrayList(tr);

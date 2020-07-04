@@ -20,7 +20,7 @@ public class DALRecebimento {
         
         if(r.getVencimento().isEqual(LocalDate.of(1800, 10, 10))) {
             
-            sql = "insert into recebimento(rec_cli,rec_tipo,rec_valor,rec_recebimento,rec_status,rec_mesa,rec_comanda) values ('#1','#2','#3','#4','#5','#6','#7')";
+            sql = "insert into recebimento(rec_cli,rec_tipo,rec_valor,rec_recebimento,rec_status,rec_mesa,rec_comanda,rec_pai) values ('#1','#2','#3','#4','#5','#6','#7','#8')";
         
             sql = sql.replaceAll("#1", ""+r.getCliente());
             sql = sql.replaceAll("#2", ""+r.getTipo());
@@ -29,10 +29,11 @@ public class DALRecebimento {
             sql = sql.replaceAll("#5", ""+r.getStatus());
             sql = sql.replaceAll("#6", ""+r.getMesa());
             sql = sql.replaceAll("#7", ""+r.getComanda());
+            sql = sql.replaceAll("#8", ""+r.getPai());
         }
         else {
             
-            sql = "insert into recebimento(rec_cli,rec_tipo,rec_valor,rec_recebimento,rec_vencimento,rec_status,rec_mesa,rec_comanda) values ('#1','#2','#3','#4','#5','#6','#7','#8')";
+            sql = "insert into recebimento(rec_cli,rec_tipo,rec_valor,rec_recebimento,rec_vencimento,rec_status,rec_mesa,rec_comanda,rec_pai) values ('#1','#2','#3','#4','#5','#6','#7','#8','#9')";
         
             sql = sql.replaceAll("#1", ""+r.getCliente());
             sql = sql.replaceAll("#2", ""+r.getTipo());
@@ -42,6 +43,7 @@ public class DALRecebimento {
             sql = sql.replaceAll("#6", ""+r.getStatus());
             sql = sql.replaceAll("#7", ""+r.getMesa());
             sql = sql.replaceAll("#8", ""+r.getComanda());
+            sql = sql.replaceAll("#9", ""+r.getPai());
         }
         return Banco.getCon().manipular(sql);
     }
