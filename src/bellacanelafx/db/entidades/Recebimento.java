@@ -17,6 +17,7 @@ public class Recebimento {
     private String status;
     private int mesa;
     private int comanda;
+    private int pai;
 
     public Recebimento() {}
 
@@ -30,6 +31,19 @@ public class Recebimento {
         this.status = status;
         this.mesa = mesa;
         this.comanda = comanda;
+    }
+
+    public Recebimento(int cod, int cliente, String tipo, double valor, LocalDate recebimento, LocalDate vencimento, String status, int mesa, int comanda, int pai) {
+        this.cod = cod;
+        this.cliente = cliente;
+        this.tipo = tipo;
+        this.valor = valor;
+        this.recebimento = recebimento;
+        this.vencimento = vencimento;
+        this.status = status;
+        this.mesa = mesa;
+        this.comanda = comanda;
+        this.pai = pai;
     }
     
     public int getCod() {
@@ -103,5 +117,12 @@ public class Recebimento {
     public void setComanda(int comanda) {
         this.comanda = comanda;
     }
-    
+
+    public int getPai() {
+        return pai;
+    }
+
+    public void setPai(int pai) {
+        this.pai = pai;
+    }
 }

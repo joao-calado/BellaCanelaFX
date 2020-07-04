@@ -1,8 +1,10 @@
 package bellacanelafx;
 
+import bellacanela.db.dal.DALCliente;
 import bellacanela.db.dal.DALComanda;
 import bellacanela.db.dal.DALRecebimento;
 import bellacanela.util.MaskFieldUtil;
+import bellacanelafx.db.entidades.Cliente;
 import bellacanelafx.db.entidades.Comanda;
 import bellacanelafx.db.entidades.Recebimento;
 import com.jfoenix.controls.JFXButton;
@@ -27,8 +29,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
 /**
@@ -49,8 +51,6 @@ public class EfetuarRecebimentoController implements Initializable {
     @FXML
     private JFXDatePicker dtpVencimento;
     @FXML
-    private TableColumn<Recebimento, Integer> colCliente;
-    @FXML
     private TableColumn<Recebimento, String> colTipo;
     @FXML
     private TableColumn<Recebimento, Double> colValor;
@@ -59,8 +59,6 @@ public class EfetuarRecebimentoController implements Initializable {
     @FXML
     private TableColumn<Recebimento, LocalDate> colVencimento;
     @FXML
-    private TableColumn<Recebimento, Integer> colMesa;
-    @FXML
     private JFXButton btReceber;
     @FXML
     private JFXButton btPesquisar;
@@ -68,6 +66,10 @@ public class EfetuarRecebimentoController implements Initializable {
     private JFXButton btCancelar;
     @FXML
     private TableView<Recebimento> tabela;
+    @FXML
+    private JFXTextField txCliente;
+    @FXML
+    private JFXDatePicker dtpVencimento1;
 
     private void fadeout() {
         FadeTransition ft = new FadeTransition(Duration.millis(1000), painel);
@@ -120,12 +122,10 @@ public class EfetuarRecebimentoController implements Initializable {
         
         btPesquisar.setDisable(false);
         dtpVencimento.setDisable(false);
+        dtpVencimento1.setDisable(false);
     }
     
     private void modoAltera() {
-        
-        btExcluir.setVisible(false);
-        btExcluir.setDisable(true);
         
         carregarCB("altera");
         tabela.setDisable(false);
@@ -139,6 +139,7 @@ public class EfetuarRecebimentoController implements Initializable {
         
         btPesquisar.setDisable(true);
         dtpVencimento.setDisable(true);
+        dtpVencimento1.setDisable(true);
     }
     
     @Override
@@ -147,17 +148,18 @@ public class EfetuarRecebimentoController implements Initializable {
         fadeout();
         MaskFieldUtil.monetaryField(txValor);
         
-        colCliente.setCellValueFactory((TableColumn.CellDataFeatures<Recebimento, Integer> r) -> new SimpleObjectProperty(r.getValue().getCliente()));
         colTipo.setCellValueFactory((TableColumn.CellDataFeatures<Recebimento, String> r) -> new SimpleStringProperty(r.getValue().getTipo()));
         colValor.setCellValueFactory((TableColumn.CellDataFeatures<Recebimento, Double> r) -> new SimpleObjectProperty(r.getValue().getValor()));
         colRecebimento.setCellValueFactory((TableColumn.CellDataFeatures<Recebimento, LocalDate> r) -> new SimpleObjectProperty(r.getValue().getRecebimento()));
         colVencimento.setCellValueFactory((TableColumn.CellDataFeatures<Recebimento, LocalDate> r) -> new SimpleObjectProperty(r.getValue().getVencimento()));
-        colMesa.setCellValueFactory((TableColumn.CellDataFeatures<Recebimento, Integer> r) -> new SimpleObjectProperty(r.getValue().getMesa()));
     
+        colTipo.setStyle("-fx-alignment: center-right;");
+        colValor.setStyle("-fx-alignment: center-right;");
+        colRecebimento.setStyle("-fx-alignment: center-right;");
+        colVencimento.setStyle("-fx-alignment: center-right;");
+        
         Platform.runLater(()->{
             try{
-                btExcluir.setVisible(false);
-                btExcluir.setDisable(true);
                 modoPesquisa();
             }
             catch(Exception e){
@@ -194,8 +196,18 @@ public class EfetuarRecebimentoController implements Initializable {
             if(pgto > tabela.getSelectionModel().getSelectedItem().getValor()) {
                 // pagar com gorjeta - update em rec_status
                 if(dalRec.alterar(r)) {
+                    
                     r.setValor(pgto - r.getValor());
                     r.setTipo("gorjeta");
+                    
+                    try {
+                        int p = r.getPai();
+                        r.setPai(r.getCod());
+                    }
+                    catch(Exception e) {
+                        r.setPai(r.getPai());
+                    }
+                    
                     if(dalRec.gravar(r)) {
                         a.setTitle("Informação:");
                         a.setAlertType(Alert.AlertType.INFORMATION);
@@ -262,18 +274,28 @@ public class EfetuarRecebimentoController implements Initializable {
         a.setHeaderText(null);
         String filtro = "";
         LocalDate venc = dtpVencimento.getValue();
+        LocalDate venc1 = dtpVencimento1.getValue();
         
-        if(venc == null) {
-            if(cbTipoRec.getValue() == null)
-                filtro += "rec_tipo like '%"+""+"%'";
-            else
-                filtro += "rec_tipo like '%"+cbTipoRec.getValue()+"%'";
+        if((venc != null && venc1 == null) || (venc == null && venc1 != null)) {
+            modoPesquisa();
+            a.setTitle("Alerta:");
+            a.setAlertType(Alert.AlertType.WARNING);
+            a.setContentText("Selecione ambas datas!");
+            a.showAndWait();
         }
         else {
-            if(cbTipoRec.getValue() == null)
-                filtro += "rec_tipo like '%"+""+"%' and rec_vencimento <='"+dtpVencimento.getValue()+"'";
-            else
-                filtro += "rec_tipo like '%"+cbTipoRec.getValue()+"%' and rec_vencimento <='"+dtpVencimento.getValue()+"'";
+            if(venc == null && venc1 == null) {
+                if(cbTipoRec.getValue() == null)
+                    filtro += "rec_tipo like '%"+""+"%'";
+                else
+                    filtro += "rec_tipo like '%"+cbTipoRec.getValue()+"%'";
+            }
+            else {
+                if(cbTipoRec.getValue() == null)
+                    filtro += "rec_tipo like '%"+""+"%' and rec_vencimento <='"+dtpVencimento1.getValue()+"' and rec_vencimento >='"+dtpVencimento.getValue()+"'";
+                else
+                    filtro += "rec_tipo like '%"+cbTipoRec.getValue()+"%' and rec_vencimento <='"+dtpVencimento1.getValue()+"' and rec_vencimento >='"+dtpVencimento.getValue()+"'";
+            }
         }
         
         DALComanda dalCOM = new DALComanda();
@@ -285,6 +307,7 @@ public class EfetuarRecebimentoController implements Initializable {
         for (int i = 0; i < lista.size(); i++) {
             
             com = dalCOM.getComanda(lista.get(i).getComanda(), lista.get(i).getMesa());
+            
             if(com.isAberta())
                 lista.remove(i);
             else {
@@ -309,6 +332,7 @@ public class EfetuarRecebimentoController implements Initializable {
             modoAltera();
         }
         dtpVencimento.setValue(null);
+        dtpVencimento1.setValue(null);
     }
 
     @FXML
@@ -324,5 +348,39 @@ public class EfetuarRecebimentoController implements Initializable {
     @FXML
     private void clkAddValor(MouseEvent event) {
         txValor.setText(formatarPreco(tabela.getSelectionModel().getSelectedItem().getValor()));
+    }
+
+    @FXML
+    private void dgtCliente(KeyEvent event) {
+        
+        DALCliente dalCLI = new DALCliente();
+        
+        DALComanda dalCOM = new DALComanda();
+        Comanda com;
+        
+        DALRecebimento dal = new DALRecebimento();
+        List<Recebimento> lista = dal.get("rec_cli="+dalCLI.get("lower(cli_nome) like '%"+txCliente.getText().toLowerCase()+"%'").get(0).getCod()+"");
+        
+        for (int i = 0; i < lista.size(); i++) {
+            
+            com = dalCOM.getComanda(lista.get(i).getComanda(), lista.get(i).getMesa());
+            
+            if(com.isAberta())
+                lista.remove(i);
+            else {
+                if(lista.get(i).getVencimento().isEqual(LocalDate.of(1900, 10, 10)))
+                    lista.get(i).setVencimento(null);
+            }
+        }
+        
+         if(lista.isEmpty()) 
+            modoPesquisa();
+        else 
+            modoAltera();
+        
+        ObservableList<Recebimento> modelo;
+        modelo = FXCollections.observableArrayList(lista);
+        tabela.setItems(modelo);
+        tabela.refresh();
     }
 }
