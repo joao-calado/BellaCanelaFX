@@ -405,7 +405,7 @@ public class FecharComandaController implements Initializable {
                 r.setValor(valor - gorjeta());
                 if(dalRec.gravar(r)) {
                     r.setValor(gorjeta());
-                    r.setTipo("Gorjeta");
+                    r.setTipo("gorjeta");
                     if(dalRec.gravar(r)) {
                         carregarTabelaRecebimentos();
                         a.setTitle("Informação:");

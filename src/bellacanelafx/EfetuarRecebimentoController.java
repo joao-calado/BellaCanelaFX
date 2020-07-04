@@ -117,6 +117,8 @@ public class EfetuarRecebimentoController implements Initializable {
         
         txValor.clear();
         txValor.setDisable(true);
+        txCliente.clear();
+        txCliente.setDisable(false);
         btReceber.setDisable(true);
         btExcluir.setDisable(true);
         
@@ -134,6 +136,8 @@ public class EfetuarRecebimentoController implements Initializable {
         
         txValor.clear();
         txValor.setDisable(false);
+        txCliente.clear();
+        txCliente.setDisable(true);
         btReceber.setDisable(false);
         btExcluir.setDisable(false);
         
@@ -276,6 +280,14 @@ public class EfetuarRecebimentoController implements Initializable {
         LocalDate venc = dtpVencimento.getValue();
         LocalDate venc1 = dtpVencimento1.getValue();
         
+        DALCliente dalCLI = new DALCliente();
+        
+        DALComanda dalCOM = new DALComanda();
+        Comanda com;
+        
+        DALRecebimento dal = new DALRecebimento();
+        List<Recebimento> lista = null;
+        
         if((venc != null && venc1 == null) || (venc == null && venc1 != null)) {
             modoPesquisa();
             a.setTitle("Alerta:");
@@ -284,44 +296,74 @@ public class EfetuarRecebimentoController implements Initializable {
             a.showAndWait();
         }
         else {
-            if(venc == null && venc1 == null) {
-                if(cbTipoRec.getValue() == null)
-                    filtro += "rec_tipo like '%"+""+"%'";
-                else
-                    filtro += "rec_tipo like '%"+cbTipoRec.getValue()+"%'";
+            if(txCliente.getText().isEmpty()) {
+                if(venc == null && venc1 == null) {
+                    if(cbTipoRec.getValue() == null)
+                        filtro += "rec_tipo like '%"+""+"%'";
+                    else
+                        filtro += "rec_tipo like '%"+cbTipoRec.getValue()+"%'";
+                }
+                else {
+                    if (cbTipoRec.getValue() == null) {
+                        filtro += "rec_tipo like '%" + "" + "%' and rec_vencimento <='" + dtpVencimento1.getValue() + "' and rec_vencimento >='" + dtpVencimento.getValue() + "'";
+                    } 
+                    else {
+                        filtro += "rec_tipo like '%" + cbTipoRec.getValue() + "%' and rec_vencimento <='" + dtpVencimento1.getValue() + "' and rec_vencimento >='" + dtpVencimento.getValue() + "'";
+                    }
+                }
+                lista = dal.get(filtro);
             }
             else {
-                if(cbTipoRec.getValue() == null)
-                    filtro += "rec_tipo like '%"+""+"%' and rec_vencimento <='"+dtpVencimento1.getValue()+"' and rec_vencimento >='"+dtpVencimento.getValue()+"'";
-                else
-                    filtro += "rec_tipo like '%"+cbTipoRec.getValue()+"%' and rec_vencimento <='"+dtpVencimento1.getValue()+"' and rec_vencimento >='"+dtpVencimento.getValue()+"'";
+                
+                int cl=0;
+                try {
+                    cl =  dalCLI.get("lower(cli_nome) like '%" + txCliente.getText().toLowerCase() + "%'").get(0).getCod();
+                }
+                catch(Exception ex) {
+                    cl = -1;
+                }
+                
+                if(cl != -1) {
+                    if (venc == null && venc1 == null) {
+                        if (cbTipoRec.getValue() == null) {
+                            filtro += "rec_tipo like '%" + "" + "%' and rec_cli=" + cl + "";
+                        } 
+                        else {
+                            filtro += "rec_tipo like '%" + cbTipoRec.getValue() + "%' and rec_cli=" + cl + "";
+                        }
+                    } else {
+                        if (cbTipoRec.getValue() == null) {
+                            filtro += "rec_tipo like '%" + "" + "%' and rec_vencimento <='" + dtpVencimento1.getValue() + "' and rec_vencimento >='" + dtpVencimento.getValue() + "' and rec_cli=" + cl + "";
+                        } 
+                        else {
+                            filtro += "rec_tipo like '%" + cbTipoRec.getValue() + "%' and rec_vencimento <='" + dtpVencimento1.getValue() + "' and rec_vencimento >='" + dtpVencimento.getValue() + "' and rec_cli=" + cl + "";
+                        }
+                    }
+                    lista = dal.get(filtro);
+                }
             }
         }
         
-        DALComanda dalCOM = new DALComanda();
-        Comanda com;
-        
-        DALRecebimento dal = new DALRecebimento();
-        List<Recebimento> lista = dal.get(filtro);
-        
-        for (int i = 0; i < lista.size(); i++) {
-            
-            com = dalCOM.getComanda(lista.get(i).getComanda(), lista.get(i).getMesa());
-            
-            if(com.isAberta())
-                lista.remove(i);
-            else {
-                if(lista.get(i).getVencimento().isEqual(LocalDate.of(1900, 10, 10)))
-                    lista.get(i).setVencimento(null);
+        if(lista != null) {
+            for (int i = 0; i < lista.size(); i++) {
+
+                com = dalCOM.getComanda(lista.get(i).getComanda(), lista.get(i).getMesa());
+
+                if(com.isAberta())
+                    lista.remove(i);
+                else {
+                    if(lista.get(i).getVencimento().isEqual(LocalDate.of(1900, 10, 10)))
+                        lista.get(i).setVencimento(null);
+                }
             }
+            
+            ObservableList<Recebimento> modelo;
+            modelo = FXCollections.observableArrayList(lista);
+            tabela.setItems(modelo);
+            tabela.refresh();
         }
         
-        ObservableList<Recebimento> modelo;
-        modelo = FXCollections.observableArrayList(lista);
-        tabela.setItems(modelo);
-        tabela.refresh();
-        
-        if(lista.isEmpty()) {
+        if(lista == null || lista.isEmpty()) {
             modoPesquisa();
             a.setTitle("Informação:");
             a.setAlertType(Alert.AlertType.INFORMATION);
@@ -348,39 +390,5 @@ public class EfetuarRecebimentoController implements Initializable {
     @FXML
     private void clkAddValor(MouseEvent event) {
         txValor.setText(formatarPreco(tabela.getSelectionModel().getSelectedItem().getValor()));
-    }
-
-    @FXML
-    private void dgtCliente(KeyEvent event) {
-        
-        DALCliente dalCLI = new DALCliente();
-        
-        DALComanda dalCOM = new DALComanda();
-        Comanda com;
-        
-        DALRecebimento dal = new DALRecebimento();
-        List<Recebimento> lista = dal.get("rec_cli="+dalCLI.get("lower(cli_nome) like '%"+txCliente.getText().toLowerCase()+"%'").get(0).getCod()+"");
-        
-        for (int i = 0; i < lista.size(); i++) {
-            
-            com = dalCOM.getComanda(lista.get(i).getComanda(), lista.get(i).getMesa());
-            
-            if(com.isAberta())
-                lista.remove(i);
-            else {
-                if(lista.get(i).getVencimento().isEqual(LocalDate.of(1900, 10, 10)))
-                    lista.get(i).setVencimento(null);
-            }
-        }
-        
-         if(lista.isEmpty()) 
-            modoPesquisa();
-        else 
-            modoAltera();
-        
-        ObservableList<Recebimento> modelo;
-        modelo = FXCollections.observableArrayList(lista);
-        tabela.setItems(modelo);
-        tabela.refresh();
     }
 }

@@ -62,7 +62,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #795548;">
                <children>
-                  <JFXTextField fx:id="txCliente" focusColor="#699933" labelFloat="true" onKeyPressed="#dgtCliente" opacity="0.75" prefHeight="25.0" prefWidth="144.0" promptText="Cliente" style="-fx-background-color: #D7CCC8;" unFocusColor="#699933">
+                  <JFXTextField fx:id="txCliente" focusColor="#699933" labelFloat="true" opacity="0.75" prefHeight="25.0" prefWidth="144.0" promptText="Cliente" style="-fx-background-color: #D7CCC8;" unFocusColor="#699933">
                      <cursor>
                         <Cursor fx:constant="TEXT" />
                      </cursor>
