@@ -189,7 +189,9 @@ public class EfetuarRecebimentoController implements Initializable {
                 if(r.getPai() != 0 && !r.getTipo().equals("gorjeta")) {
                     
                     Recebimento rPai = dalRec.get(r.getPai());
-                    rPai.setValor(rPai.getValor()-r.getValor());
+                    rPai.setValor(rPai.getValor()+r.getValor());
+                    rPai.setStatus("N");
+                    rPai.setTipo("a ver");
                     
                     if(dalRec.alterar(rPai)) {
                         a.setTitle("Informação:");
