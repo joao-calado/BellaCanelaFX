@@ -200,31 +200,38 @@ public class EfetuarRecebimentoController implements Initializable {
             
             if(pgto > tabela.getSelectionModel().getSelectedItem().getValor()) {
                 // pagar com gorjeta - update em rec_status
-                if(dalRec.alterar(r)) {
-                    
-                    r.setValor(pgto - r.getValor());
-                    r.setTipo("gorjeta");
-                    
-                    if(r.getPai() == 0)
-                        r.setPai(r.getCod());
-                    else 
-                        r.setPai(r.getPai());
-                    
-                    if(dalRec.gravar(r)) {
-                        a.setTitle("Informação:");
-                        a.setAlertType(Alert.AlertType.INFORMATION);
-                        a.setContentText("Recebimento gravado com sucesso!\nGorjeta: R$"+r.getValor());
+                if(cbTipoRec.getValue() == null || cbTipoRec.getValue().isEmpty()) {
+                    a.setTitle("Erro:");
+                    a.setAlertType(Alert.AlertType.ERROR);
+                    a.setContentText("Selecione um tipo para o novo recebimento!");
+                }
+                else {
+                    r.setTipo(cbTipoRec.getValue());
+                    if(dalRec.alterar(r)) {
+                        r.setValor(pgto - r.getValor());
+                        r.setTipo("gorjeta");
+
+                        if(r.getPai() == 0)
+                            r.setPai(r.getCod());
+                        else 
+                            r.setPai(r.getPai());
+
+                        if(dalRec.gravar(r)) {
+                            a.setTitle("Informação:");
+                            a.setAlertType(Alert.AlertType.INFORMATION);
+                            a.setContentText("Recebimento gravado com sucesso!\nGorjeta: R$"+r.getValor());
+                        }
+                        else {
+                            a.setTitle("Erro:");
+                            a.setAlertType(Alert.AlertType.ERROR);
+                            a.setContentText("Problemas ao tentar gravar recebimento com Gorjeta!");
+                        }
                     }
                     else {
                         a.setTitle("Erro:");
                         a.setAlertType(Alert.AlertType.ERROR);
-                        a.setContentText("Problemas ao tentar gravar recebimento com Gorjeta!");
+                        a.setContentText("Problemas ao tentar gravar recebimento!");
                     }
-                }
-                else {
-                    a.setTitle("Erro:");
-                    a.setAlertType(Alert.AlertType.ERROR);
-                    a.setContentText("Problemas ao tentar gravar recebimento!");
                 }
             }
             else {
@@ -273,15 +280,23 @@ public class EfetuarRecebimentoController implements Initializable {
                 }
                 else {
                     // update em rec_status
-                    if(dalRec.alterar(r)) {
-                        a.setTitle("Informação:");
-                        a.setAlertType(Alert.AlertType.INFORMATION);
-                        a.setContentText("Recebimento gravado com sucesso!");
-                    }
-                    else {
+                    if(cbTipoRec.getValue() == null || cbTipoRec.getValue().isEmpty()) {
                         a.setTitle("Erro:");
                         a.setAlertType(Alert.AlertType.ERROR);
-                        a.setContentText("Problemas ao tentar gravar recebimento!");
+                        a.setContentText("Selecione um tipo para o novo recebimento!");
+                    }
+                    else {
+                        r.setTipo(cbTipoRec.getValue());
+                        if(dalRec.alterar(r)) {
+                            a.setTitle("Informação:");
+                            a.setAlertType(Alert.AlertType.INFORMATION);
+                            a.setContentText("Recebimento gravado com sucesso!");
+                        }
+                        else {
+                            a.setTitle("Erro:");
+                            a.setAlertType(Alert.AlertType.ERROR);
+                            a.setContentText("Problemas ao tentar gravar recebimento!");
+                        }
                     }
                 }
             }
