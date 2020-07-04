@@ -132,7 +132,7 @@ public class EfetuarRecebimentoController implements Initializable {
         carregarCB("altera");
         tabela.setDisable(false);
         cbTipoRec.setPromptText("Tipo de recebimento");
-        cbTipoRec.setDisable(true);
+        cbTipoRec.setDisable(false);
         
         txValor.clear();
         txValor.setDisable(false);
@@ -206,10 +206,10 @@ public class EfetuarRecebimentoController implements Initializable {
                     
                     try {
                         int p = r.getPai();
-                        r.setPai(r.getCod());
+                        r.setPai(p);
                     }
                     catch(Exception e) {
-                        r.setPai(r.getPai());
+                        r.setPai(r.getCod());
                     }
                     
                     if(dalRec.gravar(r)) {
@@ -234,15 +234,46 @@ public class EfetuarRecebimentoController implements Initializable {
                     // update e gerar rec
                     r.setValor(r.getValor() - pgto);
                     r.setStatus("N");
-                    if(dalRec.alterar(r)) {
-                        a.setTitle("Informação:");
-                        a.setAlertType(Alert.AlertType.INFORMATION);
-                        a.setContentText("Recebimento gravado com sucesso!");
-                    }
-                    else {
+                    if(cbTipoRec.getValue().isEmpty()) {
                         a.setTitle("Erro:");
                         a.setAlertType(Alert.AlertType.ERROR);
-                        a.setContentText("Problemas ao tentar gravar recebimento!");
+                        a.setContentText("Selecione um tipo para o novo recebimento!");
+                    }
+                    else {
+                        if(dalRec.alterar(r)) {
+
+                            r.setValor(pgto - r.getValor());
+                            r.setTipo(cbTipoRec.getValue());
+                            r.setStatus("S");
+                            
+                            try {
+                                int p = r.getPai();
+                                r.setPai(p);
+                            }
+                            catch(Exception e) {
+                                r.setPai(r.getCod());
+                            }
+                            
+                            if(dalRec.gravar(r)) {
+                                a.setTitle("Informação:");
+                                a.setAlertType(Alert.AlertType.INFORMATION);
+                                a.setContentText("Recebimento gravado com sucesso!");
+                            }
+                            else {
+                                a.setTitle("Erro:");
+                                a.setAlertType(Alert.AlertType.ERROR);
+                                a.setContentText("Problemas ao tentar gravar recebimento!");
+                            }
+                            
+                            a.setTitle("Informação:");
+                            a.setAlertType(Alert.AlertType.INFORMATION);
+                            a.setContentText("Recebimento gravado com sucesso!");
+                        }
+                        else {
+                            a.setTitle("Erro:");
+                            a.setAlertType(Alert.AlertType.ERROR);
+                            a.setContentText("Problemas ao tentar gravar recebimento!");
+                        }
                     }
                 }
                 else {
