@@ -183,37 +183,48 @@ public class EfetuarRecebimentoController implements Initializable {
         a.setHeaderText(null);
         
         if(tabela.getSelectionModel().getSelectedIndex() >= 0) {
+            
             r = tabela.getSelectionModel().getSelectedItem();
-            if(dalRec.apagar(r)) {
+            
+            List<Recebimento> aux = new ArrayList();
+            aux = dalRec.get("rec_pai="+r.getCod()+"");
+            if(aux.isEmpty()) {
+                if(dalRec.apagar(r)) {
                 
-                if(r.getPai() != 0 && !r.getTipo().equals("gorjeta")) {
-                    
-                    Recebimento rPai = dalRec.get(r.getPai());
-                    rPai.setValor(rPai.getValor()+r.getValor());
-                    rPai.setStatus("N");
-                    rPai.setTipo("a ver");
-                    
-                    if(dalRec.alterar(rPai)) {
+                    if(r.getPai() != 0 && !r.getTipo().equals("gorjeta")) {
+
+                        Recebimento rPai = dalRec.get(r.getPai());
+                        rPai.setValor(rPai.getValor()+r.getValor());
+                        rPai.setStatus("N");
+                        rPai.setTipo("a ver");
+
+                        if(dalRec.alterar(rPai)) {
+                            a.setTitle("Informação:");
+                            a.setAlertType(Alert.AlertType.INFORMATION);
+                            a.setContentText("Recebimento estornado com sucesso!");
+                        }
+                        else {
+                            a.setTitle("Erro:");
+                            a.setAlertType(Alert.AlertType.ERROR);
+                            a.setContentText("Problemas ao estornar recebimento!");
+                        }
+                    }
+                    else {
                         a.setTitle("Informação:");
                         a.setAlertType(Alert.AlertType.INFORMATION);
                         a.setContentText("Recebimento estornado com sucesso!");
                     }
-                    else {
-                        a.setTitle("Erro:");
-                        a.setAlertType(Alert.AlertType.ERROR);
-                        a.setContentText("Problemas ao estornar recebimento!");
-                    }
                 }
                 else {
-                    a.setTitle("Informação:");
-                    a.setAlertType(Alert.AlertType.INFORMATION);
-                    a.setContentText("Recebimento estornado com sucesso!");
+                    a.setTitle("Erro:");
+                    a.setAlertType(Alert.AlertType.ERROR);
+                    a.setContentText("Problemas ao estornar recebimento!");
                 }
             }
             else {
                 a.setTitle("Erro:");
                 a.setAlertType(Alert.AlertType.ERROR);
-                a.setContentText("Problemas ao estornar recebimento!");
+                a.setContentText("Não é possível estornar este recebimento.\nExistem outros recebimentos atrelados a esse.");
             }
         }
         
