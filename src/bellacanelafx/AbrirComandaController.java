@@ -47,6 +47,8 @@ public class AbrirComandaController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         dpData.setValue(LocalDate.now());
         iniciarCBClientes();
+        tfNumComanda.setText((dalCom.getMaxPK() + 1) + "");
+        tfNumComanda.setDisable(true);
     }
 
     public void iniciarCBClientes() {
