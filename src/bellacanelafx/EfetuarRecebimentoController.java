@@ -1,8 +1,10 @@
 package bellacanelafx;
 
+import bellacanela.db.dal.DALCliente;
 import bellacanela.db.dal.DALComanda;
 import bellacanela.db.dal.DALRecebimento;
 import bellacanela.util.MaskFieldUtil;
+import bellacanelafx.db.entidades.Cliente;
 import bellacanelafx.db.entidades.Comanda;
 import bellacanelafx.db.entidades.Recebimento;
 import com.jfoenix.controls.JFXButton;
@@ -27,8 +29,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
 /**
@@ -49,8 +51,6 @@ public class EfetuarRecebimentoController implements Initializable {
     @FXML
     private JFXDatePicker dtpVencimento;
     @FXML
-    private TableColumn<Recebimento, Integer> colCliente;
-    @FXML
     private TableColumn<Recebimento, String> colTipo;
     @FXML
     private TableColumn<Recebimento, Double> colValor;
@@ -59,8 +59,6 @@ public class EfetuarRecebimentoController implements Initializable {
     @FXML
     private TableColumn<Recebimento, LocalDate> colVencimento;
     @FXML
-    private TableColumn<Recebimento, Integer> colMesa;
-    @FXML
     private JFXButton btReceber;
     @FXML
     private JFXButton btPesquisar;
@@ -68,6 +66,10 @@ public class EfetuarRecebimentoController implements Initializable {
     private JFXButton btCancelar;
     @FXML
     private TableView<Recebimento> tabela;
+    @FXML
+    private JFXTextField txCliente;
+    @FXML
+    private JFXDatePicker dtpVencimento1;
 
     private void fadeout() {
         FadeTransition ft = new FadeTransition(Duration.millis(1000), painel);
@@ -88,13 +90,14 @@ public class EfetuarRecebimentoController implements Initializable {
         cbTipoRec.getItems().clear();
         List<String> tr = new ArrayList();
         if(modo.equals("pesquisa")) {
-            tr.add("à vista");
+            tr.add("dinheiro");
             tr.add("crédito");
             tr.add("débito");
             tr.add("a ver");
+            tr.add("gorjeta");
         }
         else {
-            tr.add("à vista");
+            tr.add("dinheiro");
             tr.add("crédito");
             tr.add("débito");
         }
@@ -115,30 +118,33 @@ public class EfetuarRecebimentoController implements Initializable {
         
         txValor.clear();
         txValor.setDisable(true);
+        txCliente.clear();
+        txCliente.setDisable(false);
         btReceber.setDisable(true);
         btExcluir.setDisable(true);
         
         btPesquisar.setDisable(false);
         dtpVencimento.setDisable(false);
+        dtpVencimento1.setDisable(false);
     }
     
     private void modoAltera() {
         
-        btExcluir.setVisible(false);
-        btExcluir.setDisable(true);
-        
         carregarCB("altera");
         tabela.setDisable(false);
         cbTipoRec.setPromptText("Tipo de recebimento");
-        cbTipoRec.setDisable(true);
+        cbTipoRec.setDisable(false);
         
         txValor.clear();
         txValor.setDisable(false);
+        txCliente.clear();
+        txCliente.setDisable(true);
         btReceber.setDisable(false);
         btExcluir.setDisable(false);
         
         btPesquisar.setDisable(true);
         dtpVencimento.setDisable(true);
+        dtpVencimento1.setDisable(true);
     }
     
     @Override
@@ -147,17 +153,18 @@ public class EfetuarRecebimentoController implements Initializable {
         fadeout();
         MaskFieldUtil.monetaryField(txValor);
         
-        colCliente.setCellValueFactory((TableColumn.CellDataFeatures<Recebimento, Integer> r) -> new SimpleObjectProperty(r.getValue().getCliente()));
         colTipo.setCellValueFactory((TableColumn.CellDataFeatures<Recebimento, String> r) -> new SimpleStringProperty(r.getValue().getTipo()));
         colValor.setCellValueFactory((TableColumn.CellDataFeatures<Recebimento, Double> r) -> new SimpleObjectProperty(r.getValue().getValor()));
         colRecebimento.setCellValueFactory((TableColumn.CellDataFeatures<Recebimento, LocalDate> r) -> new SimpleObjectProperty(r.getValue().getRecebimento()));
         colVencimento.setCellValueFactory((TableColumn.CellDataFeatures<Recebimento, LocalDate> r) -> new SimpleObjectProperty(r.getValue().getVencimento()));
-        colMesa.setCellValueFactory((TableColumn.CellDataFeatures<Recebimento, Integer> r) -> new SimpleObjectProperty(r.getValue().getMesa()));
     
+        colTipo.setStyle("-fx-alignment: center-right;");
+        colValor.setStyle("-fx-alignment: center-right;");
+        colRecebimento.setStyle("-fx-alignment: center-right;");
+        colVencimento.setStyle("-fx-alignment: center-right;");
+        
         Platform.runLater(()->{
             try{
-                btExcluir.setVisible(false);
-                btExcluir.setDisable(true);
                 modoPesquisa();
             }
             catch(Exception e){
@@ -168,6 +175,62 @@ public class EfetuarRecebimentoController implements Initializable {
 
     @FXML
     private void clkBtExcluir(ActionEvent event) {
+        
+        Recebimento r;
+        DALRecebimento dalRec = new DALRecebimento();
+        
+        Alert a = new Alert(Alert.AlertType.INFORMATION);
+        a.setHeaderText(null);
+        
+        if(tabela.getSelectionModel().getSelectedIndex() >= 0) {
+            
+            r = tabela.getSelectionModel().getSelectedItem();
+            
+            List<Recebimento> aux = new ArrayList();
+            aux = dalRec.get("rec_pai="+r.getCod()+"");
+            if(aux.isEmpty()) {
+                if(dalRec.apagar(r)) {
+                
+                    if(r.getPai() != 0 && !r.getTipo().equals("gorjeta")) {
+
+                        Recebimento rPai = dalRec.get(r.getPai());
+                        rPai.setValor(rPai.getValor()+r.getValor());
+                        rPai.setStatus("N");
+                        rPai.setTipo("a ver");
+
+                        if(dalRec.alterar(rPai)) {
+                            a.setTitle("Informação:");
+                            a.setAlertType(Alert.AlertType.INFORMATION);
+                            a.setContentText("Recebimento estornado com sucesso!");
+                        }
+                        else {
+                            a.setTitle("Erro:");
+                            a.setAlertType(Alert.AlertType.ERROR);
+                            a.setContentText("Problemas ao estornar recebimento!");
+                        }
+                    }
+                    else {
+                        a.setTitle("Informação:");
+                        a.setAlertType(Alert.AlertType.INFORMATION);
+                        a.setContentText("Recebimento estornado com sucesso!");
+                    }
+                }
+                else {
+                    a.setTitle("Erro:");
+                    a.setAlertType(Alert.AlertType.ERROR);
+                    a.setContentText("Problemas ao estornar recebimento!");
+                }
+            }
+            else {
+                a.setTitle("Erro:");
+                a.setAlertType(Alert.AlertType.ERROR);
+                a.setContentText("Não é possível estornar este recebimento.\nExistem outros recebimentos atrelados a esse.");
+            }
+        }
+        
+        modoPesquisa();
+        btPesquisar.requestFocus();
+        a.showAndWait();
     }
 
     @FXML
@@ -178,7 +241,7 @@ public class EfetuarRecebimentoController implements Initializable {
         Alert a = new Alert(Alert.AlertType.INFORMATION);
         a.setHeaderText(null);
         
-        if(tabela.getSelectionModel().getSelectedIndex() >= 0 && tabela.getSelectionModel().getSelectedItem().getStatus().equals("N")) {
+        if(tabela.getSelectionModel().getSelectedIndex() >= 0 && tabela.getSelectionModel().getSelectedItem().getStatus().equals("N") && !txValor.getText().isEmpty()) {
             
             Double pgto = Double.parseDouble(txValor.getText().replaceAll(",", "."));
             r = new Recebimento(tabela.getSelectionModel().getSelectedItem().getCod(), 
@@ -193,24 +256,38 @@ public class EfetuarRecebimentoController implements Initializable {
             
             if(pgto > tabela.getSelectionModel().getSelectedItem().getValor()) {
                 // pagar com gorjeta - update em rec_status
-                if(dalRec.alterar(r)) {
-                    r.setValor(pgto - r.getValor());
-                    r.setTipo("gorjeta");
-                    if(dalRec.gravar(r)) {
-                        a.setTitle("Informação:");
-                        a.setAlertType(Alert.AlertType.INFORMATION);
-                        a.setContentText("Recebimento gravado com sucesso!\nGorjeta: R$"+r.getValor());
+                if(cbTipoRec.getValue() == null || cbTipoRec.getValue().isEmpty()) {
+                    a.setTitle("Erro:");
+                    a.setAlertType(Alert.AlertType.ERROR);
+                    a.setContentText("Selecione um tipo para o novo recebimento!");
+                }
+                else {
+                    r.setTipo(cbTipoRec.getValue());
+                    if(dalRec.alterar(r)) {
+                        r.setValor(pgto - r.getValor());
+                        r.setTipo("gorjeta");
+
+                        if(r.getPai() == 0)
+                            r.setPai(r.getCod());
+                        else 
+                            r.setPai(r.getPai());
+
+                        if(dalRec.gravar(r)) {
+                            a.setTitle("Informação:");
+                            a.setAlertType(Alert.AlertType.INFORMATION);
+                            a.setContentText("Recebimento gravado com sucesso!\nGorjeta: R$"+r.getValor());
+                        }
+                        else {
+                            a.setTitle("Erro:");
+                            a.setAlertType(Alert.AlertType.ERROR);
+                            a.setContentText("Problemas ao tentar gravar recebimento com Gorjeta!");
+                        }
                     }
                     else {
                         a.setTitle("Erro:");
                         a.setAlertType(Alert.AlertType.ERROR);
-                        a.setContentText("Problemas ao tentar gravar recebimento com Gorjeta!");
+                        a.setContentText("Problemas ao tentar gravar recebimento!");
                     }
-                }
-                else {
-                    a.setTitle("Erro:");
-                    a.setAlertType(Alert.AlertType.ERROR);
-                    a.setContentText("Problemas ao tentar gravar recebimento!");
                 }
             }
             else {
@@ -218,36 +295,80 @@ public class EfetuarRecebimentoController implements Initializable {
                     // update e gerar rec
                     r.setValor(r.getValor() - pgto);
                     r.setStatus("N");
-                    if(dalRec.alterar(r)) {
-                        a.setTitle("Informação:");
-                        a.setAlertType(Alert.AlertType.INFORMATION);
-                        a.setContentText("Recebimento gravado com sucesso!");
-                    }
-                    else {
+                    if(cbTipoRec.getValue() == null || cbTipoRec.getValue().isEmpty()) {
                         a.setTitle("Erro:");
                         a.setAlertType(Alert.AlertType.ERROR);
-                        a.setContentText("Problemas ao tentar gravar recebimento!");
+                        a.setContentText("Selecione um tipo para o novo recebimento!");
+                    }
+                    else {
+                        if(dalRec.alterar(r)) {
+
+                            r.setValor(pgto);
+                            r.setTipo(cbTipoRec.getValue());
+                            r.setStatus("S");
+                            
+                            if(r.getPai() == 0)
+                                r.setPai(r.getCod());
+                            else 
+                                r.setPai(r.getPai());
+                            
+                            if(dalRec.gravar(r)) {
+                                a.setTitle("Informação:");
+                                a.setAlertType(Alert.AlertType.INFORMATION);
+                                a.setContentText("Recebimento gravado com sucesso!");
+                            }
+                            else {
+                                a.setTitle("Erro:");
+                                a.setAlertType(Alert.AlertType.ERROR);
+                                a.setContentText("Problemas ao tentar gravar recebimento!");
+                            }
+                            
+                            a.setTitle("Informação:");
+                            a.setAlertType(Alert.AlertType.INFORMATION);
+                            a.setContentText("Recebimento gravado com sucesso!");
+                        }
+                        else {
+                            a.setTitle("Erro:");
+                            a.setAlertType(Alert.AlertType.ERROR);
+                            a.setContentText("Problemas ao tentar gravar recebimento!");
+                        }
                     }
                 }
                 else {
                     // update em rec_status
-                    if(dalRec.alterar(r)) {
-                        a.setTitle("Informação:");
-                        a.setAlertType(Alert.AlertType.INFORMATION);
-                        a.setContentText("Recebimento gravado com sucesso!");
-                    }
-                    else {
+                    if(cbTipoRec.getValue() == null || cbTipoRec.getValue().isEmpty()) {
                         a.setTitle("Erro:");
                         a.setAlertType(Alert.AlertType.ERROR);
-                        a.setContentText("Problemas ao tentar gravar recebimento!");
+                        a.setContentText("Selecione um tipo para o novo recebimento!");
+                    }
+                    else {
+                        r.setTipo(cbTipoRec.getValue());
+                        if(dalRec.alterar(r)) {
+                            a.setTitle("Informação:");
+                            a.setAlertType(Alert.AlertType.INFORMATION);
+                            a.setContentText("Recebimento gravado com sucesso!");
+                        }
+                        else {
+                            a.setTitle("Erro:");
+                            a.setAlertType(Alert.AlertType.ERROR);
+                            a.setContentText("Problemas ao tentar gravar recebimento!");
+                        }
                     }
                 }
             }
         }
         else {
-            a.setTitle("Erro:");
-            a.setAlertType(Alert.AlertType.ERROR);
-            a.setContentText("Recebimento já efetuado");
+            
+            if(txValor.getText().isEmpty()) {
+                a.setTitle("Erro:");
+                a.setAlertType(Alert.AlertType.ERROR);
+                a.setContentText("Informe um valor");
+            }
+            else {
+                a.setTitle("Erro:");
+                a.setAlertType(Alert.AlertType.ERROR);
+                a.setContentText("Recebimento já efetuado");
+            }
         }
        
         modoPesquisa();
@@ -262,43 +383,92 @@ public class EfetuarRecebimentoController implements Initializable {
         a.setHeaderText(null);
         String filtro = "";
         LocalDate venc = dtpVencimento.getValue();
+        LocalDate venc1 = dtpVencimento1.getValue();
         
-        if(venc == null) {
-            if(cbTipoRec.getValue() == null)
-                filtro += "rec_tipo like '%"+""+"%'";
-            else
-                filtro += "rec_tipo like '%"+cbTipoRec.getValue()+"%'";
-        }
-        else {
-            if(cbTipoRec.getValue() == null)
-                filtro += "rec_tipo like '%"+""+"%' and rec_vencimento <='"+dtpVencimento.getValue()+"'";
-            else
-                filtro += "rec_tipo like '%"+cbTipoRec.getValue()+"%' and rec_vencimento <='"+dtpVencimento.getValue()+"'";
-        }
+        DALCliente dalCLI = new DALCliente();
         
         DALComanda dalCOM = new DALComanda();
         Comanda com;
         
         DALRecebimento dal = new DALRecebimento();
-        List<Recebimento> lista = dal.get(filtro);
+        List<Recebimento> lista = null;
         
-        for (int i = 0; i < lista.size(); i++) {
-            
-            com = dalCOM.getComanda(lista.get(i).getComanda(), lista.get(i).getMesa());
-            if(com.isAberta())
-                lista.remove(i);
+        if((venc != null && venc1 == null) || (venc == null && venc1 != null)) {
+            modoPesquisa();
+            a.setTitle("Alerta:");
+            a.setAlertType(Alert.AlertType.WARNING);
+            a.setContentText("Selecione ambas datas!");
+            a.showAndWait();
+        }
+        else {
+            if(txCliente.getText().isEmpty()) {
+                if(venc == null && venc1 == null) {
+                    if(cbTipoRec.getValue() == null)
+                        filtro += "rec_tipo like '%"+""+"%'";
+                    else
+                        filtro += "rec_tipo like '%"+cbTipoRec.getValue()+"%'";
+                }
+                else {
+                    if (cbTipoRec.getValue() == null) {
+                        filtro += "rec_tipo like '%" + "" + "%' and rec_vencimento <='" + dtpVencimento1.getValue() + "' and rec_vencimento >='" + dtpVencimento.getValue() + "'";
+                    } 
+                    else {
+                        filtro += "rec_tipo like '%" + cbTipoRec.getValue() + "%' and rec_vencimento <='" + dtpVencimento1.getValue() + "' and rec_vencimento >='" + dtpVencimento.getValue() + "'";
+                    }
+                }
+                lista = dal.get(filtro);
+            }
             else {
-                if(lista.get(i).getVencimento().isEqual(LocalDate.of(1900, 10, 10)))
-                    lista.get(i).setVencimento(null);
+                
+                int cl=0;
+                try {
+                    cl =  dalCLI.get("lower(cli_nome) like '%" + txCliente.getText().toLowerCase() + "%'").get(0).getCod();
+                }
+                catch(Exception ex) {
+                    cl = -1;
+                }
+                
+                if(cl != -1) {
+                    if (venc == null && venc1 == null) {
+                        if (cbTipoRec.getValue() == null) {
+                            filtro += "rec_tipo like '%" + "" + "%' and rec_cli=" + cl + "";
+                        } 
+                        else {
+                            filtro += "rec_tipo like '%" + cbTipoRec.getValue() + "%' and rec_cli=" + cl + "";
+                        }
+                    } else {
+                        if (cbTipoRec.getValue() == null) {
+                            filtro += "rec_tipo like '%" + "" + "%' and rec_vencimento <='" + dtpVencimento1.getValue() + "' and rec_vencimento >='" + dtpVencimento.getValue() + "' and rec_cli=" + cl + "";
+                        } 
+                        else {
+                            filtro += "rec_tipo like '%" + cbTipoRec.getValue() + "%' and rec_vencimento <='" + dtpVencimento1.getValue() + "' and rec_vencimento >='" + dtpVencimento.getValue() + "' and rec_cli=" + cl + "";
+                        }
+                    }
+                    lista = dal.get(filtro);
+                }
             }
         }
         
-        ObservableList<Recebimento> modelo;
-        modelo = FXCollections.observableArrayList(lista);
-        tabela.setItems(modelo);
-        tabela.refresh();
+        if(lista != null) {
+            for (int i = 0; i < lista.size(); i++) {
+
+                com = dalCOM.getComanda(lista.get(i).getComanda(), lista.get(i).getMesa());
+
+                if(com.isAberta())
+                    lista.remove(i);
+                else {
+                    if(lista.get(i).getVencimento().isEqual(LocalDate.of(1900, 10, 10)))
+                        lista.get(i).setVencimento(null);
+                }
+            }
+            
+            ObservableList<Recebimento> modelo;
+            modelo = FXCollections.observableArrayList(lista);
+            tabela.setItems(modelo);
+            tabela.refresh();
+        }
         
-        if(lista.isEmpty()) {
+        if(lista == null || lista.isEmpty()) {
             modoPesquisa();
             a.setTitle("Informação:");
             a.setAlertType(Alert.AlertType.INFORMATION);
@@ -309,6 +479,7 @@ public class EfetuarRecebimentoController implements Initializable {
             modoAltera();
         }
         dtpVencimento.setValue(null);
+        dtpVencimento1.setValue(null);
     }
 
     @FXML
