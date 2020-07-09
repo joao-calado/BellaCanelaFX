@@ -11,7 +11,8 @@ public class Pagamento {
     private Date vencimento;
     private Date pagamento;
     private boolean parcial;
-    private Integer pai = null;
+    private Integer pai = 0;
+    private Integer nf = 0;
 
 
     public Pagamento(int cod, int parcela, String desc, double valor, double valorpago, double DesJur, Date vencimento, Date pagamento, boolean parcial, Integer pai) {
@@ -37,6 +38,28 @@ public class Pagamento {
         this.valor = valor;
         this.vencimento = vencimento;
     }
+    
+    public Pagamento(int parcela, String desc, double valor, Date vencimento, int NF) {
+        this.parcela = parcela;
+        this.desc = desc;
+        this.valor = valor;
+        this.vencimento = vencimento;
+        this.nf = NF;
+    }
+    
+    public Pagamento(double valor, Date vencimento) {        
+        this.valor = valor;
+        this.vencimento = vencimento;        
+    }
+    
+
+    public Integer getNf() {
+        return nf;
+    }
+
+    public void setNf(Integer nf) {
+        this.nf = nf;
+    }    
     
 
     public Integer getPai() {

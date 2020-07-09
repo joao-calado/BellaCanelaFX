@@ -9,7 +9,7 @@ public class Produtos {
     private Medida med;
     private double preco;
     private char AVenda;
-    private int Estoque;
+    private int Estoque = 0;
 
     public Produtos() {        
     }

@@ -16,9 +16,20 @@ public class NotaFiscal {
 
     public NotaFiscal() {
     }
-
+    public NotaFiscal(int nf) {
+        this.cod = nf;
+    }    
         
     public NotaFiscal(int cod, String numero, Fornecedor fornecedor, String desc, Date vencimento, int parcelas, double total) {
+        this.cod = cod;
+        this.numero = numero;
+        this.fornecedor = fornecedor;
+        this.desc = desc;
+        this.vencimento = vencimento;
+        this.parcelas = parcelas;
+        this.total = total;
+    }
+    public NotaFiscal(String numero, Fornecedor fornecedor, String desc, Date vencimento, int parcelas, double total) {
         this.cod = cod;
         this.numero = numero;
         this.fornecedor = fornecedor;

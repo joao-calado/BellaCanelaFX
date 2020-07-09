@@ -12,16 +12,15 @@ public class DALItensNF {
     
    public boolean gravar(ItensNF nf) {
         
-        String sql = "insert into itensnf(ite_cod, ite_notafiscal, ite_produto, ite_qtde, ite_preco, ite_total, ite_ctrl)	"
+        String sql = "insert into itensnf(ite_cod, ite_notafiscal, ite_produto, ite_qtde, ite_preco, ite_total, ite_ctrl)"
                 + "VALUES (default, '#2', '#3', '#4', '#5', '#6', '#7')";
         
         sql = sql.replaceAll("#2", ""+nf.getNf().getCod());
         sql = sql.replaceAll("#3", ""+nf.getProd().getCod());
         sql = sql.replaceAll("#4", ""+nf.getQtde());
         sql = sql.replaceAll("#5", ""+nf.getPreco());
-        sql = sql.replaceAll("#6", ""+nf.getTotal());
-        sql = sql.replaceAll("#7", ""+nf.getCtrl());
-        
+        sql = sql.replaceAll("#6", ""+nf.getTotal());        
+       
         return Banco.getCon().manipular(sql);
     }
     
@@ -34,8 +33,6 @@ public class DALItensNF {
         sql = sql.replaceAll("#4", ""+nf.getQtde());
         sql = sql.replaceAll("#5", ""+nf.getPreco());
         sql = sql.replaceAll("#6", ""+nf.getTotal());
-        sql = sql.replaceAll("#7", ""+nf.getCtrl());
-
         
         return Banco.getCon().manipular(sql);
     }
@@ -48,6 +45,8 @@ public class DALItensNF {
         return Banco.getCon().getMaxPK("itensnf", "ite_cod");
     }
     
+
+    
     public ItensNF get(int cod) {
         
         ItensNF aux = null;
@@ -58,7 +57,7 @@ public class DALItensNF {
                 //(ite_cod, ite_notafiscal, ite_produto, ite_qtde, ite_preco, ite_total)
                 aux = new ItensNF(rs.getInt("ite_cod"), new DALNotafiscal().get(rs.getInt("ite_notafiscal")),
                                   new DALProduto().get(rs.getInt("ite_produto")), rs.getInt("ite_qtde"),
-                                  rs.getDouble("ite_preco"), rs.getDouble("ite_total"),rs.getString("ite_ctrl").charAt(0));
+                                  rs.getDouble("ite_preco"), rs.getDouble("ite_total"));
         }
         catch(SQLException sqlEx){}
         
@@ -73,12 +72,31 @@ public class DALItensNF {
         
         ArrayList<ItensNF> aux = new ArrayList();
         ResultSet rs = Banco.getCon().consultar(sql);
+               
+        try {
+            while(rs.next())
+                aux.add(new ItensNF(rs.getInt("ite_cod"), new DALNotafiscal().get(rs.getInt("ite_notafiscal")),
+                                  new DALProduto().get(rs.getInt("ite_produto")), rs.getInt("ite_qtde"),
+                                  rs.getDouble("ite_preco"), rs.getDouble("ite_total")));
+        }
+        catch(SQLException sqlEx) {}
+        
+        return aux;
+    }
+    
+    public ArrayList<ItensNF> getNF(String filtro) {
+        
+        String sql = "select *from itensnf where ite_notafiscal = '" + filtro + "'";
+        System.out.println(sql);
+        
+        ArrayList<ItensNF> aux = new ArrayList();
+        ResultSet rs = Banco.getCon().consultar(sql);
         
         try {
             while(rs.next())
                 aux.add(new ItensNF(rs.getInt("ite_cod"), new DALNotafiscal().get(rs.getInt("ite_notafiscal")),
                                   new DALProduto().get(rs.getInt("ite_produto")), rs.getInt("ite_qtde"),
-                                  rs.getDouble("ite_preco"), rs.getDouble("ite_total"),rs.getString("ite_ctrl").charAt(0)));
+                                  rs.getDouble("ite_preco"), rs.getDouble("ite_total")));
         }
         catch(SQLException sqlEx) {}
         
