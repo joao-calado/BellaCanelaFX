@@ -12,8 +12,8 @@ public class DALItensNF {
     
    public boolean gravar(ItensNF nf) {
         
-        String sql = "insert into itensnf(ite_cod, ite_notafiscal, ite_produto, ite_qtde, ite_preco, ite_total, ite_ctrl)"
-                + "VALUES (default, '#2', '#3', '#4', '#5', '#6', '#7')";
+        String sql = "insert into itensnf(ite_cod, ite_notafiscal, ite_produto, ite_qtde, ite_preco, ite_total)"
+                + "VALUES (default, '#2', '#3', '#4', '#5', '#6')";
         
         sql = sql.replaceAll("#2", ""+nf.getNf().getCod());
         sql = sql.replaceAll("#3", ""+nf.getProd().getCod());
@@ -26,7 +26,7 @@ public class DALItensNF {
     
     public boolean alterar(ItensNF nf) {
         
-        String sql = "update itensnf SET ite_notafiscal='#2', ite_produto='#3', ite_qtde='#4', ite_preco='#5', ite_total='#6', ite_ctrl = '#7' WHERE ite_cod = " +nf.getCod();
+        String sql = "update itensnf SET ite_notafiscal='#2', ite_produto='#3', ite_qtde='#4', ite_preco='#5', ite_total='#6' WHERE ite_cod = " +nf.getCod();
         
         sql = sql.replaceAll("#2", ""+nf.getNf().getCod());
         sql = sql.replaceAll("#3", ""+nf.getProd().getCod());
