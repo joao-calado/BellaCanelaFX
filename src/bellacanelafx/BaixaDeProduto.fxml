@@ -131,7 +131,7 @@
          <children>
             <HBox alignment="CENTER" prefHeight="81.0" prefWidth="748.0" spacing="20.0" style="-fx-background-color: #D7CCC8;">
                <children>
-                  <JFXTextField fx:id="txtPesquisa" focusColor="#699933" labelFloat="true" prefHeight="25.0" prefWidth="278.0" promptText="Nome do produto" styleClass="textFild" unFocusColor="#212121">
+                  <JFXTextField fx:id="txtPesquisa" focusColor="#699933" labelFloat="true" onKeyReleased="#evtTextChange" prefHeight="25.0" prefWidth="278.0" promptText="Nome do produto" styleClass="textFild" unFocusColor="#212121">
                      <cursor>
                         <Cursor fx:constant="TEXT" />
                      </cursor>

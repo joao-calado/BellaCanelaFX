@@ -3,7 +3,6 @@ package bellacanelafx;
 import bellacanela.db.dal.DALBaixaDeProduto;
 import bellacanela.db.dal.DALFuncionario;
 import bellacanela.db.dal.DALProduto;
-import bellacanela.util.MaskFieldUtil;
 import bellacanelafx.db.entidades.BaixaDeProduto;
 import bellacanelafx.db.entidades.Funcionario;
 import bellacanelafx.db.entidades.Produtos;
@@ -122,10 +121,19 @@ public class BaixaDeProdutoController implements Initializable {
         ft.play(); 
     }
     
-    private void loadTable(String filtro) {
+    private void loadTable(String filtro, String nProd) {
         DALBaixaDeProduto dal = new DALBaixaDeProduto();
         ArrayList<BaixaDeProduto> baixas = dal.getBaixas(filtro);
+        
+        if(!nProd.isEmpty()) {
+            for(int i = baixas.size() - 1; i >= 0; i--) {
+                if(!baixas.get(i).getProduto().getNome().toLowerCase().contains(nProd.toLowerCase()))
+                    baixas.remove(i);
+            }
+        }
+        
         ObservableList<BaixaDeProduto> olBaixas = FXCollections.observableArrayList(baixas);
+        
         this.tabela.setItems(olBaixas);
         this.tabela.refresh();
     }
@@ -212,7 +220,7 @@ public class BaixaDeProdutoController implements Initializable {
                 ((ComboBox)n).getItems().clear();
         }
         
-        loadTable("");
+        loadTable("", "");
         loadCBProdutos("prod_estoque != -1");
         loadCBFuncionarios("");
     }
@@ -259,7 +267,7 @@ public class BaixaDeProdutoController implements Initializable {
                 new DALProduto().alterEstoque(bp.getProduto());
                 
                 this.original();
-                this.loadTable("");
+                this.loadTable("", "");
             }
             else{
                 this.snackbar("Erro ao excluir.", "red");
@@ -310,7 +318,7 @@ public class BaixaDeProdutoController implements Initializable {
                     new DALProduto().alterEstoque(bp.getProduto());
                     
                     this.original();
-                    this.loadTable("");
+                    this.loadTable("", "");
                 }
                 else{
                     this.snackbar("Problemas ao gravar Baixa!", "red");
@@ -325,7 +333,7 @@ public class BaixaDeProdutoController implements Initializable {
                     new DALProduto().alterEstoque(bp.getProduto());
                     
                     this.original();
-                    this.loadTable("");
+                    this.loadTable("", "");
                 }
                 else{
                     this.snackbar("Problemas ao atualizar Baixa!", "red");
@@ -389,7 +397,13 @@ public class BaixaDeProdutoController implements Initializable {
             }
         }
 
-        loadTable(filtro);
+        loadTable(filtro, txtPesquisa.getText());
     }
+
+    @FXML
+    private void evtTextChange(KeyEvent event) {
+        
+    }
+    
     
 }

@@ -87,6 +87,10 @@ public class DALComanda {
 
         return m;
     }
+    
+    public int getMaxPK(){
+        return Banco.getCon().getMaxPK("Comanda", "com_num");
+    }
 
     public Comanda getComanda(int com_num, int mes_cod) {
         String SQL = "SELECT * FROM Comanda WHERE com_num = '#1' AND mes_cod = '#2'";
