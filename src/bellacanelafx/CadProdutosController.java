@@ -93,6 +93,9 @@ public class CadProdutosController implements Initializable {
     private JFXComboBox<Categoria> cbCategoriaSearch;
     @FXML
     private JFXComboBox<Character> cbAVenda;
+    @FXML
+    private JFXComboBox<Character> cbCtrlEstoque;
+
     
     
     
@@ -155,6 +158,7 @@ public class CadProdutosController implements Initializable {
         auxc.add('S');
         auxc.add('N');
         this.cbAVenda.setItems(FXCollections.observableArrayList(auxc));
+        this.cbCtrlEstoque.setItems(FXCollections.observableArrayList(auxc));
         
         this.cbCategoria.setItems(FXCollections.observableArrayList(new DALCategoria().get("")));
         this.cbMedida.setItems(FXCollections.observableArrayList(new DALMedida().get("")));  
@@ -285,6 +289,8 @@ public class CadProdutosController implements Initializable {
             this.tfPreço.setText(strSal);
             
             this.cbAVenda.getSelectionModel().select(0);
+            this.cbCtrlEstoque.getSelectionModel().select(0); 
+            
             this.cbCategoria.getSelectionModel().select(0);
             this.cbMedida.getSelectionModel().select(0);
             
@@ -330,6 +336,7 @@ public class CadProdutosController implements Initializable {
         this.cbCategoria.setStyle("-fx-background-color: transparent");
         this.cbMedida.setStyle("-fx-background-color: transparent");
         this.cbAVenda.setStyle("-fx-background-color: transparent");
+        this.cbCtrlEstoque.setStyle("-fx-background-color: transparent");
 
         if("".equals(this.tfNome.getText())){
             this.tfNome.setStyle("-fx-background-color: #FF6347");
@@ -351,33 +358,45 @@ public class CadProdutosController implements Initializable {
             this.cbAVenda.setStyle("-fx-background-color: #FF6347");
             flag = false;
         }
+        if(this.cbCtrlEstoque.getValue() == null){
+            this.cbCtrlEstoque.setStyle("-fx-background-color: #FF6347");
+            flag = false;
+        }
            
         
-        
-        if("".equals(tfCod.getText())){
-            f = new Produtos(this.tfNome.getText(), cbCategoria.getValue(), cbMedida.getValue(), Double.parseDouble(this.convertStr(this.tfPreço.getText())), cbAVenda.getValue());
-            if(flag && dal.gravar(f)){
-                this.snackbar("Produto gravado com sucesso!", "green");
-                
-                this.original();
-                this.loadTable("");
+        if(flag){
+            if("".equals(tfCod.getText())){
+                f = new Produtos(this.tfNome.getText(), cbCategoria.getValue(), cbMedida.getValue(), Double.parseDouble(this.convertStr(this.tfPreço.getText())), cbAVenda.getValue());
+                if(this.cbCtrlEstoque.getValue() == 'N'){
+                    f.setEstoque(-1);
+                }
+                if(dal.gravar(f)){
+                    this.snackbar("Produto gravado com sucesso!", "green");
+
+                    this.original();
+                    this.loadTable("");
+                }
+                else{
+                    this.snackbar("Problemas ao gravar Produto!", "red");
+                }
             }
             else{
-                this.snackbar("Problemas ao gravar Produto!", "red");
+                f = new Produtos(Integer.parseInt(this.tfCod.getText()),this.tfNome.getText(), cbCategoria.getValue(), cbMedida.getValue(), Double.parseDouble(this.convertStr(this.tfPreço.getText())), cbAVenda.getValue());
+                if(this.cbCtrlEstoque.getValue() == 'N'){
+                    f.setEstoque(-1);
+                }
+                if(dal.alterar(f)){
+                    this.snackbar("Produto atualizado com sucesso!", "green");
+
+                    this.original();
+                    this.loadTable("");
+                }
+                else{
+                    this.snackbar("Problemas ao atualizar Produto!", "red");
+                }
             }
         }
-        else{
-            f = new Produtos(Integer.parseInt(this.tfCod.getText()),this.tfNome.getText(), cbCategoria.getValue(), cbMedida.getValue(), Double.parseDouble(this.convertStr(this.tfPreço.getText())), cbAVenda.getValue());
-            if(flag && dal.alterar(f)){
-                this.snackbar("Produto atualizado com sucesso!", "green");
-                
-                this.original();
-                this.loadTable("");
-            }
-            else{
-                this.snackbar("Problemas ao atualizar Produto!", "red");
-            }
-        }
+            
     }
 
     @FXML

@@ -24,14 +24,17 @@ public class DALProduto {
     
     public boolean alterar(Produtos p) {
         
-        String sql = "update produto set prod_nome = '#1', prod_cat = '#2', prod_med ='#3', prod_preco ='#4', prod_avenda = '#5' where prod_cod="+p.getCod();
+        String sql = "update produto set prod_nome = '#1', prod_cat = '#2', prod_med ='#3', prod_preco ='#4', prod_avenda = '#5', prod_estoque ='#6' where prod_cod="+p.getCod();
         
         sql = sql.replaceAll("#1", ""+p.getNome());
         sql = sql.replaceAll("#2", ""+p.getCat().getCod());
         sql = sql.replaceAll("#3", ""+p.getMed().getCod());
         sql = sql.replaceAll("#4", ""+p.getPreco()); 
         sql = sql.replaceAll("#5", ""+p.getAVenda());
+        sql = sql.replaceAll("#6", ""+p.getEstoque()); 
+        
         System.out.println(sql);
+        
         return Banco.getCon().manipular(sql);
     }
     public boolean alterEstoque(Produtos p) {
