@@ -17,7 +17,7 @@ public class DALBaixaDeProduto {
         SQL = SQL.replaceAll("#4", bp.getData().toString());
         SQL = SQL.replaceAll("#5", bp.getMotivo());
         
-        return Banco.getCon().manipular(SQL);
+        return Banco.conectar().getCon().manipular(SQL);
     }
     
     public boolean update(BaixaDeProduto bp){
@@ -29,23 +29,23 @@ public class DALBaixaDeProduto {
         SQL = SQL.replaceAll("#4", bp.getData().toString());
         SQL = SQL.replaceAll("#5", bp.getMotivo());
         
-        return Banco.getCon().manipular(SQL);
+        return Banco.conectar().getCon().manipular(SQL);
     }
     
     public boolean delete(BaixaDeProduto bp){
         String SQL = "DELETE FROM BaixaDeProduto WHERE bai_cod = " + bp.getCod();
-        return Banco.getCon().manipular(SQL);
+        return Banco.conectar().getCon().manipular(SQL);
     }
     
     public int getMaxPK(){
-        return Banco.getCon().getMaxPK("BaixaDeProduto", "bai_cod");
+        return Banco.conectar().getCon().getMaxPK("BaixaDeProduto", "bai_cod");
     }
     
     public BaixaDeProduto getBaixa(int COD){
         String SQL = "SELECT * FROM BaixaDeProduto WHERE bai_cod = " + COD;
         BaixaDeProduto bp = null;
         
-        ResultSet rs = Banco.getCon().consultar(SQL);
+        ResultSet rs = Banco.conectar().getCon().consultar(SQL);
         try{
             while(rs.next()) {
                 bp = new BaixaDeProduto (
@@ -73,7 +73,7 @@ public class DALBaixaDeProduto {
         
         ArrayList<BaixaDeProduto> baixas = new ArrayList();
         
-        ResultSet rs = Banco.getCon().consultar(SQL);
+        ResultSet rs = Banco.conectar().getCon().consultar(SQL);
         try{
             while(rs.next()) {
                 baixas.add(

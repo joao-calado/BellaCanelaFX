@@ -21,7 +21,7 @@ public class DALNotafiscal {
         sql = sql.replaceAll("#6", ""+nf.getParcelas());
         sql = sql.replaceAll("#7", ""+nf.getTotal());
         
-        return Banco.getCon().manipular(sql);
+        return Banco.conectar().getCon().manipular(sql);
     }
     
     public boolean alterar(NotaFiscal nf) {
@@ -36,22 +36,22 @@ public class DALNotafiscal {
         sql = sql.replaceAll("#7", ""+nf.getTotal());
 
         
-        return Banco.getCon().manipular(sql);
+        return Banco.conectar().getCon().manipular(sql);
     }
     
     public boolean apagar(NotaFiscal nf) {
-        return Banco.getCon().manipular("delete from notafiscal where not_cod= '"+nf.getCod()+"'");
+        return Banco.conectar().getCon().manipular("delete from notafiscal where not_cod= '"+nf.getCod()+"'");
         
     }
     
     public int getMax() {
-        return Banco.getCon().getMaxPK("notafiscal", "not_cod");
+        return Banco.conectar().getCon().getMaxPK("notafiscal", "not_cod");
     }
     
     public NotaFiscal get(int cod) {
         
         NotaFiscal aux = null;        
-        ResultSet rs = Banco.getCon().consultar("select * from notafiscal where not_cod= '"+cod+"'");
+        ResultSet rs = Banco.conectar().getCon().consultar("select * from notafiscal where not_cod= '"+cod+"'");
         System.out.println("select * from notafiscal where not_cod= '"+cod+"'");
         try{
             if(rs.next())
@@ -72,7 +72,7 @@ public class DALNotafiscal {
             sql += " where "+filtro;
         
         ArrayList<NotaFiscal> aux = new ArrayList();
-        ResultSet rs = Banco.getCon().consultar(sql);
+        ResultSet rs = Banco.conectar().getCon().consultar(sql);
         
         try {
             while(rs.next())                

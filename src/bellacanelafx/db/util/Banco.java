@@ -1,26 +1,28 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package bellacanelafx.db.util;
 
-/**
- *
- * @author joao
- */
+import java.sql.SQLException;
+
 public class Banco {
+    private static Banco banco = null;
+    private Conexao con = null;
     
-    static private Conexao con = null;
+    private Banco() {
+        con = new Conexao();
+        con.conectar("jdbc:postgresql://localhost/", "bellacanela", "postgres", "postgres123");
+    }
     
-    static public Conexao getCon() {
+    public static Banco conectar() {
+        if(banco == null)
+            banco = new Banco();
+        return banco;
+    }
+    
+    public Conexao getCon() {
         return con;
     }
     
-    private Banco(){}
-    
-    static public boolean conectar() {
-        con = new Conexao();
-        return con.conectar("jdbc:postgresql://localhost/", "bellacanela", "postgres", "postgres123");
+    public void desconectar() throws SQLException, Throwable {
+        con.getConnect().close();
+        banco = null;
     }
 }

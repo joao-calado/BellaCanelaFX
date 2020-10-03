@@ -15,7 +15,7 @@ public class DALFuncionario {
         SQL = SQL.replaceAll("#3", f.getTelefone());
         SQL = SQL.replaceAll("#4", f.getSalario()+"");
         
-        return Banco.getCon().manipular(SQL);
+        return Banco.conectar().getCon().manipular(SQL);
     }
     
     public boolean update(Funcionario f){
@@ -26,23 +26,23 @@ public class DALFuncionario {
         SQL = SQL.replaceAll("#3", f.getTelefone());
         SQL = SQL.replaceAll("#4", f.getSalario()+"");
         
-        return Banco.getCon().manipular(SQL);
+        return Banco.conectar().getCon().manipular(SQL);
     }
     
     public boolean delete(Funcionario f){
         String SQL = "DELETE FROM Funcionarios WHERE fun_cod = " + f.getCod();
-        return Banco.getCon().manipular(SQL);
+        return Banco.conectar().getCon().manipular(SQL);
     }
     
     public int getMaxPK(){
-        return Banco.getCon().getMaxPK("Funcionarios", "fun_cod");
+        return Banco.conectar().getCon().getMaxPK("Funcionarios", "fun_cod");
     }
     
     public Funcionario getFuncionario(int COD){
         String SQL = "SELECT * FROM Funcionarios WHERE fun_cod = " + COD;
         Funcionario f = null;
         
-        ResultSet rs = Banco.getCon().consultar(SQL);
+        ResultSet rs = Banco.conectar().getCon().consultar(SQL);
         try{
             while(rs.next())
                 f = new Funcionario(rs.getInt("fun_cod"), rs.getDate("fun_datanascimento").toLocalDate(), rs.getString("fun_nome"), rs.getString("fun_telefone"), rs.getDouble("fun_salario"));
@@ -62,7 +62,7 @@ public class DALFuncionario {
         ArrayList<Funcionario> funcionarios = new ArrayList();
         Funcionario f = null;
         
-        ResultSet rs = Banco.getCon().consultar(SQL);
+        ResultSet rs = Banco.conectar().getCon().consultar(SQL);
         try{
             while(rs.next())
                 funcionarios.add(new Funcionario(rs.getInt("fun_cod"), rs.getDate("fun_datanascimento").toLocalDate(), rs.getString("fun_nome"), rs.getString("fun_telefone"), rs.getDouble("fun_salario")));

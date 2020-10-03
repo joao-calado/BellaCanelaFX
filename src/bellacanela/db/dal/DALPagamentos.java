@@ -32,7 +32,7 @@ public class DALPagamentos {
         else
             sql = sql.replaceAll("#9", ""+p.getNf());
         
-        return Banco.getCon().manipular(sql);
+        return Banco.conectar().getCon().manipular(sql);
     }
     
     public boolean alterar(Pagamento p) {
@@ -48,14 +48,14 @@ public class DALPagamentos {
         sql = sql.replaceAll("#8", ""+p.getPagamento());
 
         
-        return Banco.getCon().manipular(sql);
+        return Banco.conectar().getCon().manipular(sql);
     }
     
     public boolean verifica(NotaFiscal nota) {
 
         boolean aux = false;
 
-        ResultSet rs = Banco.getCon().consultar("select COUNT(*) as total from pagamentos where pag_nf = '"+nota.getCod()+"' AND pag_pagamento IS NOT NULL GROUP BY pag_nf");
+        ResultSet rs = Banco.conectar().getCon().consultar("select COUNT(*) as total from pagamentos where pag_nf = '"+nota.getCod()+"' AND pag_pagamento IS NOT NULL GROUP BY pag_nf");
         try{
             if(rs.next())
                 if(rs.getInt("total") > 0)
@@ -76,34 +76,34 @@ public class DALPagamentos {
         sql = sql.replaceAll("#8", ""+p.getPagamento());
         sql = sql.replaceAll("#9", ""+p.isParcial());
 
-        return Banco.getCon().manipular(sql);
+        return Banco.conectar().getCon().manipular(sql);
     }
     
     public boolean estornar(int p) {
         
         String sql = "update pagamentos SET pag_valorpago=0, pag_desjur=0, pag_pagamento = null, pag_parcial = false WHERE pag_cod = " +p;    
         
-        return Banco.getCon().manipular(sql);
+        return Banco.conectar().getCon().manipular(sql);
     }
     public boolean apagarNF(Pagamento p) {
-        return Banco.getCon().manipular("delete from pagamentos where pag_nf= '"+p.getNf()+"'");
+        return Banco.conectar().getCon().manipular("delete from pagamentos where pag_nf= '"+p.getNf()+"'");
     }
     public boolean apagarEstonro(int p) {
-        return Banco.getCon().manipular("delete from pagamentos where pag_father= "+p);
+        return Banco.conectar().getCon().manipular("delete from pagamentos where pag_father= "+p);
     }
     public boolean apagar(Pagamento p) {
-        return Banco.getCon().manipular("delete from pagamentos where pag_cod= '"+p.getCod()+"'");
+        return Banco.conectar().getCon().manipular("delete from pagamentos where pag_cod= '"+p.getCod()+"'");
     }
     
     public int getMax() {
-        return Banco.getCon().getMaxPK("pagamentos", "pag_cod");
+        return Banco.conectar().getCon().getMaxPK("pagamentos", "pag_cod");
     }
     
     public Pagamento get(int cod) {
         
         Pagamento aux = null;
         
-        ResultSet rs = Banco.getCon().consultar("select * from pagamentos where pag_cod= '"+cod+"'");
+        ResultSet rs = Banco.conectar().getCon().consultar("select * from pagamentos where pag_cod= '"+cod+"'");
         try{
             if(rs.next())               
                 aux = new Pagamento(rs.getInt("pag_cod"),rs.getInt("pag_parcela"), rs.getString("pag_desc"),
@@ -124,7 +124,7 @@ public class DALPagamentos {
             sql += " where "+filtro;
         
         ArrayList<Pagamento> aux = new ArrayList();
-        ResultSet rs = Banco.getCon().consultar(sql);
+        ResultSet rs = Banco.conectar().getCon().consultar(sql);
         
         try {
             while(rs.next())
@@ -143,7 +143,7 @@ public class DALPagamentos {
         
         
         ArrayList<Pagamento> aux = new ArrayList();
-        ResultSet rs = Banco.getCon().consultar(sql);
+        ResultSet rs = Banco.conectar().getCon().consultar(sql);
         
         try {
             while(rs.next())

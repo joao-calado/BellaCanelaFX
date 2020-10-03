@@ -19,7 +19,7 @@ public class DALProduto {
         sql = sql.replaceAll("#3", ""+p.getMed().getCod());
         sql = sql.replaceAll("#4", ""+p.getPreco());
         sql = sql.replaceAll("#5", ""+p.getAVenda());
-        return Banco.getCon().manipular(sql);
+        return Banco.conectar().getCon().manipular(sql);
     }
     
     public boolean alterar(Produtos p) {
@@ -35,28 +35,28 @@ public class DALProduto {
         
         System.out.println(sql);
         
-        return Banco.getCon().manipular(sql);
+        return Banco.conectar().getCon().manipular(sql);
     }
     public boolean alterEstoque(Produtos p) {
         
         String sql = "update produto set prod_estoque ='#6' where prod_cod="+p.getCod();        
         
         sql = sql.replaceAll("#6", ""+p.getEstoque()); 
-        return Banco.getCon().manipular(sql);
+        return Banco.conectar().getCon().manipular(sql);
     }
     
     public boolean apagar(Produtos p) {
-        return Banco.getCon().manipular("delete from produto where prod_cod="+p.getCod());
+        return Banco.conectar().getCon().manipular("delete from produto where prod_cod="+p.getCod());
     }
     
     public int getMax() {
-        return Banco.getCon().getMaxPK("produto", "prod_cod");
+        return Banco.conectar().getCon().getMaxPK("produto", "prod_cod");
     }
     
     public Produtos get(int cod) {
         
         Produtos aux = null;
-        ResultSet rs = Banco.getCon().consultar("select * from produto where prod_cod='"+cod+"'");
+        ResultSet rs = Banco.conectar().getCon().consultar("select * from produto where prod_cod='"+cod+"'");
         try{
             
             if(rs.next()){                
@@ -80,7 +80,7 @@ public class DALProduto {
             sql += " where "+filtro;
         
         ArrayList<Produtos> aux = new ArrayList();
-        ResultSet rs = Banco.getCon().consultar(sql);
+        ResultSet rs = Banco.conectar().getCon().consultar(sql);
         Categoria cat = null;
         Medida med = null;
         try {

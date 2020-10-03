@@ -37,7 +37,7 @@ public class DALConfSistema {
         sql = sql.replaceAll("#j", ""+cs.getCor1());
         sql = sql.replaceAll("#k", ""+cs.getCor2());
         
-        return Banco.getCon().manipular(sql);
+        return Banco.conectar().getCon().manipular(sql);
     }
     
     public boolean alterar(ConfSistema cs) {
@@ -56,13 +56,13 @@ public class DALConfSistema {
         sql = sql.replaceAll("#j", ""+cs.getCor1());
         sql = sql.replaceAll("#k", ""+cs.getCor2());
         
-        return Banco.getCon().manipular(sql);
+        return Banco.conectar().getCon().manipular(sql);
     }
     
     public ConfSistema get() {
         
         ConfSistema aux = null;
-        ResultSet rs = Banco.getCon().consultar("select * from parametrizacao");
+        ResultSet rs = Banco.conectar().getCon().consultar("select * from parametrizacao");
         
         try {
             if(rs.next()) {
@@ -79,7 +79,7 @@ public class DALConfSistema {
         try {
             
             String sql = "update parametrizacao set par_icone = ? where par_cod = ?";
-            PreparedStatement ps = Banco.getCon().getConnect().prepareStatement(sql);
+            PreparedStatement ps = Banco.conectar().getCon().getConnect().prepareStatement(sql);
             ps.setBinaryStream(1, icone);
             ps.setInt(2, cs.getCod());
             ps.executeUpdate();
@@ -99,7 +99,7 @@ public class DALConfSistema {
         
         try {
             
-            PreparedStatement ps = Banco.getCon().getConnect().prepareStatement("select par_icone from parametrizacao where par_cod = ?");
+            PreparedStatement ps = Banco.conectar().getCon().getConnect().prepareStatement("select par_icone from parametrizacao where par_cod = ?");
             ps.setInt(1, cs.getCod());
             ResultSet rs = ps.executeQuery();
             

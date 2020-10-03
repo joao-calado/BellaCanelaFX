@@ -17,7 +17,7 @@ public class DALCategoria {
         
         sql = sql.replaceAll("#1", ""+c.getNome());
         
-        return Banco.getCon().manipular(sql);
+        return Banco.conectar().getCon().manipular(sql);
     }
     
     public boolean alterar(Categoria c) {
@@ -27,22 +27,22 @@ public class DALCategoria {
         sql = sql.replaceAll("#1", ""+c.getNome());
 
         
-        return Banco.getCon().manipular(sql);
+        return Banco.conectar().getCon().manipular(sql);
     }
     
     public boolean apagar(Categoria c) {
-        return Banco.getCon().manipular("delete from categoria where cat_cod="+c.getCod());
+        return Banco.conectar().getCon().manipular("delete from categoria where cat_cod="+c.getCod());
     }
     
     public int getMax() {
-        return Banco.getCon().getMaxPK("categoria", "cat_cod");
+        return Banco.conectar().getCon().getMaxPK("categoria", "cat_cod");
     }
     
     public Categoria get(int cod) {
         
         Categoria aux = null;
         
-        ResultSet rs = Banco.getCon().consultar("select * from categoria where cat_cod='"+cod+"'");
+        ResultSet rs = Banco.conectar().getCon().consultar("select * from categoria where cat_cod='"+cod+"'");
         try{
             if(rs.next())
                 aux = new Categoria(rs.getInt("cat_cod"),rs.getString("cat_nome"));
@@ -59,7 +59,7 @@ public class DALCategoria {
             sql += " where "+filtro;
         
         ArrayList<Categoria> aux = new ArrayList();
-        ResultSet rs = Banco.getCon().consultar(sql);
+        ResultSet rs = Banco.conectar().getCon().consultar(sql);
         
         try {
             while(rs.next())

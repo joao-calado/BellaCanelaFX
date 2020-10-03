@@ -45,7 +45,7 @@ public class DALRecebimento {
             sql = sql.replaceAll("#8", ""+r.getComanda());
             sql = sql.replaceAll("#9", ""+r.getPai());
         }
-        return Banco.getCon().manipular(sql);
+        return Banco.conectar().getCon().manipular(sql);
     }
     
     public boolean alterar(Recebimento r) {
@@ -62,22 +62,22 @@ public class DALRecebimento {
         sql = sql.replaceAll("#8", ""+r.getComanda());
         sql = sql.replaceAll("#9", ""+r.getPai());
         
-        return Banco.getCon().manipular(sql);
+        return Banco.conectar().getCon().manipular(sql);
     }
     
     public boolean apagar(Recebimento r) {
-        return Banco.getCon().manipular("delete from recebimento where rec_cod="+r.getCod());
+        return Banco.conectar().getCon().manipular("delete from recebimento where rec_cod="+r.getCod());
     }
     
     public int getMax() {
-        return Banco.getCon().getMaxPK("recebimento", "rec_cod");
+        return Banco.conectar().getCon().getMaxPK("recebimento", "rec_cod");
     }
     
     public Recebimento get (int cod) {
         
         Recebimento aux = null;
         
-        ResultSet rs = Banco.getCon().consultar("select * from recebimento where rec_cod="+cod);
+        ResultSet rs = Banco.conectar().getCon().consultar("select * from recebimento where rec_cod="+cod);
         try{
             if(rs.next())
                 aux = new Recebimento(rs.getInt("rec_cod"),rs.getInt("rec_cli"),rs.getString("rec_tipo"),rs.getDouble("rec_valor"),rs.getDate("rec_recebimento").toLocalDate(),rs.getDate("rec_vencimento").toLocalDate(),rs.getString("rec_status"),rs.getInt("rec_mesa"),rs.getInt("rec_comanda"));
@@ -94,7 +94,7 @@ public class DALRecebimento {
             sql += " where "+filtro;
         
         List<Recebimento> aux = new ArrayList();
-        ResultSet rs = Banco.getCon().consultar(sql);
+        ResultSet rs = Banco.conectar().getCon().consultar(sql);
         
         try {
             while(rs.next()) {

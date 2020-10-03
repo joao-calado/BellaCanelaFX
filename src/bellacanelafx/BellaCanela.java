@@ -79,10 +79,9 @@ public class BellaCanela extends Application {
     }
 
     public static void main(String[] args) {
-        if(Banco.conectar())
+        if(Banco.conectar() != null)
             launch(args);
         else
             JOptionPane.showMessageDialog(null, "Erro ao conectar ao banco");
     }
-    
 }

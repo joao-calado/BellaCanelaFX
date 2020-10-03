@@ -19,7 +19,7 @@ public class DALComanda {
         SQL = SQL.replaceAll("#5", c.getDescricao());
         SQL = SQL.replaceAll("#6", c.isAberta()+"");
         
-        return Banco.getCon().manipular(SQL);
+        return Banco.conectar().getCon().manipular(SQL);
     }
 
     public boolean update(Comanda c) {
@@ -33,7 +33,7 @@ public class DALComanda {
         SQL = SQL.replaceAll("#4", c.isAberta()+"");
         SQL = SQL.replaceAll("#5", c.getCom_num() + "");
         SQL = SQL.replaceAll("#6", c.getMes_cod() + "");
-        ans = Banco.getCon().manipular(SQL);
+        ans = Banco.conectar().getCon().manipular(SQL);
         
         if (ans) {
             new DALItensDaComanda().delete(c.getCom_num(), c.getMes_cod());
@@ -60,7 +60,7 @@ public class DALComanda {
             SQL = SQL.replaceAll("#1", c.getCom_num() + "");
             SQL = SQL.replaceAll("#2", c.getMes_cod() + "");
 
-            ans = Banco.getCon().manipular(SQL);
+            ans = Banco.conectar().getCon().manipular(SQL);
         }
 
         return ans;
@@ -68,13 +68,13 @@ public class DALComanda {
 
     public boolean setMesa(int mes_cod, boolean liberada) {
         String SQL = "UPDATE Mesa SET mes_liberada = '" + liberada + "' WHERE mes_cod = " + mes_cod;
-        return Banco.getCon().manipular(SQL);
+        return Banco.conectar().getCon().manipular(SQL);
     }
 
     public Mesa getMesa(int mes_cod) {
         Mesa m = null;
         String SQL = "SELECT * FROM Mesa WHERE mes_cod = " + mes_cod;
-        ResultSet rs = Banco.getCon().consultar(SQL);
+        ResultSet rs = Banco.conectar().getCon().consultar(SQL);
 
         try {
             if (rs.next()) {
@@ -89,7 +89,7 @@ public class DALComanda {
     }
     
     public int getMaxPK(){
-        return Banco.getCon().getMaxPK("Comanda", "com_num");
+        return Banco.conectar().getCon().getMaxPK("Comanda", "com_num");
     }
 
     public Comanda getComanda(int com_num, int mes_cod) {
@@ -98,7 +98,7 @@ public class DALComanda {
         SQL = SQL.replaceAll("#2", mes_cod + "");
         Comanda c = null;
 
-        ResultSet rs = Banco.getCon().consultar(SQL);
+        ResultSet rs = Banco.conectar().getCon().consultar(SQL);
         try {
             while (rs.next()) {
                 c = new Comanda(
@@ -126,7 +126,7 @@ public class DALComanda {
             SQL += " WHERE " + filter;
         }
         
-        ResultSet rs = Banco.getCon().consultar(SQL), rsAux;
+        ResultSet rs = Banco.conectar().getCon().consultar(SQL), rsAux;
         try {
             while (rs.next()) {
                 

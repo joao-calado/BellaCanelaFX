@@ -18,7 +18,7 @@ public class DALMedida {
         
         sql = sql.replaceAll("#1", ""+m.getNome());
         
-        return Banco.getCon().manipular(sql);
+        return Banco.conectar().getCon().manipular(sql);
     }
     
     public boolean alterar(Medida m) {
@@ -28,22 +28,22 @@ public class DALMedida {
         sql = sql.replaceAll("#1", ""+m.getNome());
 
         
-        return Banco.getCon().manipular(sql);
+        return Banco.conectar().getCon().manipular(sql);
     }
     
     public boolean apagar(Medida m) {
-        return Banco.getCon().manipular("delete from medida where med_cod= '"+m.getCod()+"'");
+        return Banco.conectar().getCon().manipular("delete from medida where med_cod= '"+m.getCod()+"'");
     }
     
     public int getMax() {
-        return Banco.getCon().getMaxPK("medida", "med_cod");
+        return Banco.conectar().getCon().getMaxPK("medida", "med_cod");
     }
     
     public Medida get(int cod) {
         
         Medida aux = null;
         
-        ResultSet rs = Banco.getCon().consultar("select * from medida where med_cod= '"+cod+"'");
+        ResultSet rs = Banco.conectar().getCon().consultar("select * from medida where med_cod= '"+cod+"'");
         try{
             if(rs.next())
                 aux = new Medida(rs.getInt("med_cod"),rs.getString("med_nome"));
@@ -60,7 +60,7 @@ public class DALMedida {
             sql += " where "+filtro;
         
         ArrayList<Medida> aux = new ArrayList();
-        ResultSet rs = Banco.getCon().consultar(sql);
+        ResultSet rs = Banco.conectar().getCon().consultar(sql);
         
         try {
             while(rs.next())

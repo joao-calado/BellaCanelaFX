@@ -12,7 +12,7 @@ public class DALMesa {
         
         SQL = SQL.replaceAll("#1", m.isLiberada()+"");
         
-        return Banco.getCon().manipular(SQL);
+        return Banco.conectar().getCon().manipular(SQL);
     }
     
     public boolean update(Mesa m){
@@ -20,19 +20,19 @@ public class DALMesa {
         
         SQL = SQL.replaceAll("#1", m.isLiberada()+"");
         
-        return Banco.getCon().manipular(SQL);
+        return Banco.conectar().getCon().manipular(SQL);
     }
     
     public boolean delete(int cod){
         String SQL = "DELETE FROM Mesa WHERE mes_cod = " + cod;
-        return Banco.getCon().manipular(SQL);
+        return Banco.conectar().getCon().manipular(SQL);
     }
     
     public Mesa getMesa(int cod){
         String SQL = "SELECT * FROM Mesa WHERE mes_cod = " + cod;
         Mesa m = null;
         
-        ResultSet rs = Banco.getCon().consultar(SQL);
+        ResultSet rs = Banco.conectar().getCon().consultar(SQL);
         try{
             while(rs.next())
                 m = new Mesa(rs.getInt("mes_cod"), rs.getBoolean("mes_liberada"));
@@ -52,7 +52,7 @@ public class DALMesa {
         
         ArrayList<Mesa> mesas = new ArrayList();
         
-        ResultSet rs = Banco.getCon().consultar(SQL);
+        ResultSet rs = Banco.conectar().getCon().consultar(SQL);
         try{
             while(rs.next())
                 mesas.add(new Mesa(rs.getInt("mes_cod"), rs.getBoolean("mes_liberada")));

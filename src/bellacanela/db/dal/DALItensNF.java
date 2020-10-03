@@ -21,7 +21,7 @@ public class DALItensNF {
         sql = sql.replaceAll("#5", ""+nf.getPreco());
         sql = sql.replaceAll("#6", ""+nf.getTotal());        
        
-        return Banco.getCon().manipular(sql);
+        return Banco.conectar().getCon().manipular(sql);
     }
     
     public boolean alterar(ItensNF nf) {
@@ -34,15 +34,15 @@ public class DALItensNF {
         sql = sql.replaceAll("#5", ""+nf.getPreco());
         sql = sql.replaceAll("#6", ""+nf.getTotal());
         
-        return Banco.getCon().manipular(sql);
+        return Banco.conectar().getCon().manipular(sql);
     }
     
     public boolean apagar(ItensNF nf) {
-        return Banco.getCon().manipular("delete from itensnf where ite_cod= '"+nf.getCod()+"'");
+        return Banco.conectar().getCon().manipular("delete from itensnf where ite_cod= '"+nf.getCod()+"'");
     }
     
     public int getMax() {
-        return Banco.getCon().getMaxPK("itensnf", "ite_cod");
+        return Banco.conectar().getCon().getMaxPK("itensnf", "ite_cod");
     }
     
 
@@ -51,7 +51,7 @@ public class DALItensNF {
         
         ItensNF aux = null;
         
-        ResultSet rs = Banco.getCon().consultar("select * from itensnf where ite_cod= '"+cod+"'");
+        ResultSet rs = Banco.conectar().getCon().consultar("select * from itensnf where ite_cod= '"+cod+"'");
         try{
             if(rs.next())
                 //(ite_cod, ite_notafiscal, ite_produto, ite_qtde, ite_preco, ite_total)
@@ -71,7 +71,7 @@ public class DALItensNF {
             sql += " where "+filtro;
         
         ArrayList<ItensNF> aux = new ArrayList();
-        ResultSet rs = Banco.getCon().consultar(sql);
+        ResultSet rs = Banco.conectar().getCon().consultar(sql);
                
         try {
             while(rs.next())
@@ -90,7 +90,7 @@ public class DALItensNF {
         System.out.println(sql);
         
         ArrayList<ItensNF> aux = new ArrayList();
-        ResultSet rs = Banco.getCon().consultar(sql);
+        ResultSet rs = Banco.conectar().getCon().consultar(sql);
         
         try {
             while(rs.next())

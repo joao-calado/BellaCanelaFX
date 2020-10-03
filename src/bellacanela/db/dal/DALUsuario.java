@@ -16,7 +16,7 @@ public class DALUsuario {
         SQL = SQL.replaceAll("#3", u.getNivel()+"");
         SQL = SQL.replaceAll("#4", u.isHabilitado()+"");
         
-        return Banco.getCon().manipular(SQL);
+        return Banco.conectar().getCon().manipular(SQL);
     }
     
     public boolean update(Usuario u){
@@ -26,12 +26,12 @@ public class DALUsuario {
         SQL = SQL.replaceAll("#2", u.getNivel()+"");
         SQL = SQL.replaceAll("#3", u.isHabilitado()+"");
         
-        return Banco.getCon().manipular(SQL);
+        return Banco.conectar().getCon().manipular(SQL);
     }
     
     public boolean delete(String login){
         String SQL = "DELETE FROM Usuarios WHERE user_login = '" + login + "'";
-        return Banco.getCon().manipular(SQL);
+        return Banco.conectar().getCon().manipular(SQL);
     }
     
     public boolean verificarLogin(String login) throws SQLException{
@@ -39,7 +39,7 @@ public class DALUsuario {
         
         SQL = SQL.replaceAll("#1", login);
         
-        ResultSet rs = Banco.getCon().consultar(SQL);
+        ResultSet rs = Banco.conectar().getCon().consultar(SQL);
         
         return rs.next();
     }
@@ -48,7 +48,7 @@ public class DALUsuario {
         String SQL = "SELECT * FROM Usuarios WHERE user_login = '" + login + "'";
         Usuario u = null;
         
-        ResultSet rs = Banco.getCon().consultar(SQL);
+        ResultSet rs = Banco.conectar().getCon().consultar(SQL);
         try{
             while(rs.next())
                 u = new Usuario(rs.getString("user_login"), rs.getString("user_senha"), rs.getInt("user_nivel"), rs.getBoolean("user_habilitado"));
@@ -67,7 +67,7 @@ public class DALUsuario {
         
         ArrayList<Usuario> usuarios = new ArrayList();
         
-        ResultSet rs = Banco.getCon().consultar(SQL);
+        ResultSet rs = Banco.conectar().getCon().consultar(SQL);
         try{
             while(rs.next())
                 usuarios.add(new Usuario(rs.getString("user_login"), rs.getString("user_senha"), rs.getInt("user_nivel"), rs.getBoolean("user_habilitado")));

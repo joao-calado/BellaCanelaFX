@@ -15,7 +15,7 @@ public class DALItensDaComanda {
         SQL = SQL.replaceAll("#3", itens.getProduto().getCod()+"");
         SQL = SQL.replaceAll("#4", itens.getQtde()+"");
 
-        return Banco.getCon().manipular(SQL);
+        return Banco.conectar().getCon().manipular(SQL);
     }
     
     public boolean delete(int com_num, int mes_cod){
@@ -24,7 +24,7 @@ public class DALItensDaComanda {
         SQL = SQL.replaceAll("#1", com_num+"");
         SQL = SQL.replaceAll("#2", mes_cod+"");
         
-        return Banco.getCon().manipular(SQL);
+        return Banco.conectar().getCon().manipular(SQL);
     }
     
     public ArrayList<ItensDaComanda> getItens(String filtro){
@@ -33,7 +33,7 @@ public class DALItensDaComanda {
         
         if(!filtro.equals("")) SQL += " WHERE " + filtro;
         
-        ResultSet rs = Banco.getCon().consultar(SQL);
+        ResultSet rs = Banco.conectar().getCon().consultar(SQL);
         try{
             while(rs.next()){
                 itens.add(

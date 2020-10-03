@@ -19,7 +19,7 @@ public class DALFornecedor {
         sql = sql.replaceAll("#3", ""+f.getEmail());
         sql = sql.replaceAll("#4", ""+f.getDesc());
         
-        return Banco.getCon().manipular(sql);
+        return Banco.conectar().getCon().manipular(sql);
     }
     
     public boolean alterar(Fornecedor f) {
@@ -31,22 +31,22 @@ public class DALFornecedor {
         sql = sql.replaceAll("#3", ""+f.getEmail());
         sql = sql.replaceAll("#4", ""+f.getDesc());
         
-        return Banco.getCon().manipular(sql);
+        return Banco.conectar().getCon().manipular(sql);
     }
     
     public boolean apagar(Fornecedor f) {
-        return Banco.getCon().manipular("delete from fornecedor where for_cod="+f.getCod());
+        return Banco.conectar().getCon().manipular("delete from fornecedor where for_cod="+f.getCod());
     }
     
     public int getMax() {
-        return Banco.getCon().getMaxPK("fornecedor", "for_cod");
+        return Banco.conectar().getCon().getMaxPK("fornecedor", "for_cod");
     }
     
     public Fornecedor get(int cod) {
         
         Fornecedor aux = null;
         
-        ResultSet rs = Banco.getCon().consultar("select * from fornecedor where for_cod="+cod);
+        ResultSet rs = Banco.conectar().getCon().consultar("select * from fornecedor where for_cod="+cod);
         try{
             if(rs.next())
                 aux = new Fornecedor(rs.getInt("for_cod"),rs.getString("for_nome"),rs.getString("for_telefone"),rs.getString("for_email"),rs.getString("for_desc"));
@@ -63,7 +63,7 @@ public class DALFornecedor {
             sql += " where "+filtro;
         
         ArrayList<Fornecedor> aux = new ArrayList();
-        ResultSet rs = Banco.getCon().consultar(sql);
+        ResultSet rs = Banco.conectar().getCon().consultar(sql);
         
         try {
             while(rs.next())

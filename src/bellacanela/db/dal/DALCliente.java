@@ -22,7 +22,7 @@ public class DALCliente {
         sql = sql.replaceAll("#3", ""+c.getEmail());
         sql = sql.replaceAll("#4", ""+c.getFone());
         
-        return Banco.getCon().manipular(sql);
+        return Banco.conectar().getCon().manipular(sql);
     }
     
     public boolean alterar(Cliente c) {
@@ -34,22 +34,22 @@ public class DALCliente {
         sql = sql.replaceAll("#3", ""+c.getEmail());
         sql = sql.replaceAll("#4", ""+c.getFone());
         
-        return Banco.getCon().manipular(sql);
+        return Banco.conectar().getCon().manipular(sql);
     }
     
     public boolean apagar(Cliente c) {
-        return Banco.getCon().manipular("delete from cliente where cli_cod="+c.getCod());
+        return Banco.conectar().getCon().manipular("delete from cliente where cli_cod="+c.getCod());
     }
     
     public int getMax() {
-        return Banco.getCon().getMaxPK("cliente", "cli_cod");
+        return Banco.conectar().getCon().getMaxPK("cliente", "cli_cod");
     }
     
     public Cliente get(int cod) {
         
         Cliente aux = null;
         
-        ResultSet rs = Banco.getCon().consultar("select * from cliente where cli_cod="+cod);
+        ResultSet rs = Banco.conectar().getCon().consultar("select * from cliente where cli_cod="+cod);
         try{
             if(rs.next())
                 aux = new Cliente(rs.getInt("cli_cod"),rs.getString("cli_nome"),rs.getString("cli_cpf"),rs.getString("cli_email"),rs.getString("cli_fone"));
@@ -66,7 +66,7 @@ public class DALCliente {
             sql += " where "+filtro;
         
         List<Cliente> aux = new ArrayList();
-        ResultSet rs = Banco.getCon().consultar(sql);
+        ResultSet rs = Banco.conectar().getCon().consultar(sql);
         
         try {
             while(rs.next())
